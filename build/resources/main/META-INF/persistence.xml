@@ -6,10 +6,15 @@
     <!--Unidad de persistencias. Se pueden tener mas de una.-->
     <persistence-unit name="persistenceUnit" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <!--<class>oppucmm.models.User</class>-->
-        <!--<class>oppucmm.models.Form</class>-->
+        <class>WEBAPP_SFK.models.User</class>
+        <class>WEBAPP_SFK.models.Person</class>
+        <class>WEBAPP_SFK.models.ShelfData</class>
+
+        <class>WEBAPP_SFK.models.Shelf</class>
+
+
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/oppucmm" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/webapp_sfk" />
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
             <property name="javax.persistence.jdbc.user" value="sa" />
             <property name="javax.persistence.jdbc.password" value="" />
@@ -17,7 +22,7 @@
             <property name="hibernate.show_sql" value="true"/>
             <!-- Indica como será la generación de las tablas en el motor-->
             <!-- ver la documentación: https://docs.oracle.com/javaee/7/tutorial/persistence-intro005.htm -->
-            <property name="javax.persistence.schema-generation.database.action" value="create-drop"/>
+            <property name="javax.persistence.schema-generation.database.action" value="update"/>
         </properties>
     </persistence-unit>
 
