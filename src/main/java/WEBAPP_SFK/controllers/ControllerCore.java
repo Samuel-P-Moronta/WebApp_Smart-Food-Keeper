@@ -41,5 +41,6 @@ public class ControllerCore {
     public boolean addShelfData(ShelfData sh){
         return shelfDataServices.create(sh);
     }
+    public Shelf getShelfByDeviceName(String shelf){return shelfServices.findById(shelf);}
 
 }

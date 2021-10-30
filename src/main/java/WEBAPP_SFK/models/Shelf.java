@@ -17,8 +17,6 @@ public class Shelf implements Serializable {
     public Shelf(){
 
     }
-
-
     public Shelf(String device_name, String registerDate) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.registerDate = sdf.format(new Date());

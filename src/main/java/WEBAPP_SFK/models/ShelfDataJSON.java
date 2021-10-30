@@ -1,56 +1,41 @@
 package WEBAPP_SFK.models;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
+import javax.persistence.Column;
 import java.util.Date;
 
-@Entity
-@Table(name = "SHELF_DATA")
-public class ShelfData implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ShelfDataJSON {
     private int measureId;
-    @Column(name = "TEMPERATURE")
     private Double temperature;
-    @Column(name = "HUMIDITY")
     private Double humidity;
-    @Column(name = "FRUIT_CANT")
     private int fruitCant;
-    @Column(name = "FRUIT_TYPE")
     private String fruitType;
-    @Column(name = "PERCENTAGE_OVERRIPE")
     private int percentageOverripe;
-    @Column(name = "PERCENTAGE_RIPE")
     private int percentageRipe;
-    @Column(name = "PERCENTAGE_UNRIPE")
-    private int percentage_unripe;
-    @Column(name = "CURRENT_SAMPLE_DATE")
+    private int percentageUnripe;
     private Date currentSampleDate;
+    private String Shelf;
 
-
-    @OneToOne
-    private Shelf shelf;
-    public ShelfData(){
-
+    public ShelfDataJSON() {
     }
 
-    public ShelfData(Double temperature, Double humidity,
-                     int fruitCant, String fruitType,
-                     int percentageOverripe, int percentageRipe,
-                     int percentage_unripe, Date currentSampleDate,Shelf shelf) {
-
+    public ShelfDataJSON(Double temperature, Double humidity, int fruitCant, String fruitType, int percentageOverripe, int percentageRipe, int percentageUnripe, Date currentSampleDate, String shelf) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.fruitCant = fruitCant;
         this.fruitType = fruitType;
         this.percentageOverripe = percentageOverripe;
         this.percentageRipe = percentageRipe;
-        this.percentage_unripe = percentage_unripe;
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.percentageUnripe = percentageUnripe;
         this.currentSampleDate = currentSampleDate;
-        this.shelf = shelf;
+        Shelf = shelf;
+    }
+
+    public int getMeasureId() {
+        return measureId;
+    }
+
+    public void setMeasureId(int measureId) {
+        this.measureId = measureId;
     }
 
     public Double getTemperature() {
@@ -101,12 +86,12 @@ public class ShelfData implements Serializable {
         this.percentageRipe = percentageRipe;
     }
 
-    public int getPercentage_unripe() {
-        return percentage_unripe;
+    public int getPercentageUnripe() {
+        return percentageUnripe;
     }
 
-    public void setPercentage_unripe(int percentage_unripe) {
-        this.percentage_unripe = percentage_unripe;
+    public void setPercentageUnripe(int percentageUnripe) {
+        this.percentageUnripe = percentageUnripe;
     }
 
     public Date getCurrentSampleDate() {
@@ -116,22 +101,12 @@ public class ShelfData implements Serializable {
     public void setCurrentSampleDate(Date currentSampleDate) {
         this.currentSampleDate = currentSampleDate;
     }
-    public Shelf getShelf() {
-        return shelf;
+
+    public String getShelf() {
+        return Shelf;
     }
 
-    public void setShelf(Shelf shelf) {
-        this.shelf = shelf;
+    public void setShelf(String shelf) {
+        Shelf = shelf;
     }
-    public int getMeasureId() {
-        return measureId;
-    }
-
-    public void setMeasureId(int measureId) {
-        this.measureId = measureId;
-    }
-
-
-
-
 }

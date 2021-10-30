@@ -1,6 +1,7 @@
 package WEBAPP_SFK;
 
 import WEBAPP_SFK.controllers.ControllerCore;
+import WEBAPP_SFK.controllers.WebSocketController;
 import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.services.connect.DataBaseServices;
 import io.javalin.Javalin;
@@ -9,6 +10,9 @@ import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Main {
     private static String connectionMode = "";
@@ -59,13 +63,14 @@ public class Main {
         //ShelfData sd = new ShelfData(35.50,60.20,4,"PINEAPPLE",20,30,50,"2021-30-10 02:51:02",sf);
        // ControllerCore.getInstance().addShelf(sf1);
 
-        makeFakeMeasures();
+      //  makeFakeMeasures();
        // ControllerCore.getInstance().addShelf(sf);
         //ControllerCore.getInstance().addShelfData(sd);
 
        // ControllerCore.getInstance().addShelf(sf);
       //  ShelfData sd = new ShelfData(27.67,60.20,4,"PINEAPPLE",20,30,50,"2021-30-10 02:51:02",sf);
      //   ControllerCore.getInstance().addShelfData(sd);
+        new WebSocketController(app).aplicarRutas();
 
 
 
@@ -76,16 +81,24 @@ public class Main {
     public static String getModoConexion() {
         return connectionMode;
     }
+
+
     public static void makeFakeMeasures() throws InterruptedException {
-        Double temp = (Double) Math.floor(Math.random()*(40-20+1)+20);
+
 
         while (true){
-            Thread.sleep(5000);
+            Double temperature = (Double) Math.floor(Math.random()*(40-20+1)+20);
+            Double humidity = (Double) Math.floor(Math.random()*(40-20+1)+20);
+            int cantFrutas = 4;
+            int percentageOverripe = 25;
+            int percentageRipe = 50;
+            int percentageUnripe = 25;
+            Date currentSampleDate = new Date(System.currentTimeMillis());
+
+            Thread.sleep(10000);
             Shelf sf = new Shelf("SH002","2021-30-10 02:51:02");
-            ShelfData sd = new ShelfData(temp,60.20,4,"PINEAPPLE",20,30,50,"2021-30-10 02:51:02",sf);
+            ShelfData sd = new ShelfData(temperature,humidity,cantFrutas,"PINEAPPLE",percentageOverripe,percentageRipe,percentageUnripe,currentSampleDate,sf);
             ControllerCore.getInstance().addShelfData(sd);
-
         }
-
     }
 }
