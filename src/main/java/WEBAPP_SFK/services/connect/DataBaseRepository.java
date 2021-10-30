@@ -55,7 +55,7 @@ public class DataBaseRepository<T> {
      * @throws PersistenceException
      */
     public boolean create(T entidad) throws PersistenceException{
-       boolean estado = false;
+        boolean estado = false;
         EntityManager entityManager = getEntityManager();
 
         try {
