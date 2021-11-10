@@ -1,23 +1,28 @@
 package WEBAPP_SFK.services.connect;
 
 
+import WEBAPP_SFK.utilities.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.event.spi.SaveOrUpdateEvent;
+import org.hibernate.proxy.HibernateProxy;
+
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
+import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.*;
 
-public class DataBaseRepository<T> {
+public class DataBaseRepository<T>{
     private static EntityManagerFactory entityManagerFactory;
-    private Class<T> claseEntidad;
+    private Class<T> entityClass;
 
     public DataBaseRepository(Class<T> clase) {
         if (entityManagerFactory == null) {
             entityManagerFactory = Persistence.createEntityManagerFactory("persistenceUnit");
         }
-        this.claseEntidad = clase;
+        this.entityClass = clase;
     }
     public static EntityManager getEntityManager() {
         return entityManagerFactory.createEntityManager();
@@ -26,16 +31,16 @@ public class DataBaseRepository<T> {
     /**
      * Permite obtener el valor del campo
      */
-    private Object getCampValue(T entidad){
+    private Object getCampValue(T entity){
         Object valorCampo = null;
-        if(entidad != null){
-            for(Field campo : entidad.getClass().getDeclaredFields()) {
-                if (campo.isAnnotationPresent(Id.class)) {
+        if(entity != null){
+            for(Field field : entity.getClass().getDeclaredFields()) {
+                if (field.isAnnotationPresent(Id.class)) {
                     try {
-                        campo.setAccessible(true);
-                        valorCampo = campo.get(entidad);
-                        System.out.println("Nombre del campo: "+campo.getName());
-                        System.out.println("Tipo del campo: "+campo.getType().getName());
+                        field.setAccessible(true);
+                        valorCampo = field.get(entity);
+                        System.out.println("Nombre del campo: "+field.getName());
+                        System.out.println("Tipo del campo: "+field.getType().getName());
                         System.out.println("Valor del campo: "+valorCampo );
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -46,65 +51,136 @@ public class DataBaseRepository<T> {
         return valorCampo;
     }
 
+
     /**
      * CRUD BASICO IMPLEMENTANDO ORM
-     * @param entidad
+     * @param entity
      * @return
      * @throws IllegalArgumentException
      * @throws EntityExistsException
      * @throws PersistenceException
      */
-    public boolean create(T entidad) throws PersistenceException{
-        boolean estado = false;
-        EntityManager entityManager = getEntityManager();
+    public boolean create(T entity) throws PersistenceException{
+        boolean state = false;
+        EntityManager em = getEntityManager();
 
         try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(entidad);
-            entityManager.getTransaction().commit();
-            estado = true;
+            em.getTransaction().begin();
+            em.persist(entity);
+            em.getTransaction().commit();
+            state = true;
         } catch (Exception e){
+            Logger.getInstance().getLog(getClass()).error(String.format("Error creating entity - Exception message: %s", e.getMessage()));
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            em.close();
         }
-        return estado;
+        return state;
     }
-    public boolean delete(Object entidadId) throws PersistenceException {
-        boolean estado = false;
-        T entidad;
-        EntityManager entityManager = getEntityManager();
-        entityManager.getTransaction().begin();
-        try {
-            entidad = entityManager.find(this.claseEntidad, entidadId);
-            entityManager.remove(entidad);
-            entityManager.getTransaction().commit();
-            estado = true;
-        } finally {
-            entityManager.close();
-        }
+    public void createOrUpdate(T entity,int x) throws  PersistenceException{
+        boolean state = false;
+        EntityManager em = getEntityManager();
 
-        return estado;
+        if(x == 1){
+            try {
+                T temp = em.find(entityClass, getCampValue(entity));
+                if (temp != null) {
+                    System.out.println("La entidad a guardar existe, no creada.");
+                    entity = temp;
+                    return;
+                }
+            } catch (IllegalArgumentException ie){
+                System.out.println("Parametro ilegal.");
+            }
+            em.getTransaction().begin();
+            try{
+                em.persist(entity);
+                em.getTransaction().commit();
+            }catch (Exception e){
+                em.getTransaction().rollback();
+                throw  e;
+            }finally {
+                em.close();
+            }
+
+        }
+        if(x == 2){
+            try{
+                em.merge(entity);
+                em.getTransaction().commit();
+            }catch (Exception e){
+                em.getTransaction().rollback();
+                throw e;
+            }finally {
+                em.close();
+            }
+
+        }
+    }
+
+
+    public void createP(T entity){
+        EntityManager em = getEntityManager();
+        try {
+            T temp = em.find(entityClass, getCampValue(entity));
+            if (temp != null) {
+                System.out.println("La entidad a guardar existe, no creada.");
+                entity = temp;
+                return;
+            }
+        } catch (IllegalArgumentException ie){
+            System.out.println("Parametro ilegal.");
+        }
+        em.getTransaction().begin();
+        try{
+            em.persist(entity);
+            em.getTransaction().commit();
+        }catch (Exception e){
+            em.getTransaction().rollback();
+            throw  e;
+        }finally {
+            em.close();
+        }
+    }
+
+    public boolean delete(Object entidadId) throws PersistenceException {
+        boolean state = false;
+        T entity;
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        try {
+            entity = em.find(this.entityClass, entidadId);
+            em.remove(entity);
+            em.getTransaction().commit();
+            state = true;
+        }
+        finally {
+            em.close();
+        }
+        return state;
     }
     public boolean update(T entidad) throws PersistenceException {
-        boolean estado = false;
-        EntityManager entityManager = getEntityManager();
-        entityManager.getTransaction().begin();
+        boolean state = false;
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
         try {
-            entityManager.merge(entidad);
-            entityManager.getTransaction().commit();
-            estado = true;
-        } finally {
-            entityManager.close();
+            em.merge(entidad);
+            em.getTransaction().commit();
+            state = true;
+        }catch (Exception e){
+            Logger.getInstance().getLog(getClass()).error(String.format("Error updating entity - %s", e.getMessage()));
+        }
+        finally {
+            em.close();
         }
 
-        return estado;
+        return state;
     }
 
-    public T findById(Object id) throws PersistenceException {
+    public T find(Object id) throws PersistenceException {
         EntityManager em = getEntityManager();
         try{
-            return em.find(claseEntidad, id);
+            return em.find(entityClass, id);
         } catch (Exception ex){
             throw  ex;
         } finally {
@@ -112,17 +188,18 @@ public class DataBaseRepository<T> {
         }
     }
 
+
     public List<T> findAll() throws PersistenceException {
-        EntityManager entityManager = getEntityManager();
-        List<T> entida = null;
+        EntityManager em = getEntityManager();
+        List<T> entity = null;
         try {
-            CriteriaQuery<T> criteriaQuery = entityManager.getCriteriaBuilder().createQuery(this.claseEntidad);
-            criteriaQuery.select(criteriaQuery.from(this.claseEntidad));
-            entida = entityManager.createQuery(criteriaQuery).getResultList();
+            CriteriaQuery<T> criteriaQuery = em.getCriteriaBuilder().createQuery(this.entityClass);
+            criteriaQuery.select(criteriaQuery.from(this.entityClass));
+            entity = em.createQuery(criteriaQuery).getResultList();
         } finally {
-            entityManager.close();
+            em.close();
         }
-        return entida;
+        return entity;
     }
 
     /**

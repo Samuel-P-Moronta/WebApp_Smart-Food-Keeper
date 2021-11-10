@@ -1,17 +1,14 @@
 package WEBAPP_SFK;
 
-import WEBAPP_SFK.controllers.ControllerCore;
 import WEBAPP_SFK.controllers.WebSocketController;
-import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.services.connect.DataBaseServices;
+import WEBAPP_SFK.utilities.DefaultDataLoader;
 import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
 import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
 
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.List;
 
 public class Main {
     private static String connectionMode = "";
@@ -37,8 +34,14 @@ public class Main {
 
         });
         new WebSocketController(app).aplicarRutas();
-        System.out.println("Shelf Data List: " + ControllerCore.getInstance().getShelfDataByShelf("SH001"));
-      //  ControllerCore.getInstance().createFakeDataToBD();
+        //new UserController(app).aplicarRutas();
+
+        //  ControllerCore.getInstance().createFakeDataToBD();
+        //  DefaultDataLoader.getInstance().createDefaultSuperUser();
+       //   DefaultDataLoader.getInstance().createDefaultShelfData();
+        //DefaultDataLoader.getInstance().createDefaultContainerData();
+        //DefaultDataLoader.getInstance().createDefaultUsers();
+
 
         app.start(7000);
     }

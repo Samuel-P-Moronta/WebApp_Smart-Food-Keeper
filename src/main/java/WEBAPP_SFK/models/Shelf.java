@@ -1,5 +1,7 @@
 package WEBAPP_SFK.models;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -9,20 +11,20 @@ import java.util.Date;
 @Table(name = "SHELF")
 public class Shelf implements Serializable {
     @Id
-    @Column(name = "DEVICE_NAME")
+    @Column(name = "DEVICE_NAME",unique = true)
     private String device_name;
-    @Column(name = "REGISTER_DATE")
-    private String registerDate;
+    @CreationTimestamp
+    private Date registerDate;
 
     public Shelf(){
 
     }
-    public Shelf(String device_name, String registerDate) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.registerDate = sdf.format(new Date());
+
+    public Shelf(String device_name, Date registerDate) {
         this.device_name = device_name;
         this.registerDate = registerDate;
     }
+
     public String getDevice_name() {
         return device_name;
     }
@@ -31,12 +33,11 @@ public class Shelf implements Serializable {
         this.device_name = device_name;
     }
 
-    public String getRegisterDate() {
+    public Date getRegisterDate() {
         return registerDate;
     }
 
-    public void setRegisterDate(String registerDate) {
+    public void setRegisterDate(Date registerDate) {
         this.registerDate = registerDate;
     }
-
 }

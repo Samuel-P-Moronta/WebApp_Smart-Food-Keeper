@@ -24,11 +24,11 @@ public class ShelfDataServices extends DataBaseRepository<ShelfData> {
     }
     public List<ShelfData> getAllShelfData(String deviceName){
         EntityManager entityManager = getEntityManager();
-        String consulta = "";
-       // consulta+='SELECT * from'
+        String sql = "";
+        sql+=" SELECT * FROM SHELF S INNER JOIN SHELF_DATA SD on DEVICE_NAME =:deviceName";
 
-        Query query = entityManager.createQuery("SELECT SD FROM ShelfData SD WHERE SD.shelf.id = :id");
-        query.setParameter("id",deviceName);
+        Query query = entityManager.createNativeQuery(sql,ShelfData.class);
+        query.setParameter("deviceName",deviceName);
         return query.getResultList();
     }
 

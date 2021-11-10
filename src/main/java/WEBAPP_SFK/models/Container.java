@@ -1,7 +1,10 @@
 package WEBAPP_SFK.models;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "CONTAINER")
@@ -10,16 +13,16 @@ public class Container implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "REGISTER_DATE")
-    private String registerDate;
-    @OneToOne
-    private BranchOffice branchOffice;
+    @CreationTimestamp
+    private Date registerDate;
+    //OneToOne
+   // private BranchOffice branchOffice;
 
     public Container() {
     }
 
-    public Container(String registerDate, BranchOffice branchOffice) {
+    public Container(Date registerDate) {
         this.registerDate = registerDate;
-        this.branchOffice = branchOffice;
     }
 
 
@@ -31,14 +34,15 @@ public class Container implements Serializable {
         this.id = id;
     }
 
-    public String getRegisterDate() {
+    public Date getRegisterDate() {
         return registerDate;
     }
 
-    public void setRegisterDate(String registerDate) {
+    public void setRegisterDate(Date registerDate) {
         this.registerDate = registerDate;
     }
 
+    /*
     public BranchOffice getBranchOffice() {
         return branchOffice;
     }
@@ -46,4 +50,6 @@ public class Container implements Serializable {
     public void setBranchOffice(BranchOffice branchOffice) {
         this.branchOffice = branchOffice;
     }
+
+     */
 }

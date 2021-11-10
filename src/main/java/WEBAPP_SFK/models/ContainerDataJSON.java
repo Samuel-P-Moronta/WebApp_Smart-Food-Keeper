@@ -6,14 +6,16 @@ import javax.persistence.OneToOne;
 public class ContainerDataJSON {
     private int measureId;
     private float weight;
-    private String container;
+    private int container;
+    private int statusCode;
 
     public ContainerDataJSON() {
     }
 
-    public ContainerDataJSON(float weight, String container) {
+    public ContainerDataJSON(float weight, int container,int statusCode) {
         this.weight = weight;
         this.container = container;
+        this.statusCode = statusCode;
     }
 
 
@@ -33,11 +35,20 @@ public class ContainerDataJSON {
         this.weight = weight;
     }
 
-    public String getContainer() {
+    public int getContainer() {
         return container;
     }
 
-    public void setContainer(String container) {
+    public void setContainer(int container) {
         this.container = container;
     }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
+    }
+
 }
