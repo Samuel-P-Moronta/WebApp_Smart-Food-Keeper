@@ -1,41 +1,55 @@
 package WEBAPP_SFK.models;
 
+import WEBAPP_SFK.models.enums.Gender;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
-
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.Date;
 
 @Entity
 @Table(name = "PERSON")
-public class Person{
+public class Person implements Serializable {
     @Id
-    @Column(name = "IDENTIFICATION_CARD",length = 13)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name = "IDENTIFICATION_CARD", unique = true, nullable = false)
     private String identificationCard;
-    @Column(name = "EMAIL")
+    private String firstName;
+    private String LastName;
+    @Column(unique = true,nullable = false)
     private String email;
-    @Column(name = "NAME")
-    private String name;
-    @Column(name = "SURNAME")
-    private String surname;
-    @Column(name = "LASTNAME")
-    private String lastName;
+    private Gender gender;
+    @CreationTimestamp
+    private Date registerDate;
+    @Embedded
+    private Address address;
+
+    @OneToOne
+    private User user;
 
 
 
-    /*Empty constructor*/
-    public Person(){
-        /* Testing purpose */
+    public Person() {
+    }
+
+    public Person(String identificationCard, String firstName, String lastName, String email, Gender gender, Address address, User user) {
+        this.identificationCard = identificationCard;
+        this.firstName = firstName;
+        LastName = lastName;
+        this.email = email;
+        this.gender = gender;
+        this.address = address;
+        this.user = user;
     }
 
 
-    public Person(String identificationCard, String email, String name, String surname, String lastName) {
-        this.identificationCard = identificationCard;
-        this.email = email;
-        this.name = name;
-        this.surname = surname;
-        this.lastName = lastName;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getIdentificationCard() {
@@ -46,6 +60,54 @@ public class Person{
         this.identificationCard = identificationCard;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return LastName;
+    }
+
+    public void setLastName(String lastName) {
+        LastName = lastName;
+    }
+
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public Date getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -54,27 +116,6 @@ public class Person{
         this.email = email;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 }
