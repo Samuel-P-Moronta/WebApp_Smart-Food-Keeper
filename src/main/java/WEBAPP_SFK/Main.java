@@ -41,6 +41,9 @@ public class Main {
        //   DefaultDataLoader.getInstance().createDefaultShelfData();
         //DefaultDataLoader.getInstance().createDefaultContainerData();
         //DefaultDataLoader.getInstance().createDefaultUsers();
+        app.get("/", ctx -> {
+            ctx.render("/public/dashboardv4.html");
+        });
 
 
         app.start(7000);

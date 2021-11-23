@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+    <meta charset='utf-8'>
+    <style>
+        body     { font-size:100%;text-transform: uppercase;letter-spacing: 3px}
+        #main    { display: table; width: 500px; margin: 20px auto;  padding: 10px 10px 10px 10px; border: 1px solid black; text-align:left;}
+        #main    { display: table; width: 450px; margin: 20px auto;  padding: 10px 10px 10px 10px; border: 3px solid black; text-align:left;}
+        p        { font-size: 90%; }
+    </style>
+
+</head>
+<body>
+<div id='main'>
+    <h3 style="text-align: center">Smart Food Keeper - Project </h3>
+
+    <div id='content'>
+        <h6>Fecha : <span id='measure_shelf_date'></span></h6>
+        <p>Estante: <span id='Estante'></span></p>
+        <p>Fruta: <span id='fruitType'></span></p>
+        <p>Cantidad de frutas: <span id='cantFruit'></span></p>
+        <hr>
+        <p style="text-align: center">Categorias de Madurez <img align="left" src="https://img.icons8.com/external-itim2101-blue-itim2101/50/000000/external-fruit-store-itim2101-blue-itim2101.png"/></p>
+        <br>
+        <br>
+        <p style="margin:1;display:inline;float:left;margin: 0.3em;margin-left: 0.2em ">Overripe: <span id='overripe'>00</span>%</p>
+        <p style="margin:1;display:inline;float:right;margin: 0.3em;margin-left: 4em">Ripe: <span id='ripe' >00</span>%</p>
+        <p style="margin:1;display:inline;float:right;margin: 0.3em;margin-left: 0.2em">Unripe: <span id='unripe'>00</span>%</p>
+        <br>
+        <hr>
+        <p style="text-align: center">Condiciones ambientales <img  align="left"  src="https://img.icons8.com/dusk/40/000000/environmental-planning.png"/></p>
+        <br>
+        <p>Humedad: <span id='humidity' style="color: red">00</span>%</p>
+        <p>Temperatura: <span id='temperature' style="color: blue">00</span>&#176;C</p>
+        <hr>
+        <p style="text-align: center">Basurero <img align="left" src="https://img.icons8.com/external-flatarticons-blue-flatarticons/50/000000/external-dustbin-ux-and-ui-flatarticons-blue-flatarticons.png"/></p>
+        <br>
+        <h6>Fecha : <span id='measure_container_date'></span></h6>
+        <p>Identificador: <span id='container_id'>00</span></p>
+        <p>Peso: <span id='weight'>00</span>LB</p>
+        <p>Estado del basurero: <span id='statuscode'></span> </p>
+
+    </div>
+    <br />
+</div>
+</body>
+
+<script>
+    var webSocket;
+    var webSocket2;
+
+    function connect1()
+    {
+        webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/server/shelf");
+        webSocket.onmessage = function(event) { getDataFromServerShelf(event); };
+    }
+    function connect2()
+    {
+        webSocket2 = new WebSocket("ws://" + location.hostname + ":" + location.port + "/server/container");
+        webSocket2.onmessage = function(event) { getDataFromServerContainer(event); };
+    }
+
+    function getDataFromServerShelf(evt)
+    {
+        var data = JSON.parse(evt.data);
+        document.getElementById('Estante').innerHTML = data['shelf']['device_name'];
+        document.getElementById('fruitType').innerHTML = data['fruitType'];
+        document.getElementById('cantFruit').innerHTML = data['fruitCant'];
+        document.getElementById('overripe').innerHTML = data['percentageOverripe'];
+        document.getElementById('ripe').innerHTML = data['percentageRipe'];
+        document.getElementById('unripe').innerHTML = data['percentage_unripe'];
+        document.getElementById('humidity').innerHTML = data['humidity'];
+        document.getElementById('temperature').innerHTML = data['temperature'];
+        var measure_date = new Date();
+
+        var date = measure_date.getMonth()+"/"+
+                      measure_date.getDay()+"/"+
+                      measure_date.getFullYear()+":"+
+                      measure_date.getHours()+":"+
+                      measure_date.getMinutes();
+
+        document.getElementById('measure_shelf_date').innerHTML = date;
+
+    }
+    function getDataFromServerContainer(evt)
+    {
+        var data = JSON.parse(evt.data);
+        document.getElementById('container_id').innerHTML = data['container']['id'];
+        document.getElementById('weight').innerHTML = data['weight'];
+        // MINIMO = 1 MEDIO = 2 LLENO = 3 COMPLETAMENTE VACIO = 0
+        switch (data['statusCode']) {
+            case 0:
+                document.getElementById('statuscode').innerHTML = "Vacio";
+                break;
+            case 1:
+                document.getElementById('statuscode').innerHTML = "Normal";
+                break;
+            case 2:
+                document.getElementById('statuscode').innerHTML = "Medio";
+                break;
+            case 3:
+                document.getElementById('statuscode').innerHTML = "Lleno";
+                break;
+            default:
+        }
+        var measure_date = new Date();
+        var date = measure_date.getMonth()+"/"+
+            measure_date.getDay()+"/"+
+            measure_date.getFullYear()+":"+
+            measure_date.getHours()+":"+
+            measure_date.getMinutes();
+
+        document.getElementById('measure_container_date').innerHTML = date;
+    }
+
+    window.onload = function(e)   {
+        connect1();
+        connect2();
+
+    }
+
+</script>
+
+</html>
