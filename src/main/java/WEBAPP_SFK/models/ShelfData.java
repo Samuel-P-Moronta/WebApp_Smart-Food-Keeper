@@ -11,21 +11,13 @@ public class ShelfData implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int measureId;
-    @Column(name = "TEMPERATURE")
     private Double temperature;
-    @Column(name = "HUMIDITY")
     private Double humidity;
-    @Column(name = "FRUIT_CANT")
     private int fruitCant;
-    @Column(name = "FRUIT_TYPE")
     private String fruitType;
-    @Column(name = "PERCENTAGE_OVERRIPE")
-    private int percentageOverripe;
-    @Column(name = "PERCENTAGE_RIPE")
-    private int percentageRipe;
-    @Column(name = "PERCENTAGE_UNRIPE")
-    private int percentage_unripe;
-    @Column(name = "CURRENT_SAMPLE_DATE")
+    private int cantOverripe;
+    private int cantRipe;
+    private int cantUnripe;
     private Date currentSampleDate;
 
 
@@ -37,16 +29,16 @@ public class ShelfData implements Serializable {
 
     public ShelfData(Double temperature, Double humidity,
                      int fruitCant, String fruitType,
-                     int percentageOverripe, int percentageRipe,
-                     int percentage_unripe, Date currentSampleDate,Shelf shelf) {
+                     int cantOverripe, int cantRipe,
+                     int cantUnripe, Date currentSampleDate,Shelf shelf) {
 
         this.temperature = temperature;
         this.humidity = humidity;
         this.fruitCant = fruitCant;
         this.fruitType = fruitType;
-        this.percentageOverripe = percentageOverripe;
-        this.percentageRipe = percentageRipe;
-        this.percentage_unripe = percentage_unripe;
+        this.cantOverripe = cantOverripe;
+        this.cantRipe = cantRipe;
+        this.cantUnripe = cantUnripe;
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.currentSampleDate = currentSampleDate;
@@ -85,28 +77,28 @@ public class ShelfData implements Serializable {
         this.fruitType = fruitType;
     }
 
-    public int getPercentageOverripe() {
-        return percentageOverripe;
+    public int getCantOverripe() {
+        return cantOverripe;
     }
 
-    public void setPercentageOverripe(int percentageOverripe) {
-        this.percentageOverripe = percentageOverripe;
+    public void setCantOverripe(int percentageOverripe) {
+        this.cantOverripe = percentageOverripe;
     }
 
-    public int getPercentageRipe() {
-        return percentageRipe;
+    public int getCantRipe() {
+        return cantRipe;
     }
 
-    public void setPercentageRipe(int percentageRipe) {
-        this.percentageRipe = percentageRipe;
+    public void setCantRipe(int percentageRipe) {
+        this.cantRipe = percentageRipe;
     }
 
-    public int getPercentage_unripe() {
-        return percentage_unripe;
+    public int getCantUnripe() {
+        return cantUnripe;
     }
 
-    public void setPercentage_unripe(int percentage_unripe) {
-        this.percentage_unripe = percentage_unripe;
+    public void setCantUnripe(int percentage_unripe) {
+        this.cantUnripe = percentage_unripe;
     }
 
     public Date getCurrentSampleDate() {

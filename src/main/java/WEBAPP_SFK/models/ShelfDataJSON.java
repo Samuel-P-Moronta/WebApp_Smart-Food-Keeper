@@ -9,23 +9,23 @@ public class ShelfDataJSON {
     private Double humidity;
     private int fruitCant;
     private String fruitType;
-    private int percentageOverripe;
-    private int percentageRipe;
-    private int percentageUnripe;
+    private int cantOverripe;
+    private int cantRipe;
+    private int cantUnripe;
     private Date currentSampleDate;
     private String Shelf;
 
     public ShelfDataJSON() {
     }
 
-    public ShelfDataJSON(Double temperature, Double humidity, int fruitCant, String fruitType, int percentageOverripe, int percentageRipe, int percentageUnripe, Date currentSampleDate, String shelf) {
+    public ShelfDataJSON(Double temperature, Double humidity, int fruitCant, String fruitType, int cantOverripe, int cantRipe, int cantUnripe, Date currentSampleDate, String shelf) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.fruitCant = fruitCant;
         this.fruitType = fruitType;
-        this.percentageOverripe = percentageOverripe;
-        this.percentageRipe = percentageRipe;
-        this.percentageUnripe = percentageUnripe;
+        this.cantOverripe = cantOverripe;
+        this.cantRipe = cantRipe;
+        this.cantUnripe = cantUnripe;
         this.currentSampleDate = currentSampleDate;
         Shelf = shelf;
     }
@@ -70,29 +70,7 @@ public class ShelfDataJSON {
         this.fruitType = fruitType;
     }
 
-    public int getPercentageOverripe() {
-        return percentageOverripe;
-    }
 
-    public void setPercentageOverripe(int percentageOverripe) {
-        this.percentageOverripe = percentageOverripe;
-    }
-
-    public int getPercentageRipe() {
-        return percentageRipe;
-    }
-
-    public void setPercentageRipe(int percentageRipe) {
-        this.percentageRipe = percentageRipe;
-    }
-
-    public int getPercentageUnripe() {
-        return percentageUnripe;
-    }
-
-    public void setPercentageUnripe(int percentageUnripe) {
-        this.percentageUnripe = percentageUnripe;
-    }
 
     public Date getCurrentSampleDate() {
         return currentSampleDate;
@@ -108,5 +86,29 @@ public class ShelfDataJSON {
 
     public void setShelf(String shelf) {
         Shelf = shelf;
+    }
+
+    public int getCantOverripe() {
+        return cantOverripe;
+    }
+
+    public void setCantOverripe(int cantOverripe) {
+        this.cantOverripe = cantOverripe;
+    }
+
+    public int getCantRipe() {
+        return cantRipe;
+    }
+
+    public void setCantRipe(int cantRipe) {
+        this.cantRipe = cantRipe;
+    }
+
+    public int getCantUnripe() {
+        return cantUnripe;
+    }
+
+    public void setCantUnripe(int cantUnripe) {
+        this.cantUnripe = cantUnripe;
     }
 }

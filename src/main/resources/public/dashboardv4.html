@@ -4,7 +4,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
     <meta charset='utf-8'>
     <style>
-        body     { font-size:100%;text-transform: uppercase;letter-spacing: 3px}
+        body     { font-size:100%;letter-spacing: 3px}
         #main    { display: table; width: 500px; margin: 20px auto;  padding: 10px 10px 10px 10px; border: 1px solid black; text-align:left;}
         #main    { display: table; width: 450px; margin: 20px auto;  padding: 10px 10px 10px 10px; border: 3px solid black; text-align:left;}
         p        { font-size: 90%; }
@@ -18,16 +18,20 @@
     <div id='content'>
         <h6>Fecha : <span id='measure_shelf_date'></span></h6>
         <p>Estante: <span id='Estante'></span></p>
-        <p>Fruta: <span id='fruitType'></span></p>
+        <p>Tipo de fruta: <span id='fruitType'></span></p>
         <p>Cantidad de frutas: <span id='cantFruit'></span></p>
         <hr>
         <p style="text-align: center">Categorias de Madurez <img align="left" src="https://img.icons8.com/external-itim2101-blue-itim2101/50/000000/external-fruit-store-itim2101-blue-itim2101.png"/></p>
         <br>
         <br>
-        <p style="margin:1;display:inline;float:left;margin: 0.3em;margin-left: 0.2em ">Overripe: <span id='overripe'>00</span>%</p>
-        <p style="margin:1;display:inline;float:right;margin: 0.3em;margin-left: 4em">Ripe: <span id='ripe' >00</span>%</p>
-        <p style="margin:1;display:inline;float:right;margin: 0.3em;margin-left: 0.2em">Unripe: <span id='unripe'>00</span>%</p>
-        <br>
+        <p>Cantidad de frutas muy maduras: <span id='overripe'>00</span></p>
+        <p>Cantidad de frutas verdes : <span id='unripe'>00</span></p>
+        <p>Cantidad de frutas maduras : <span id='ripe' >00</span></p>
+        <p>Porcentages: </p>
+        <p>Muy maduras: <span id='percentage_overripe'>00</span>%</p>
+        <p>Verdes : <span id='percentage_unripe'>00</span>%</p>
+        <p>Maduras: <span id='percentage_ripe' >00</span>%</p>
+
         <hr>
         <p style="text-align: center">Condiciones ambientales <img  align="left"  src="https://img.icons8.com/dusk/40/000000/environmental-planning.png"/></p>
         <br>
@@ -38,7 +42,7 @@
         <br>
         <h6>Fecha : <span id='measure_container_date'></span></h6>
         <p>Identificador: <span id='container_id'>00</span></p>
-        <p>Peso: <span id='weight'>00</span>LB</p>
+        <p>Peso: <span id='weight'>00</span>KG</p>
         <p>Estado del basurero: <span id='statuscode'></span> </p>
 
     </div>
@@ -64,12 +68,56 @@
     function getDataFromServerShelf(evt)
     {
         var data = JSON.parse(evt.data);
-        document.getElementById('Estante').innerHTML = data['shelf']['device_name'];
-        document.getElementById('fruitType').innerHTML = data['fruitType'];
-        document.getElementById('cantFruit').innerHTML = data['fruitCant'];
-        document.getElementById('overripe').innerHTML = data['percentageOverripe'];
-        document.getElementById('ripe').innerHTML = data['percentageRipe'];
-        document.getElementById('unripe').innerHTML = data['percentage_unripe'];
+        //var percentage_ripe = 0;
+        //var percentage_unripe = 0;
+        //var percentage_overipe = 0;
+
+        var data_json_fruit_type = data['fruitType'];
+        var fruit_cant = data['fruitCant'];
+        var cant_overripe = data['cantOverripe'];
+        var cant_ripe = data['cantRipe'];
+        var cant_unripe = data['cantUnripe']
+
+
+        if(data_json_fruit_type == "pineapple"){
+            data_json_fruit_type = "Pina"
+        }else{
+            if(data_json_fruit_type == "papaya"){
+                data_json_fruit_type = "Lechosa"
+            }
+        }
+        document.getElementById('fruitType').innerHTML = data_json_fruit_type;
+
+
+        if((data['fruitType']) == 0){
+            document.getElementById('fruitType').innerHTML = "No hay frutas";
+            document.getElementById('cantFruit').innerHTML = "No hay frutas";
+            document.getElementById('overripe').innerHTML = "No hay datos";
+            document.getElementById('ripe').innerHTML = "No hay datos";
+            document.getElementById('unripe').innerHTML = "No hay datos";
+            document.getElementById('humidity').innerHTML = "No hay datos";
+
+            document.getElementById('percentage_ripe').innerHTML = "No hay datos";
+            document.getElementById('percentage_unripe').innerHTML = "No hay datos";
+            document.getElementById('percentage_overripe').innerHTML = "No hay datos";
+
+        }else{
+            document.getElementById('cantFruit').innerHTML = fruit_cant;
+            document.getElementById('overripe').innerHTML = data['cantOverripe'];
+            document.getElementById('ripe').innerHTML = data['cantRipe'];
+            document.getElementById('unripe').innerHTML = data['cantUnripe'];
+
+
+        }
+        if(fruit_cant != 0){
+            var percentage_ripe = (cant_ripe/fruit_cant)*100;
+            var percentage_unripe = (cant_unripe/fruit_cant)*100;
+            var percentage_overipe = (cant_overripe/fruit_cant)*100;
+
+            document.getElementById('percentage_ripe').innerHTML = percentage_ripe;
+            document.getElementById('percentage_unripe').innerHTML = percentage_unripe;
+            document.getElementById('percentage_overripe').innerHTML = percentage_overipe;
+        }
         document.getElementById('humidity').innerHTML = data['humidity'];
         document.getElementById('temperature').innerHTML = data['temperature'];
         var measure_date = new Date();
@@ -86,7 +134,7 @@
     function getDataFromServerContainer(evt)
     {
         var data = JSON.parse(evt.data);
-        document.getElementById('container_id').innerHTML = data['container']['id'];
+      //  document.getElementById('container_id').innerHTML = data['container']['id'];
         document.getElementById('weight').innerHTML = data['weight'];
         // MINIMO = 1 MEDIO = 2 LLENO = 3 COMPLETAMENTE VACIO = 0
         switch (data['statusCode']) {

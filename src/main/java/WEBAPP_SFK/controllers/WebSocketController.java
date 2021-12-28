@@ -107,12 +107,9 @@ public class WebSocketController extends BaseController {
                     e.printStackTrace();
                 }
             }
-            //ControllerCore.getInstance().createContainerData(auxContainerData);
+            Logger.getInstance().getLog(this.getClass()).info("Saving into data base from websocket client [...]");
+            ControllerCore.getInstance().createContainerData(auxContainerData);
         }
-
-    }
-
-    public void allDataShelf() {
 
     }
 
@@ -122,15 +119,16 @@ public class WebSocketController extends BaseController {
 
         for (ShelfDataJSON f : s) {
             Date currentSampleDate = new Date(System.currentTimeMillis());
+
             auxShelf = ControllerCore.getInstance().getShelfByDeviceName("SH001");
             auxShelfData = new ShelfData(
                     f.getTemperature(),
                     f.getHumidity(),
                     f.getFruitCant(),
                     f.getFruitType(),
-                    f.getPercentageOverripe(),
-                    f.getPercentageRipe(),
-                    f.getPercentageUnripe(),
+                    f.getCantOverripe(),
+                    f.getCantRipe(),
+                    f.getCantUnripe(),
                     currentSampleDate,
                     auxShelf
             );
