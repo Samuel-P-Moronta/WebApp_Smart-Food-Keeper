@@ -40,9 +40,7 @@ public class ControllerCore {
         Logger.getInstance().getLog(this.getClass()).info("Searching shelf by device name [...]");
         return SHELF_SERVICES.find(shelf);
     }
-    public List<ShelfData> getAllDataFromShelf(String deviceName){
-        return SHELF_DATA_SERVICES.getAllShelfData(deviceName);
-    }
+
     public List<ShelfData> listShelfData(){
         return SHELF_DATA_SERVICES.findAll();
     }

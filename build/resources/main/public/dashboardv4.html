@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
     <meta charset='utf-8'>
@@ -24,7 +24,7 @@
         <p style="text-align: center">Categorias de Madurez <img align="left" src="https://img.icons8.com/external-itim2101-blue-itim2101/50/000000/external-fruit-store-itim2101-blue-itim2101.png"/></p>
         <br>
         <br>
-        <p>Cantidad de frutas muy maduras: <span id='overripe'>00</span></p>
+        <p>Cantidad de frutas muy maduras: <span id='overripe'  >00</span></p>
         <p>Cantidad de frutas verdes : <span id='unripe'>00</span></p>
         <p>Cantidad de frutas maduras : <span id='ripe' >00</span></p>
         <p>Porcentages: </p>
@@ -36,7 +36,7 @@
         <p style="text-align: center">Condiciones ambientales <img  align="left"  src="https://img.icons8.com/dusk/40/000000/environmental-planning.png"/></p>
         <br>
         <p>Humedad: <span id='humidity' style="color: red">00</span>%</p>
-        <p>Temperatura: <span id='temperature' style="color: blue">00</span>&#176;C</p>
+        <p>Temperatura: <span id='temperature' style="color: blue" >00</span>&#176;C</p>
         <hr>
         <p style="text-align: center">Basurero <img align="left" src="https://img.icons8.com/external-flatarticons-blue-flatarticons/50/000000/external-dustbin-ux-and-ui-flatarticons-blue-flatarticons.png"/></p>
         <br>
@@ -58,6 +58,8 @@
     {
         webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/server/shelf");
         webSocket.onmessage = function(event) { getDataFromServerShelf(event); };
+
+
     }
     function connect2()
     {
@@ -68,10 +70,7 @@
     function getDataFromServerShelf(evt)
     {
         var data = JSON.parse(evt.data);
-        //var percentage_ripe = 0;
-        //var percentage_unripe = 0;
-        //var percentage_overipe = 0;
-
+        
         var data_json_fruit_type = data['fruitType'];
         var fruit_cant = data['fruitCant'];
         var cant_overripe = data['cantOverripe'];
@@ -122,13 +121,11 @@
         document.getElementById('temperature').innerHTML = data['temperature'];
         var measure_date = new Date();
 
-        var date = measure_date.getMonth()+"/"+
-                      measure_date.getDay()+"/"+
-                      measure_date.getFullYear()+":"+
-                      measure_date.getHours()+":"+
-                      measure_date.getMinutes();
+        var date = measure_date.getFullYear()+'-'+(measure_date.getMonth()+1)+'-'+measure_date.getDate();
+        var time = measure_date.getHours() + ":" + measure_date.getMinutes() + ":" + measure_date.getSeconds();
 
-        document.getElementById('measure_shelf_date').innerHTML = date;
+
+        document.getElementById('measure_shelf_date').innerHTML = date+" "+time;
 
     }
     function getDataFromServerContainer(evt)

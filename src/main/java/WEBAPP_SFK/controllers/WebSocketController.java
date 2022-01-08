@@ -1,20 +1,23 @@
 package WEBAPP_SFK.controllers;
 
 import WEBAPP_SFK.models.*;
+import WEBAPP_SFK.services.ShelfDataServices;
+import WEBAPP_SFK.services.ShelfServices;
 import WEBAPP_SFK.utilities.Logger;
 import com.google.gson.Gson;
 import io.javalin.Javalin;
 import org.eclipse.jetty.websocket.api.Session;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 
 public class WebSocketController extends BaseController {
     //Creando el repositorio de las sesiones recibidas.
+
     public static List<Session> USERS_CONNECTED_C = new ArrayList<>();
     public static List<Session> USERS_CONNECTED_S = new ArrayList<>();
+    private Map<String, Object> model = new HashMap<>();
+
     private List<ShelfData> quantities = new ArrayList<>();
 
 
@@ -29,10 +32,6 @@ public class WebSocketController extends BaseController {
 
     public void websocket() {
 
-
-        //Por el momento esta no es una solucion eficiente [es para rapido]
-        //Luego se pondra el codigo mas eficiente par que solo exista un path para recibir los datos
-        // de los sensores de temeperature, humbedad y el peso del safacon
         app.ws("/server/shelf", ws -> {
 
             ws.onConnect(ctx -> {
@@ -41,17 +40,17 @@ public class WebSocketController extends BaseController {
 
             });
             ws.onMessage(ctx -> {
-                System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                System.out.println("+           RECIBIENDO MENSAJE DEL CLIENT [SHELF]                      +");
-                System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                System.out.println("Mensaje: " + ctx.message());
+                System.out.println("RECIBIENDO MENSAJE DEL CLIENT [SHELF]");
+                System.out.println("Informacion recibida: " + ctx.message());
+                System.out.println("Informacion recibido de : " + ctx.getSessionId());
                 Gson gson = new Gson();
                 ShelfDataJSON sdj = gson.fromJson(ctx.message(), ShelfDataJSON.class);
                 addDataToShelf(Collections.singletonList(sdj));
             });
             ws.onClose(ctx -> {
-                System.out.println("La conexión se ha  cerrada - " + ctx.getSessionId());
+                System.out.println("La conexión se ha  cerrado - " + ctx.getSessionId());
                 USERS_CONNECTED_S.remove(ctx.session);
+                sendLastInfo();
             });
             ws.onError(ctx -> {
                 System.out.println("Ocurrió un error en el WS");
@@ -65,14 +64,13 @@ public class WebSocketController extends BaseController {
             ws.onConnect(ctx -> {
                 System.out.println("Conexion Iniciada - " + ctx.getSessionId());
                 USERS_CONNECTED_C.add(ctx.session);
+                sendLastInfo();
             });
             ws.onMessage(ctx -> {
-                System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                System.out.println("+           RECIBIENDO MENSAJE DEL CLIENT [CONTAINER]                  +");
-                System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                System.out.println("RECIBIENDO MENSAJE DEL CLIENT [CONTAINER]+");
                 Gson gson = new Gson();
-                System.out.println("Mensaje: " + ctx.message());
-                System.out.println("Mensaje recibido de : " + ctx.getSessionId());
+                System.out.println("Informacion recibida: " + ctx.message());
+                System.out.println("Informacion recibido de : " + ctx.getSessionId());
 
 
                 ContainerDataJSON containerDataJSON = gson.fromJson(ctx.message(), ContainerDataJSON.class);
@@ -121,22 +119,15 @@ public class WebSocketController extends BaseController {
             Date currentSampleDate = new Date(System.currentTimeMillis());
 
             auxShelf = ControllerCore.getInstance().getShelfByDeviceName("SH001");
-            auxShelfData = new ShelfData(
-                    f.getTemperature(),
-                    f.getHumidity(),
-                    f.getFruitCant(),
-                    f.getFruitType(),
-                    f.getCantOverripe(),
-                    f.getCantRipe(),
-                    f.getCantUnripe(),
-                    currentSampleDate,
+            auxShelfData = new ShelfData(f.getTemperature(), f.getHumidity(), f.getFruitCant(),
+                    f.getFruitType(), f.getCantOverripe(), f.getCantRipe(), f.getCantUnripe(), currentSampleDate,
                     auxShelf
             );
             if (s.size() > 0) {
                 //ControllerCore.getInstance().addShelfData(auxShelfData);
                 for (Session session : USERS_CONNECTED_S) {
                     try {
-                        Logger.getInstance().getLog(this.getClass()).info("Sending msg sheld data to connect clients [...]");
+                        Logger.getInstance().getLog(this.getClass()).info("Sending msg shelf data to connect clients [...]");
                         session.getRemote().sendString(new Gson().toJson(auxShelfData));
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -145,6 +136,29 @@ public class WebSocketController extends BaseController {
             }
         }
         return s.size();
+    }
+    public void sendLastInfo(){
+        ShelfData auxShelfData = null;
+
+        int fruitCant = ShelfDataServices.getInstance().getLastRecognitionData(0);
+        String fruitType = ShelfDataServices.getInstance().getLastFruitType();
+        int cantOverripe = ShelfDataServices.getInstance().getLastRecognitionData(1);
+        int cantRipe = ShelfDataServices.getInstance().getLastRecognitionData(2);
+        int cantUnripe = ShelfDataServices.getInstance().getLastRecognitionData(3);
+
+        Float temperature = ShelfDataServices.getInstance().getLastEnvironmentalData(0);
+        Float humidity = ShelfDataServices.getInstance().getLastEnvironmentalData(1);
+
+
+        auxShelfData = new ShelfData(temperature,humidity,fruitCant,fruitType,cantOverripe,cantRipe,cantUnripe,null,null);
+        for(Session sesionConectada : USERS_CONNECTED_S){
+            try {
+                sesionConectada.getRemote().sendString(new Gson().toJson(auxShelfData));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
+
 }

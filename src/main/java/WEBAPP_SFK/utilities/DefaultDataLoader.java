@@ -88,30 +88,30 @@ public class DefaultDataLoader {
         if(shelfAux == null){
             ControllerCore.getInstance().addShelf(shelf);
             int i = 0;
-            /*
 
-            while (i < 10) {
-                Double temperature = (Double) Math.floor(Math.random() * (40 - 20 + 1) + 20);
-                Double humidity = (Double) Math.floor(Math.random() * (40 - 20 + 1) + 20);
+
+            while (i < 3) {
+                float temperature = (float) Math.floor(Math.random() * (40 - 20 + 1) + 20);
+                float humidity = (float) Math.floor(Math.random() * (40 - 20 + 1) + 20);
                 int cantFrutas = 4;
-                int percentageOverripe = 25;
-                int percentageRipe = 50;
-                int percentageUnripe = 25;
+                int cantOverripe = 1;
+                int cantRipe = 2;
+                int cantUnripe = 1;
                 Date currentSampleDate = new Date(System.currentTimeMillis());
                 ShelfData sd = new ShelfData(
                         temperature,
                         humidity, cantFrutas,
                         "PINEAPPLE",
-                        percentageOverripe,
-                        percentageRipe,
-                        percentageUnripe,
+                        cantOverripe,
+                        cantRipe,
+                        cantUnripe,
                         currentSampleDate,
                         ControllerCore.getInstance().getShelfByDeviceName("SH001"));
                 ControllerCore.getInstance().addShelfData(sd);
                 ++i;
             }
 
-             */
+
         }
     }
     public void createDefaultContainerData(){

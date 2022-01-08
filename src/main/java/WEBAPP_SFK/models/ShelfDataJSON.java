@@ -5,8 +5,8 @@ import java.util.Date;
 
 public class ShelfDataJSON {
     private int measureId;
-    private Double temperature;
-    private Double humidity;
+    private Float temperature;
+    private Float humidity;
     private int fruitCant;
     private String fruitType;
     private int cantOverripe;
@@ -15,10 +15,11 @@ public class ShelfDataJSON {
     private Date currentSampleDate;
     private String Shelf;
 
+
     public ShelfDataJSON() {
     }
 
-    public ShelfDataJSON(Double temperature, Double humidity, int fruitCant, String fruitType, int cantOverripe, int cantRipe, int cantUnripe, Date currentSampleDate, String shelf) {
+    public ShelfDataJSON(Float temperature, Float humidity, int fruitCant, String fruitType, int cantOverripe, int cantRipe, int cantUnripe, Date currentSampleDate, String shelf) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.fruitCant = fruitCant;
@@ -38,19 +39,19 @@ public class ShelfDataJSON {
         this.measureId = measureId;
     }
 
-    public Double getTemperature() {
+    public Float getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(Double temperature) {
+    public void setTemperature(Float temperature) {
         this.temperature = temperature;
     }
 
-    public Double getHumidity() {
+    public Float getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(Double humidity) {
+    public void setHumidity(Float humidity) {
         this.humidity = humidity;
     }
 

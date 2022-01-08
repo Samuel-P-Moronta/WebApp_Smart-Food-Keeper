@@ -6,6 +6,7 @@ import WEBAPP_SFK.services.connect.DataBaseRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShelfServices extends DataBaseRepository<Shelf> {
@@ -21,4 +22,7 @@ public class ShelfServices extends DataBaseRepository<Shelf> {
         }
         return instance;
     }
+
+
+
 }

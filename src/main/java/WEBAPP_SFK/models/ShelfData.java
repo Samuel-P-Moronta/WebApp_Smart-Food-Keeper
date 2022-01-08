@@ -11,8 +11,8 @@ public class ShelfData implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int measureId;
-    private Double temperature;
-    private Double humidity;
+    private Float temperature;
+    private Float humidity;
     private int fruitCant;
     private String fruitType;
     private int cantOverripe;
@@ -27,7 +27,7 @@ public class ShelfData implements Serializable {
 
     }
 
-    public ShelfData(Double temperature, Double humidity,
+    public ShelfData(Float temperature, Float humidity,
                      int fruitCant, String fruitType,
                      int cantOverripe, int cantRipe,
                      int cantUnripe, Date currentSampleDate,Shelf shelf) {
@@ -45,19 +45,19 @@ public class ShelfData implements Serializable {
         this.shelf = shelf;
     }
 
-    public Double getTemperature() {
+    public Float getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(Double temperature) {
+    public void setTemperature(Float temperature) {
         this.temperature = temperature;
     }
 
-    public Double getHumidity() {
+    public Float getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(Double humidity) {
+    public void setHumidity(Float humidity) {
         this.humidity = humidity;
     }
 
