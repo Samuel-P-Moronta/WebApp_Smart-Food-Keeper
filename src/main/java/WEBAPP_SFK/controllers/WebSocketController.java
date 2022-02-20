@@ -132,6 +132,10 @@ public class WebSocketController extends BaseController {
 
 
                 ContainerDataJSON containerDataJSON = gson.fromJson(ctx.message(), ContainerDataJSON.class);
+
+                if(containerDataJSON.getWeight() == 0){
+
+                }
                 //addDataToContainer(Collections.singletonList(containerDataJSON));
 
 

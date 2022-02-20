@@ -37,14 +37,14 @@ public class Main {
 
         Javalin app = Javalin.create(config -> {
 
-            config.addStaticFiles("/public");
+            config.addStaticFiles("/public/FrontEnd_SFK");
             config.registerPlugin(new RouteOverviewPlugin("/routesControl"));
             config.enableCorsForAllOrigins();
 
             JavalinRenderer.register(JavalinThymeleaf.INSTANCE, ".html");
 
         });
-        DefaultDataLoader.getInstance().createDefaultSuperUser();
+       // DefaultDataLoader.getInstance().createDefaultSuperUser();
         new WebSocketController(app).aplicarRutas();
         //new UserController(app).aplicarRutas();
         //System.out.println(s.getLastDataFromShelf());
@@ -122,10 +122,9 @@ public class Main {
        // DefaultDataLoader.getInstance().createDefaultShelfData();
       //  DefaultDataLoader.getInstance().createDefaultContainerData();
 
-        /*
         app.get("/", ctx -> {
+            /*
             Map<String, Object> model = new HashMap<>();
-
             int fruitCant = ShelfDataServices.getInstance().getLastRecognitionData(0);
             String fruitType = ShelfDataServices.getInstance().getLastFruitType();
 
@@ -144,13 +143,12 @@ public class Main {
             model.put("temperature",temperature);
             model.put("temperature",humidity);
 
+             */
 
-            ctx.render("/public/dashboardv4.html",model);
+
+            ctx.render("/public/FrontEnd_SFK/views/landingPage.html",model);
 
         });
-
-         */
-
 
 
         app.start(7000);
