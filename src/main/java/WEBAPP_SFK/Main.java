@@ -10,9 +10,7 @@ import io.javalin.core.util.RouteOverviewPlugin;
 import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
 
-import java.awt.*;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,16 +44,17 @@ public class Main {
             JavalinRenderer.register(JavalinThymeleaf.INSTANCE, ".html");
 
         });
+        DefaultDataLoader.getInstance().createDefaultSuperUser();
         new WebSocketController(app).aplicarRutas();
         //new UserController(app).aplicarRutas();
         //System.out.println(s.getLastDataFromShelf());
         //1
         /* TESTING CRUD ORGANIZATION */
         /*Creating*/
-       // DefaultDataLoader.getInstance().createDefaultOrganization();
+        //DefaultDataLoader.getInstance().createDefaultOrganization();
         /* TESTING CRUD BRANCH OFFICE */
         /* Creating */
-        //DefaultDataLoader.getInstance().createDefaultBranchOffice();
+       // DefaultDataLoader.getInstance().createDefaultBranchOffice();
         /*Deleting*/
        // ControllerCore.getInstance().deleteBranchOffice(1);
         /*Updating*/
@@ -70,20 +69,15 @@ public class Main {
         /* TESTING CRUD PERSON */
 
         /*Updating*/
-        Address address = new Address("Puerto Plata", "Calle capotillo 16");
-        Person person = ControllerCore.getInstance().findPersonById(1);
-        if(person !=null){
-            person.setFirstName("Oye eso");
-            person.setAddress(address);
-            ControllerCore.getInstance().updatePerson(person);
-        }
+  //      Address address = new Address("Puerto Plata", "Calle capotillo 16");
+//        Person person = ControllerCore.getInstance().findPersonById(1);
+  //      if(person !=null){
+   //         person.setFirstName("Oye eso");
+   //         person.setAddress(address);
+   //         ControllerCore.getInstance().updatePerson(person);
+    //    }
         /* TESTING CRUD USER */
         /*Updating*/
-        User user = ControllerCore.getInstance().findUserByEmail("employee@gmail.com");
-        if(user !=null){
-            user.setUsername("El animal");
-            ControllerCore.getInstance().updateUser(user);
-        }
         /* TESTING CRUD SHELF */
         /*Updating*/
         /*Deleting*/
@@ -92,9 +86,28 @@ public class Main {
         /*Deleting*/
         /* TESTING CRUD NOTIFICATION */
 
+        /*
+        User user = ControllerCore.getInstance().findUserByEmail("employee@gmail.com");
+
+       // boolean notification1 = new ControllerCore().findNotificationByTypeAndUser(1,user);
+        if(user !=null){
+            if(notification1 == true){
+                System.out.println("Notificaciones repetidas");
+            }else{
+                System.out.println("Crear la notificacion");
+             //   Notification notificationCreate = new Notification("Madurez",new Date(), "Existen frutas en estado muy maduras", user,1);
+               // ControllerCore.getInstance().createNotification(notificationCreate);
+            }
+        }
+
+         */
+
+
+
         /*Just Deleting*/
 
         /* TESTING HELPER METHODS */
+        /*
         Organization organization1 = new ControllerCore().findOrganizationByBranchOffice(100);
 
         if(organization1 !=null){
@@ -105,8 +118,7 @@ public class Main {
 
         }
 
-
-       // DefaultDataLoader.getInstance().createDefaultSuperUser();
+         */
        // DefaultDataLoader.getInstance().createDefaultShelfData();
       //  DefaultDataLoader.getInstance().createDefaultContainerData();
 

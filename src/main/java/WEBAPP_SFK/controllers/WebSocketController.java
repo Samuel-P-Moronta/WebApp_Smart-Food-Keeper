@@ -8,13 +8,13 @@ import com.google.gson.Gson;
 import io.javalin.Javalin;
 import org.eclipse.jetty.websocket.api.Session;
 
+import javax.naming.ldap.Control;
 import java.io.IOException;
 import java.util.*;
 
 public class WebSocketController extends BaseController {
     public static List<Session> USERS_CONNECTED_C = new ArrayList<>();
     public static List<Session> USERS_CONNECTED_S = new ArrayList<>();
-    public static List<Session> USERS_CONNECTED_N = new ArrayList<>();
 
     private Map<String, Object> model = new HashMap<>();
 
@@ -47,7 +47,63 @@ public class WebSocketController extends BaseController {
                 ShelfDataJSON sdj = gson.fromJson(ctx.message(), ShelfDataJSON.class);
 
                 addDataToShelf(Collections.singletonList(sdj));
+                User user = ControllerCore.getInstance().findUserByEmail("employee@gmail.com");
+                boolean notificationMadurez = new ControllerCore().findNotificationByTypeAndUser(1,user);
+                boolean notificationSuministro = new ControllerCore().findNotificationByTypeAndUser(2,user);
+                boolean notificationTemperature = new ControllerCore().findNotificationByTypeAndUser(3,user);
+                boolean notificationHumidity = new ControllerCore().findNotificationByTypeAndUser(4,user);
+                boolean notificationHealthy = new ControllerCore().findNotificationByTypeAndUser(5,user);
 
+                String messageType1 = "Existen frutas en estado muy maduras";
+                String messageType2 = "Necesitas abastecer el estante";
+                String messageType3 = "La temperatura ha excedido el limite permitido";
+                String messageType4 = "La humedad ha excedido el limite permitido";
+                String messageType5 = "Las frutas se encuentran saludable";
+
+                if(user!=null){
+                    if(sdj.getCantOverripe()> 0){
+                        if(notificationMadurez == true){
+                            System.out.println("This notification [MADUREZ] already exist in database");
+                        }else{
+                            Notification notificationType1 = new Notification("Madurez",messageType1,new Date(),user,user.getBranchOffice(),1);
+                            ControllerCore.getInstance().createNotification(notificationType1);
+
+                        }
+                    }else{
+                        if(sdj.getCantRipe() > 0 || sdj.getCantUnripe() > 0){
+                            if(notificationHealthy == true){
+                                System.out.println("This notification [HEALTHY] already exist in database");
+                            }else{
+                                Notification notificationType5 = new Notification("Saludable",messageType5,new Date(), user, user.getBranchOffice(), 5);
+                                ControllerCore.getInstance().createNotification(notificationType5);
+                            }
+                        }
+                    }
+                    if(sdj.getFruitCant() <= 1){
+                        if(notificationSuministro == true){
+                            System.out.println("This notification [SUMINISTRO] already exist in database");
+                        }else{
+                            Notification notificationType2 = new Notification("Suministro", messageType2, new Date(), user,user.getBranchOffice(), 2);
+                            ControllerCore.getInstance().createNotification(notificationType2);
+                        }
+                    }
+                    if(sdj.getTemperature() > 30){
+                        if(notificationTemperature == true){
+                            System.out.println("This notification [TEMPERATURE] already exist in database");
+                        }else{
+                            Notification notificationType3 = new Notification("Temperatura",messageType3,new Date(), user,user.getBranchOffice(),3);
+                            ControllerCore.getInstance().createNotification(notificationType3);
+                        }
+                    }
+                    if(sdj.getHumidity() < 75){
+                        if(notificationHumidity == true){
+                             System.out.println("This notification [HUMIDITY] already exist in database");
+                        }else{
+                            Notification notificationType4 = new Notification("Humedad",messageType4,new Date(), user,user.getBranchOffice(),4);
+                            ControllerCore.getInstance().createNotification(notificationType4);
+                        }
+                    }
+                }
             });
             ws.onClose(ctx -> {
                 System.out.println("La conexión se ha  cerrado - " + ctx.getSessionId());

@@ -1,9 +1,11 @@
 package WEBAPP_SFK.services;
 
-import WEBAPP_SFK.models.Notification;
-import WEBAPP_SFK.models.Person;
-import WEBAPP_SFK.models.ShelfData;
+import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.services.connect.DataBaseRepository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
 
 public class NotificationServices extends DataBaseRepository<Notification> {
     private static NotificationServices instance;
@@ -17,4 +19,21 @@ public class NotificationServices extends DataBaseRepository<Notification> {
         }
         return instance;
     }
+
+    public Notification findNotificationByType(int type, User user) {
+        EntityManager em = getEntityManager();
+        String sql = "";
+        sql += " SELECT N from Notification N WHERE N.type = :type and user.email =:email";
+
+        Query query = em.createQuery(sql, Notification.class);
+        query.setParameter("type", type);
+        query.setParameter("email",user.getEmail());
+        List<Notification> notificationList = query.getResultList();
+        if (notificationList.size() > 0) {
+            return notificationList.get(0);
+        }
+        return null;
+    }
+
+
 }

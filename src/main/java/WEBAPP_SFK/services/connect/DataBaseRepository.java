@@ -77,47 +77,6 @@ public class DataBaseRepository<T>{
         }
         return state;
     }
-    public void createOrUpdate(T entity,int x) throws  PersistenceException{
-        boolean state = false;
-        EntityManager em = getEntityManager();
-
-        if(x == 1){
-            try {
-                T temp = em.find(entityClass, getCampValue(entity));
-                if (temp != null) {
-                    System.out.println("La entidad a guardar existe, no creada.");
-                    entity = temp;
-                    return;
-                }
-            } catch (IllegalArgumentException ie){
-                System.out.println("Parametro ilegal.");
-            }
-            em.getTransaction().begin();
-            try{
-                em.persist(entity);
-                em.getTransaction().commit();
-            }catch (Exception e){
-                em.getTransaction().rollback();
-                throw  e;
-            }finally {
-                em.close();
-            }
-
-        }
-        if(x == 2){
-            try{
-                em.merge(entity);
-                em.getTransaction().commit();
-            }catch (Exception e){
-                em.getTransaction().rollback();
-                throw e;
-            }finally {
-                em.close();
-            }
-
-        }
-    }
-
 
     public void createP(T entity){
         EntityManager em = getEntityManager();

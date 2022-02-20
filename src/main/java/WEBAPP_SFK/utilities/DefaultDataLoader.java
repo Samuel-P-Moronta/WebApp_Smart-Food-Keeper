@@ -67,13 +67,14 @@ public class DefaultDataLoader {
         // Creating branch Office
         BranchOffice branchOffice = new BranchOffice(new Address("Calle 30 de Marzo","Santiago"),new Date(),ControllerCore.getInstance().findOrganizationById(1));
         //Creating super user
+
         User user = new User(
                 "sfkproject@gmail.com",
                 "admin",
                 "admin",
                 Collections.singleton(RoleApp.ROLE_ADMIN),
                 null,
-                ControllerCore.getInstance().findOrganizationById(1)
+                ControllerCore.getInstance().findBranchOfficeById(1)
         );
         User user2 = new User(
                 "employee@gmail.com",
@@ -81,7 +82,7 @@ public class DefaultDataLoader {
                 "employee",
                 Collections.singleton(RoleApp.ROLE_EMPLOYEE),
                 null,
-                ControllerCore.getInstance().findOrganizationById(1)
+                ControllerCore.getInstance().findBranchOfficeById(1)
         );
 
         //Creating defulalt person

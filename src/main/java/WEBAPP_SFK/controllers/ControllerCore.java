@@ -83,6 +83,13 @@ public class ControllerCore {
 
     //---------------------------------NOTIFICATIONS---------------------------------------------//
     public boolean createNotification(Notification notification){return NOTIFICATION_SERVICES.create(notification);}
-    private boolean deleteNotification(Notification notification){return NOTIFICATION_SERVICES.delete(notification);}
+    public boolean deleteNotification(Notification notification){return NOTIFICATION_SERVICES.delete(notification);}
 
+    public boolean findNotificationByTypeAndUser(int type, User user){
+        if (NOTIFICATION_SERVICES.findNotificationByType(type,user) != null){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

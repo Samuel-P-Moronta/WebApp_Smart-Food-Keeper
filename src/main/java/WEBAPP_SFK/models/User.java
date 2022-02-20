@@ -29,19 +29,19 @@ public class User implements Serializable {
     private Person person;
     @ManyToOne
     // Muchos usuarios pueden pertenecer a una misma empresa
-    private Organization organization;
+    private BranchOffice branchOffice;
 
 
     public User() {
     }
 
-    public User(String email, String username, String password, Set<RoleApp> rolesList, Person person, Organization organization) {
+    public User(String email, String username, String password, Set<RoleApp> rolesList, Person person, BranchOffice branchOffice) {
         this.email = email;
         this.username = username;
         this.password = password;
         this.rolesList = rolesList;
         this.person = person;
-        this.organization = organization;
+        this.branchOffice = branchOffice;
     }
 
     public String getEmail() {
@@ -94,11 +94,11 @@ public class User implements Serializable {
         this.person = person;
     }
 
-    public Organization getOrganization() {
-        return organization;
+    public BranchOffice getBranchOffice() {
+        return branchOffice;
     }
 
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
+    public void setBranchOffice(BranchOffice branchOffice) {
+        this.branchOffice = branchOffice;
     }
 }

@@ -2,9 +2,12 @@ package WEBAPP_SFK.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Date;
 
 @Entity
 @Table(name = "NOTIFICATION")
@@ -14,24 +17,31 @@ public class Notification {
     private Long id;
     @Column(name = "TITLE")
     private String title;
-    @CreationTimestamp
-    private LocalDateTime sendDate;
     @Column(name = "DESCRIPTION")
     private String description;
+    @CreationTimestamp
+    private Date sendDate;
     @JsonIgnore
     // Carga Perezosa en JPA
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private BranchOffice branchOffice;
+    private int type;
+
+
 
 
     public Notification() {
     }
 
-    public Notification(String title, String description, User user) {
+    public Notification(String title, String description, Date sendDate, User user, BranchOffice branchOffice, int type) {
         this.title = title;
-        this.sendDate = sendDate;
         this.description = description;
+        this.sendDate = sendDate;
         this.user = user;
+        this.branchOffice = branchOffice;
+        this.type = type;
     }
 
     public Long getId() {
@@ -42,11 +52,11 @@ public class Notification {
         this.id = id;
     }
 
-    public LocalDateTime getSendDate() {
+    public Date getSendDate() {
         return sendDate;
     }
 
-    public void setSendDate(LocalDateTime sendDate) {
+    public void setSendDate(Date sendDate) {
         this.sendDate = sendDate;
     }
 
@@ -72,4 +82,30 @@ public class Notification {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+
+    public BranchOffice getBranchOffice() {
+        return branchOffice;
+    }
+
+    public void setBranchOffice(BranchOffice branchOffice) {
+        this.branchOffice = branchOffice;
+    }
+
 }
