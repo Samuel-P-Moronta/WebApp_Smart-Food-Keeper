@@ -7,6 +7,7 @@ import WEBAPP_SFK.models.enums.Gender;
 import WEBAPP_SFK.models.enums.RoleApp;
 import WEBAPP_SFK.services.*;
 
+import javax.naming.ldap.Control;
 import java.util.*;
 
 public class DefaultDataLoader {
@@ -29,6 +30,35 @@ public class DefaultDataLoader {
             instance = new DefaultDataLoader();
         }
         return instance;
+    }
+    public void createDefaultOrganization(){
+        Logger.getInstance().getLog(this.getClass()).info("Creating default organizations [...]");
+        Organization organization1 = new Organization("El nacional", new Date());
+        Organization organization2 = new Organization("El Bravo", new Date());
+        Organization organization3 = new Organization("Caco de botella", new Date());
+
+        ControllerCore.getInstance().createOrganization(organization1);
+        ControllerCore.getInstance().createOrganization(organization2);
+        ControllerCore.getInstance().createOrganization(organization3);
+    }
+    public void createDefaultBranchOffice(){
+        Logger.getInstance().getLog(this.getClass()).info("Creating default branch offices [...]");
+        Address address = new Address("Etrella Sadhala","Santiago" );
+        Address address1 = new Address("Calle el bravo XD", "Santiago");
+        Address address2 = new Address("Calle 16 de agosto", "Navarrete");
+
+        ControllerCore controllerCore1 = new ControllerCore();
+        ControllerCore controllerCore2 = new ControllerCore();
+        ControllerCore controllerCore3 = new ControllerCore();
+
+        BranchOffice branchOffice1 = new BranchOffice(address, new Date(),controllerCore1.findOrganizationByName("El nacional"));
+        BranchOffice branchOffice2 = new BranchOffice(address1, new Date(),controllerCore1.findOrganizationByName("El Bravo"));
+        BranchOffice branchOffice3 = new BranchOffice(address2, new Date(),controllerCore1.findOrganizationByName("Caco de botella"));
+
+        ControllerCore.getInstance().createBranchOffice(branchOffice1);
+        ControllerCore.getInstance().createBranchOffice(branchOffice2);
+        ControllerCore.getInstance().createBranchOffice(branchOffice3);
+
     }
     public void createDefaultSuperUser(){
         Logger.getInstance().getLog(this.getClass()).info("Creating default users [...]");

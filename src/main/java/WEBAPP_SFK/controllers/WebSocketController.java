@@ -12,13 +12,11 @@ import java.io.IOException;
 import java.util.*;
 
 public class WebSocketController extends BaseController {
-    //Creando el repositorio de las sesiones recibidas.
-
     public static List<Session> USERS_CONNECTED_C = new ArrayList<>();
     public static List<Session> USERS_CONNECTED_S = new ArrayList<>();
-    private Map<String, Object> model = new HashMap<>();
+    public static List<Session> USERS_CONNECTED_N = new ArrayList<>();
 
-    private List<ShelfData> quantities = new ArrayList<>();
+    private Map<String, Object> model = new HashMap<>();
 
 
     public WebSocketController(Javalin app) {
@@ -37,6 +35,8 @@ public class WebSocketController extends BaseController {
             ws.onConnect(ctx -> {
                 System.out.println("Conexion Iniciada - " + ctx.getSessionId());
                 USERS_CONNECTED_S.add(ctx.session);
+                //sendLastDataFromShelf();
+
 
             });
             ws.onMessage(ctx -> {
@@ -45,12 +45,14 @@ public class WebSocketController extends BaseController {
                 System.out.println("Informacion recibido de : " + ctx.getSessionId());
                 Gson gson = new Gson();
                 ShelfDataJSON sdj = gson.fromJson(ctx.message(), ShelfDataJSON.class);
+
                 addDataToShelf(Collections.singletonList(sdj));
+
             });
             ws.onClose(ctx -> {
                 System.out.println("La conexión se ha  cerrado - " + ctx.getSessionId());
                 USERS_CONNECTED_S.remove(ctx.session);
-                sendLastInfo();
+                //sendLastDataFromShelf();
             });
             ws.onError(ctx -> {
                 System.out.println("Ocurrió un error en el WS");
@@ -60,11 +62,11 @@ public class WebSocketController extends BaseController {
             });
 
         });
+
         app.ws("/server/container", ws -> {
             ws.onConnect(ctx -> {
                 System.out.println("Conexion Iniciada - " + ctx.getSessionId());
                 USERS_CONNECTED_C.add(ctx.session);
-                sendLastInfo();
             });
             ws.onMessage(ctx -> {
                 System.out.println("RECIBIENDO MENSAJE DEL CLIENT [CONTAINER]+");
@@ -74,7 +76,7 @@ public class WebSocketController extends BaseController {
 
 
                 ContainerDataJSON containerDataJSON = gson.fromJson(ctx.message(), ContainerDataJSON.class);
-                addDataToContainer(Collections.singletonList(containerDataJSON));
+                //addDataToContainer(Collections.singletonList(containerDataJSON));
 
 
             });
@@ -108,36 +110,35 @@ public class WebSocketController extends BaseController {
             Logger.getInstance().getLog(this.getClass()).info("Saving into data base from websocket client [...]");
             ControllerCore.getInstance().createContainerData(auxContainerData);
         }
-
     }
 
-    private int addDataToShelf(List<ShelfDataJSON> s) {
+    private void addDataToShelf(List<ShelfDataJSON> shelf) {
         ShelfData auxShelfData = null;
         Shelf auxShelf = null;
 
-        for (ShelfDataJSON f : s) {
+        for (ShelfDataJSON f : shelf) {
             Date currentSampleDate = new Date(System.currentTimeMillis());
 
             auxShelf = ControllerCore.getInstance().getShelfByDeviceName("SH001");
-            auxShelfData = new ShelfData(f.getTemperature(), f.getHumidity(), f.getFruitCant(),
+
+            auxShelfData = new ShelfData(f.getTemperature(),f.getHumidity(), f.getFruitCant(),
                     f.getFruitType(), f.getCantOverripe(), f.getCantRipe(), f.getCantUnripe(), currentSampleDate,
-                    auxShelf
-            );
-            if (s.size() > 0) {
-                //ControllerCore.getInstance().addShelfData(auxShelfData);
-                for (Session session : USERS_CONNECTED_S) {
-                    try {
-                        Logger.getInstance().getLog(this.getClass()).info("Sending msg shelf data to connect clients [...]");
-                        session.getRemote().sendString(new Gson().toJson(auxShelfData));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    auxShelf);
+            for (Session session : USERS_CONNECTED_S) {
+                try {
+                    Logger.getInstance().getLog(this.getClass()).info("Sending msg shelf data to connect clients [...]");
+                    session.getRemote().sendString(new Gson().toJson(auxShelfData));
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
+            Logger.getInstance().getLog(this.getClass()).info("Saving into data base from websocket client [...]");
+
+          //  ControllerCore.getInstance().addShelfData(auxShelfData);
         }
-        return s.size();
     }
-    public void sendLastInfo(){
+
+    public void sendLastDataFromShelf(){
         ShelfData auxShelfData = null;
 
         int fruitCant = ShelfDataServices.getInstance().getLastRecognitionData(0);
@@ -149,10 +150,13 @@ public class WebSocketController extends BaseController {
         Float temperature = ShelfDataServices.getInstance().getLastEnvironmentalData(0);
         Float humidity = ShelfDataServices.getInstance().getLastEnvironmentalData(1);
 
+        Shelf auxShelf = ControllerCore.getInstance().getShelfByDeviceName("SH001");
 
-        auxShelfData = new ShelfData(temperature,humidity,fruitCant,fruitType,cantOverripe,cantRipe,cantUnripe,null,null);
+
+        auxShelfData = new ShelfData(temperature,humidity,fruitCant,fruitType,cantOverripe,cantRipe,cantUnripe,null,auxShelf);
         for(Session sesionConectada : USERS_CONNECTED_S){
             try {
+                Logger.getInstance().getLog(this.getClass()).info("Sending last data from shelf when websocket disconnect");
                 sesionConectada.getRemote().sendString(new Gson().toJson(auxShelfData));
             } catch (IOException e) {
                 e.printStackTrace();

@@ -1,19 +1,20 @@
 package WEBAPP_SFK;
 
+import WEBAPP_SFK.controllers.ControllerCore;
 import WEBAPP_SFK.controllers.WebSocketController;
-import WEBAPP_SFK.models.ShelfData;
-import WEBAPP_SFK.models.ShelfDataJSON;
-import WEBAPP_SFK.services.ShelfDataServices;
+import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.services.connect.DataBaseServices;
+import WEBAPP_SFK.utilities.DefaultDataLoader;
 import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
 import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
 
+import java.awt.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.SQLOutput;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Main {
@@ -48,13 +49,68 @@ public class Main {
         new WebSocketController(app).aplicarRutas();
         //new UserController(app).aplicarRutas();
         //System.out.println(s.getLastDataFromShelf());
+        //1
+        /* TESTING CRUD ORGANIZATION */
+        /*Creating*/
+       // DefaultDataLoader.getInstance().createDefaultOrganization();
+        /* TESTING CRUD BRANCH OFFICE */
+        /* Creating */
+        //DefaultDataLoader.getInstance().createDefaultBranchOffice();
+        /*Deleting*/
+       // ControllerCore.getInstance().deleteBranchOffice(1);
+        /*Updating*/
+        /*
+        Address address = new Address("Calle bonita","La vega" );
+        BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(129);
+        if(branchOffice != null){
+            branchOffice.setAddress(address);
+            ControllerCore.getInstance().updateBranchOffice(branchOffice);
+        }
+         */
+        /* TESTING CRUD PERSON */
 
-        //  ControllerCore.getInstance().createFakeDataToBD();
-        //  DefaultDataLoader.getInstance().createDefaultSuperUser();
-        //  DefaultDataLoader.getInstance().createDefaultShelfData();
-        //DefaultDataLoader.getInstance().createDefaultContainerData();
-        //DefaultDataLoader.getInstance().createDefaultUsers();
+        /*Updating*/
+        Address address = new Address("Puerto Plata", "Calle capotillo 16");
+        Person person = ControllerCore.getInstance().findPersonById(1);
+        if(person !=null){
+            person.setFirstName("Oye eso");
+            person.setAddress(address);
+            ControllerCore.getInstance().updatePerson(person);
+        }
+        /* TESTING CRUD USER */
+        /*Updating*/
+        User user = ControllerCore.getInstance().findUserByEmail("employee@gmail.com");
+        if(user !=null){
+            user.setUsername("El animal");
+            ControllerCore.getInstance().updateUser(user);
+        }
+        /* TESTING CRUD SHELF */
+        /*Updating*/
+        /*Deleting*/
+        /* TESTING CRUD CONTAINER */
+        /*Updating*/
+        /*Deleting*/
+        /* TESTING CRUD NOTIFICATION */
 
+        /*Just Deleting*/
+
+        /* TESTING HELPER METHODS */
+        Organization organization1 = new ControllerCore().findOrganizationByBranchOffice(100);
+
+        if(organization1 !=null){
+            System.out.println("Organization found");
+        }
+        else{
+            System.out.println("Organization not found");
+
+        }
+
+
+       // DefaultDataLoader.getInstance().createDefaultSuperUser();
+       // DefaultDataLoader.getInstance().createDefaultShelfData();
+      //  DefaultDataLoader.getInstance().createDefaultContainerData();
+
+        /*
         app.get("/", ctx -> {
             Map<String, Object> model = new HashMap<>();
 
@@ -80,6 +136,8 @@ public class Main {
             ctx.render("/public/dashboardv4.html",model);
 
         });
+
+         */
 
 
 

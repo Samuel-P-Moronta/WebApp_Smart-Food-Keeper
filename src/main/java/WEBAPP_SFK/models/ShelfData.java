@@ -45,6 +45,11 @@ public class ShelfData implements Serializable {
         this.shelf = shelf;
     }
 
+    public ShelfData(Float temperature, Float humidity) {
+        this.temperature = temperature;
+        this.humidity = humidity;
+    }
+
     public Float getTemperature() {
         return temperature;
     }

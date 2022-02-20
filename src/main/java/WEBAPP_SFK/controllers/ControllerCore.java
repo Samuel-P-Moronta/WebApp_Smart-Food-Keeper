@@ -10,11 +10,14 @@ import java.util.List;
 public class ControllerCore {
     public static ControllerCore controllerCore;
     public static final PersonServices PERSON_SERVICES = new PersonServices();
-    public static final UserServices USER_CREDENTIAL_SERVICES = new UserServices();
+    public static final UserServices USER_SERVICES = new UserServices();
     public static final ShelfServices SHELF_SERVICES = new ShelfServices();
     public static final ShelfDataServices SHELF_DATA_SERVICES = new ShelfDataServices();
     public static final ContainerServices CONTAINER_SERVICES = new ContainerServices();
     public static final ContainerDataServices CONTAINER_DATA_SERVICES = new ContainerDataServices();
+    public static final OrganizationServices ORGANIZATION_SERVICES = new OrganizationServices();
+    private static final BranchOfficeServices BRANCH_OFFICE_SERVICES = new BranchOfficeServices();
+    private static final NotificationServices NOTIFICATION_SERVICES = new NotificationServices();
 
 
 
@@ -26,19 +29,6 @@ public class ControllerCore {
             controllerCore = new ControllerCore();
         }
         return controllerCore;
-    }
-    //----------------------------------SHELF-------------------------------------------------------//
-    public boolean addShelf(Shelf sh){
-        Logger.getInstance().getLog(this.getClass()).info("Creating default shelf [...]");
-        return SHELF_SERVICES.create(sh);
-    }
-    public boolean addShelfData(ShelfData sh){
-        Logger.getInstance().getLog(this.getClass()).info("Adding shelfData to DB[...]");
-        return SHELF_DATA_SERVICES.create(sh);
-    }
-    public Shelf getShelfByDeviceName(String shelf){
-        Logger.getInstance().getLog(this.getClass()).info("Searching shelf by device name [...]");
-        return SHELF_SERVICES.find(shelf);
     }
 
     public List<ShelfData> listShelfData(){
@@ -53,44 +43,46 @@ public class ControllerCore {
         }
         return sh1;
     }
+    //----------------------------------SHELF-------------------------------------------------------//
+    public boolean addShelf(Shelf sh){return SHELF_SERVICES.create(sh);}
+    public boolean updateShelf(Shelf shelf){return SHELF_SERVICES.update(shelf);}
+    public boolean deleteShelf(Shelf shelf){return SHELF_SERVICES.delete(shelf);}
+    public boolean addShelfData(ShelfData sh){return SHELF_DATA_SERVICES.create(sh);}
+    public Shelf getShelfByDeviceName(String shelf){return SHELF_SERVICES.find(shelf);}
+
     //----------------------------------CONTAINER--------------------------------------------------//
-    public boolean createContainer(Container container){
-        Logger.getInstance().getLog(this.getClass()).info("Creating default container [...]");
-        return CONTAINER_SERVICES.create(container);
-    }
-    public boolean createContainerData(ContainerData containerData){
-        Logger.getInstance().getLog(this.getClass()).info("Creating default container data [...]");
-        return CONTAINER_DATA_SERVICES.create(containerData);
-    }
-    public Container findContainerById(int id){
-        Logger.getInstance().getLog(this.getClass()).info("Searching container by id [...]");
-        return CONTAINER_SERVICES.find(id);
-    }
+    public boolean createContainer(Container container){return CONTAINER_SERVICES.create(container);}
+    public boolean updateContainer(Container container){return CONTAINER_SERVICES.update(container);}
+    public boolean deleteContainer(Container container){return CONTAINER_SERVICES.delete(container);}
+    public boolean createContainerData(ContainerData containerData){return CONTAINER_DATA_SERVICES.create(containerData);}
+    public Container findContainerById(int id){return CONTAINER_SERVICES.find(id);}
+
     //----------------------------------ORGANIZATION-----------------------------------------------//
-    public Organization findOrganizationById(int id){
-        return OrganizationServices.getInstance().find(id);
-    }
-    public boolean createOrganization(Organization organization){
-        Logger.getInstance().getLog(this.getClass()).info("Creating default organizations [...]");
-        return OrganizationServices.getInstance().update(organization);
-    }
-    public boolean createBranchOffice(BranchOffice branchOffice){
-        Logger.getInstance().getLog(this.getClass()).info("Creating default Branch office [...]");
-        return BranchOfficeServices.getInstance().create(branchOffice);
-    }
+    public boolean createOrganization(Organization organization){return ORGANIZATION_SERVICES.update(organization);}
+    public Organization findOrganizationById(int id){return ORGANIZATION_SERVICES.find(id);}
+    public Organization findOrganizationByName(String name){return ORGANIZATION_SERVICES.findOrganizationByName(name);}
+    public Organization findOrganizationByBranchOffice(long idBranchOffice){return ORGANIZATION_SERVICES.findOrganizationByBranchOffice(idBranchOffice);}
+
+    //--------------------------BRANCH OFFICE------------------------------------------------------------//
+    public boolean createBranchOffice(BranchOffice branchOffice){return BRANCH_OFFICE_SERVICES.create(branchOffice);}
+    public boolean updateBranchOffice(BranchOffice branchOffice){return BRANCH_OFFICE_SERVICES.update(branchOffice);}
+    public boolean deleteBranchOffice(long idbranchOffice){return BRANCH_OFFICE_SERVICES.delete(idbranchOffice);}
+    public BranchOffice findBranchOfficeById(long id){return BRANCH_OFFICE_SERVICES.find(id);}
+
     //----------------------------------PERSON-----------------------------------------------------//
-    public boolean createPerson(Person person){
-        Logger.getInstance().getLog(this.getClass()).info("Creating default person [...]");
-        return PersonServices.getInstance().create(person);
-    }
+    public boolean createPerson(Person person){return PERSON_SERVICES.getInstance().create(person);}
+    public boolean updatePerson(Person person){return PERSON_SERVICES.update(person);}
+    public boolean deletePerson(Person person){return PERSON_SERVICES.delete(person);}
+    public Person findPersonById(long idPerson){return PERSON_SERVICES.find(idPerson);}
+
     //----------------------------------USER-------------------------------------------------------//
-    public boolean createUser(User user){
-        Logger.getInstance().getLog(this.getClass()).info("Creating default person [...]");
-        return UserServices.getInstance().create(user);
-    }
-    public User findUserByEmail(String email){
-        Logger.getInstance().getLog(this.getClass()).info("Searching user by email [...]");
-        return UserServices.getInstance().find(email);
-    }
+    public boolean createUser(User user){return USER_SERVICES.getInstance().create(user);}
+    public boolean updateUser(User user){return USER_SERVICES.update(user);}
+    public boolean deleteUser(User user){return USER_SERVICES.delete(user);}
+    public User findUserByEmail(String email){return UserServices.getInstance().find(email);}
+
+    //---------------------------------NOTIFICATIONS---------------------------------------------//
+    public boolean createNotification(Notification notification){return NOTIFICATION_SERVICES.create(notification);}
+    private boolean deleteNotification(Notification notification){return NOTIFICATION_SERVICES.delete(notification);}
 
 }
