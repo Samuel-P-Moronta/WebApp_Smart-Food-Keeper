@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="public/FrontEnd_SFK/views/template.html :: head"></head>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row" th:replace="public/FrontEnd_SFK/views/template.html :: header">
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar" th:replace="public/FrontEnd_SFK/views/template.html::sidebar">
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+
+            <!-- CODE HERE VIEWS OF PAGE -->
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div th:replace="public/FrontEnd_SFK/views/template.html::javascript"></div>
+  </body>
+</html>

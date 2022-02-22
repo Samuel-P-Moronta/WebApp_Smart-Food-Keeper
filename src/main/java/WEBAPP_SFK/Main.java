@@ -1,12 +1,15 @@
 package WEBAPP_SFK;
 
 import WEBAPP_SFK.controllers.ControllerCore;
+import WEBAPP_SFK.controllers.MainController;
+import WEBAPP_SFK.controllers.SFKException;
 import WEBAPP_SFK.controllers.WebSocketController;
 import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.services.connect.DataBaseServices;
 import WEBAPP_SFK.utilities.DefaultDataLoader;
 import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
+import io.javalin.http.staticfiles.Location;
 import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
 
@@ -37,15 +40,17 @@ public class Main {
 
         Javalin app = Javalin.create(config -> {
 
-            config.addStaticFiles("/public/FrontEnd_SFK");
-            config.registerPlugin(new RouteOverviewPlugin("/routesControl"));
+            config.addStaticFiles("public/FrontEnd_SFK");
+            config.registerPlugin(new RouteOverviewPlugin("/public/FrontEnd_SFK"));
             config.enableCorsForAllOrigins();
 
             JavalinRenderer.register(JavalinThymeleaf.INSTANCE, ".html");
 
         });
        // DefaultDataLoader.getInstance().createDefaultSuperUser();
+        new SFKException(app).aplicarRutas();
         new WebSocketController(app).aplicarRutas();
+        new MainController(app).aplicarRutas();
         //new UserController(app).aplicarRutas();
         //System.out.println(s.getLastDataFromShelf());
         //1
@@ -122,33 +127,6 @@ public class Main {
        // DefaultDataLoader.getInstance().createDefaultShelfData();
       //  DefaultDataLoader.getInstance().createDefaultContainerData();
 
-        app.get("/", ctx -> {
-            /*
-            Map<String, Object> model = new HashMap<>();
-            int fruitCant = ShelfDataServices.getInstance().getLastRecognitionData(0);
-            String fruitType = ShelfDataServices.getInstance().getLastFruitType();
-
-            int cantOverripe = ShelfDataServices.getInstance().getLastRecognitionData(1);
-            int cantRipe = ShelfDataServices.getInstance().getLastRecognitionData(2);
-            int cantUnripe = ShelfDataServices.getInstance().getLastRecognitionData(3);
-
-            Float temperature = ShelfDataServices.getInstance().getLastEnvironmentalData(0);
-            Float humidity = ShelfDataServices.getInstance().getLastEnvironmentalData(1);
-
-            model.put("fruitCant",fruitCant);
-            model.put("fruitType",fruitType);
-            model.put("cantOverripe",cantOverripe);
-            model.put("cantRipe",cantRipe);
-            model.put("cantUnripe",cantUnripe);
-            model.put("temperature",temperature);
-            model.put("temperature",humidity);
-
-             */
-
-
-            ctx.render("/public/FrontEnd_SFK/views/landingPage.html",model);
-
-        });
 
 
         app.start(7000);
