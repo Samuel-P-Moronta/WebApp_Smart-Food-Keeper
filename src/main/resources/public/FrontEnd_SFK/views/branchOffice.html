@@ -14,16 +14,297 @@
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-            <div class="page-header">
-              <h3 class="page-title" >Administracion de empleados</h3>
+            <div class="d-sm-flex justify-content-between align-items-center transaparent-tab-border {">
+              <!-- Credit card form tabs -->
+              <ul role="tablist" class="nav nav-tabs tab-transparent">
+                <li class="nav-item"> <a data-toggle="pill" href="#branchOfficeRegister" class="nav-link active "> <i class="fas fa-credit-card mr-2"></i>Nueva sucursal</a> </li>
+                <li class="nav-item"> <a data-toggle="pill" href="#branchOfficeList"     class="nav-link"> <i class="fab fa-paypal mr-2"></i>Listado de sucursales</a> </li>
+                <li class="nav-item"> <a data-toggle="pill" href="#shelfManagement" class="nav-link"> <i class="fab fa-paypal mr-2"></i>Estantes</a> </li>
+                <li class="nav-item"> <a data-toggle="pill" href="#containerManagement" class="nav-link"> <i class="fab fa-paypal mr-2"></i>Contenedores</a> </li>
+              </ul>
             </div>
+            <div class="tab-content tab-transparent-content">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="tab-content tab-transparent-content">
+                        <div id="branchOfficeRegister" class="tab-pane fade show active pt-3">
+                          <h4 class="card-title">Nueva sucursal</h4>
+                          <form>
+                            <div class="form-group">
+                              <div class="form-group">
+                                <label for="name">Nickname</label>
+                                <input type="text" class="form-control" id="name" placeholder=" Ej. Sucusal de la 16">
+                              </div>
+                              <div class="form-group">
+                                <label for="direction">Direccion</label>
+                                <input type="text" class="form-control" id="direction" placeholder=" Ej. Calle 16 de agosto #10">
+                              </div>
+                              <div class="form-group">
+                                <label for="city">Ciudad</label>
+                                <input type="text" class="form-control" id="city" placeholder="Santiago">
+                              </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">REGISTRAR SUCURSAL</button>
+                          </form>
+                        </div>
+                        <div id="branchOfficeList" class="tab-pane fade">
+                          <h4 class="card-title">Listado</h4>
 
-            <!-- CODE HERE VIEWS OF PAGE -->
+                          <div class="table-responsive">
+                            <table id="example" class="table table-hover table-bordered" style="width:100%">
+                              <thead>
+                              <tr>
+                                <th>Sucursal</th>
+                                <th>Fecha de registro</th>
+                                <th>Status</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                <td>Tiger Nixon</td>
+                                <td>System Architect</td>
+                                <td><label class="badge badge-success">Activo</label></td>
+
+                              </tr>
+                              <tr>
+                                <td>Garrett Winters</td>
+                                <td>Accountant</td>
+                                <td><label class="badge badge-success">Activo</label></td>
+
+                              </tr>
+                              <tr>
+                                <td>Ashton Cox</td>
+                                <td>Junior Technical Author</td>
+                                <td><label class="badge badge-success">Activo</label></td>
+
+                              </tr>
+                              <tr>
+                                <td>Cedric Kelly</td>
+                                <td>Senior Javascript Developer</td>
+                                <td><label class="badge badge-danger">Inactivo</label></td>
+
+                              </tr>
+                              <tr>
+                                <td>Airi Satou</td>
+                                <td>Accountant</td>
+                                <td><label class="badge badge-success">Activo</label></td>
+
+                              </tr>
+                              <tr>
+                                <td>Fiona Green</td>
+                                <td>Chief Operating Officer (COO)</td>
+                                <td><label class="badge badge-danger">Inactivo</label></td>
+                              </tr>
+                              <tr>
+                                <td>Shou Itou</td>
+                                <td>Regional Marketing</td>
+                                <td><label class="badge badge-danger">Inactivo</label></td>
+                              </tr>
+                              </tbody>
+                              <tfoot>
+                              <tr>
+                                <th>Sucursal</th>
+                                <th>Fecha de registro</th>
+                                <th>Status</th>
+                              </tr>
+                              </tfoot>
+                            </table>
+
+                          </div>
+
+
+                        </div>
+                        <div id="shelfManagement" class="tab-pane fade">
+                          <h4 class="card-title text-uppercase">Solicitar estante</h4>
+                          <p>Para adquirir un nuevo estante inteligente favor comunicarse con uno de los proveedores de SFK Project al correo
+                            <mark class="bg-success text-white">sfkproject@gmail.com</mark> o contactar al <mark class="bg-success text-white"> +1 (829) 555-555</mark>
+                            de esta forma se le facilitara un codigo de activacion para su nuevo estante
+                          </p>
+                          <hr>
+                          <h4 class="card-title text-uppercase">VALIDAR ESTANTE</h4>
+                          <form>
+                            <div class="row">
+                              <div class="form-group col-md-6">
+                                <label for="activateCode">Codigo de activacion</label>
+                                <input type="email" class="form-control" id="activateCode" placeholder="codigo">
+                              </div>
+                              <div class="form-group col-md-6">
+                                <label for="branchOfficeShelf">Asignar a sucursal</label>
+                                <input type="text" class="form-control" id="branchOfficeShelf" placeholder="Sucursal">
+                              </div>
+                              <div class="form-group col-md-4">
+                                <button type="button" class="btn btn-primary">REGISTRAR ESTANTE</button>
+                              </div>
+                            </div>
+                          </form>
+                          <hr>
+                          <h4 class="card-title text-uppercase">Listado de estantes</h4>
+                          <div class="table-responsive">
+                            <table id="example" class="table table-hover table-bordered" style="width:100%">
+                              <thead>
+                              <tr>
+                                <th>Sucursal</th>
+                                <th>Fecha de registro</th>
+                                <th>Status</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr>
+                                <td>Tiger Nixon</td>
+                                <td>System Architect</td>
+                                <td><label class="badge badge-success">Activo</label></td>
+
+                              </tr>
+                              <tr>
+                                <td>Garrett Winters</td>
+                                <td>Accountant</td>
+                                <td><label class="badge badge-success">Activo</label></td>
+
+                              </tr>
+                              <tr>
+                                <td>Ashton Cox</td>
+                                <td>Junior Technical Author</td>
+                                <td><label class="badge badge-success">Activo</label></td>
+
+                              </tr>
+                              <tr>
+                                <td>Cedric Kelly</td>
+                                <td>Senior Javascript Developer</td>
+                                <td><label class="badge badge-danger">Inactivo</label></td>
+
+                              </tr>
+                              <tr>
+                                <td>Airi Satou</td>
+                                <td>Accountant</td>
+                                <td><label class="badge badge-success">Activo</label></td>
+
+                              </tr>
+                              <tr>
+                                <td>Fiona Green</td>
+                                <td>Chief Operating Officer (COO)</td>
+                                <td><label class="badge badge-danger">Inactivo</label></td>
+                              </tr>
+                              <tr>
+                                <td>Shou Itou</td>
+                                <td>Regional Marketing</td>
+                                <td><label class="badge badge-danger">Inactivo</label></td>
+                              </tr>
+                              </tbody>
+                              <tfoot>
+                              <tr>
+                                <th>Sucursal</th>
+                                <th>Fecha de registro</th>
+                                <th>Status</th>
+                              </tr>
+                              </tfoot>
+                            </table>
+
+                          </div>
+
+
+                          <!-- CREACION DEL LISTADO--->
+                        </div>
+                        <div id="containerManagement" class="tab-pane fade">
+                          <h4 class="card-title text-uppercase">Solicitar contenedor</h4>
+                          <p>Para adquirir un nuevo contenedor inteligente favor comunicarse con uno de los proveedores de SFK Project al correo
+                            <mark class="bg-success text-white">sfkproject@gmail.com</mark> o contactar al <mark class="bg-success text-white"> +1 (829) 555-555</mark>
+                            de esta forma se le facilitara un codigo de activacion para su nuevo estante
+                          </p>
+                          <hr>
+                          <h4 class="card-title text-uppercase">Validar contenedor</h4>
+                          <form>
+                            <div class="row">
+                              <div class="form-group col-md-6">
+                                <label for="activateCodeContainer">Codigo de activacion</label>
+                                <input type="text" class="form-control" id="activateCodeContainer" placeholder="codigo">
+                              </div>
+                              <div class="form-group col-md-6">
+                                <label for="branchOfficeContainer">Asignar a sucursal</label>
+                                <input type="text" class="form-control" id="branchOfficeContainer" placeholder="Sucursal">
+                              </div>
+                              <div class="form-group col-md-4">
+                                <button type="button" class="btn btn-primary">REGISTRAR CONTENEDOR</button>
+                              </div>
+                            </div>
+                          </form>
+                          <hr>
+                          <h4 class="card-title text-uppercase">Listado de contenedores</h4>
+                            <div class="table-responsive">
+                              <table id="example" class="table table-hover table-bordered" style="width:100%">
+                                <thead>
+                                <tr>
+                                  <th>Sucursal</th>
+                                  <th>Fecha de registro</th>
+                                  <th>Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                  <td>Tiger Nixon</td>
+                                  <td>System Architect</td>
+                                  <td><label class="badge badge-success">Activo</label></td>
+
+                                </tr>
+                                <tr>
+                                  <td>Garrett Winters</td>
+                                  <td>Accountant</td>
+                                  <td><label class="badge badge-success">Activo</label></td>
+
+                                </tr>
+                                <tr>
+                                  <td>Ashton Cox</td>
+                                  <td>Junior Technical Author</td>
+                                  <td><label class="badge badge-success">Activo</label></td>
+
+                                </tr>
+                                <tr>
+                                  <td>Cedric Kelly</td>
+                                  <td>Senior Javascript Developer</td>
+                                  <td><label class="badge badge-danger">Inactivo</label></td>
+
+                                </tr>
+                                <tr>
+                                  <td>Airi Satou</td>
+                                  <td>Accountant</td>
+                                  <td><label class="badge badge-success">Activo</label></td>
+
+                                </tr>
+                                <tr>
+                                  <td>Fiona Green</td>
+                                  <td>Chief Operating Officer (COO)</td>
+                                  <td><label class="badge badge-danger">Inactivo</label></td>
+                                </tr>
+                                <tr>
+                                  <td>Shou Itou</td>
+                                  <td>Regional Marketing</td>
+                                  <td><label class="badge badge-danger">Inactivo</label></td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                  <th>Sucursal</th>
+                                  <th>Fecha de registro</th>
+                                  <th>Status</th>
+                                </tr>
+                                </tfoot>
+                              </table>
+
+                            </div>
 
 
 
 
 
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->

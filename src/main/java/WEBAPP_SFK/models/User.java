@@ -13,8 +13,6 @@ public class User implements Serializable {
     @Id
     @Column(name = "EMAIL", unique = true)
     private String email;
-    @Column(unique = true)
-    private String username;
     private String password;
     // Carga en linea
     @ElementCollection(fetch = FetchType.EAGER)
@@ -35,13 +33,19 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String email, String username, String password, Set<RoleApp> rolesList, Person person, BranchOffice branchOffice) {
+    public User(String email, String password, Set<RoleApp> rolesList, Person person, BranchOffice branchOffice) {
         this.email = email;
-        this.username = username;
         this.password = password;
         this.rolesList = rolesList;
         this.person = person;
         this.branchOffice = branchOffice;
+    }
+
+    public User(String email, String password,Set<RoleApp> rolesList) {
+        this.email = email;
+        this.password = password;
+        this.rolesList = rolesList;
+
     }
 
     public String getEmail() {
@@ -50,14 +54,6 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {

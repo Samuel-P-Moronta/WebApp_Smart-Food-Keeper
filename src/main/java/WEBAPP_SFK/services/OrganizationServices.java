@@ -5,6 +5,7 @@ import WEBAPP_SFK.models.Organization;
 import WEBAPP_SFK.services.connect.DataBaseRepository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import java.util.Date;
 import java.util.List;
@@ -48,5 +49,17 @@ public class OrganizationServices extends DataBaseRepository<Organization> {
             return organizationList.get(0);
         }
         return null;
+    }
+    public Organization createOrganization(Organization entidad) throws IllegalArgumentException, PersistenceException {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(entidad);
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+        }
+        return entidad;
     }
 }

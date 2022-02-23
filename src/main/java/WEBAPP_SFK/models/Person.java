@@ -1,6 +1,5 @@
 package WEBAPP_SFK.models;
 
-import WEBAPP_SFK.models.enums.Gender;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -19,7 +18,6 @@ public class Person implements Serializable {
     private String LastName;
     @Column(unique = true,nullable = false)
     private String email;
-    private Gender gender;
     @CreationTimestamp
     private Date registerDate;
     @Embedded
@@ -33,12 +31,11 @@ public class Person implements Serializable {
     public Person() {
     }
 
-    public Person(String identificationCard, String firstName, String lastName, String email, Gender gender, Address address, User user) {
+    public Person(String identificationCard, String firstName, String lastName, String email, Address address, User user) {
         this.identificationCard = identificationCard;
         this.firstName = firstName;
         LastName = lastName;
         this.email = email;
-        this.gender = gender;
         this.address = address;
         this.user = user;
     }
@@ -74,15 +71,6 @@ public class Person implements Serializable {
 
     public void setLastName(String lastName) {
         LastName = lastName;
-    }
-
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
     }
 
     public Date getRegisterDate() {

@@ -58,7 +58,9 @@ public class ControllerCore {
     public Container findContainerById(int id){return CONTAINER_SERVICES.find(id);}
 
     //----------------------------------ORGANIZATION-----------------------------------------------//
-    public boolean createOrganization(Organization organization){return ORGANIZATION_SERVICES.update(organization);}
+    public boolean createOrganization(Organization organization){
+        return ORGANIZATION_SERVICES.update(organization);
+    }
     public Organization findOrganizationById(int id){return ORGANIZATION_SERVICES.find(id);}
     public Organization findOrganizationByName(String name){return ORGANIZATION_SERVICES.findOrganizationByName(name);}
     public Organization findOrganizationByBranchOffice(long idBranchOffice){return ORGANIZATION_SERVICES.findOrganizationByBranchOffice(idBranchOffice);}

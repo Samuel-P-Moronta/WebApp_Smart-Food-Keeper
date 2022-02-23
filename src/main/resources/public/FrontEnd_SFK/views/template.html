@@ -26,6 +26,21 @@
     <link rel="stylesheet" href="../assets/css/style.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="../assets/images/favicon.png" />
+
+
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+
+    <script type='text/javascript' src='https://code.jquery.com/jquery-3.5.1.js'></script>
+    <script type='text/javascript' src='https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js'></script>
+    <script type='text/javascript' src='https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js'></script>
+
+
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css"  type="text/css">
+
+
+
+
 </head>
 <body>
 <div class="container-scroller">
@@ -132,20 +147,10 @@
                         <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
                         <span class="menu-title">Dashboard</span>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                        <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
-                        <span class="menu-title">UI Elements</span>
-                        <i class="menu-arrow"></i>
+                    <a class="nav-link" href="/management/dashboard">
+                        <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
+                        <span class="menu-title">Notificaciones</span>
                     </a>
-                    <div class="collapse" id="ui-basic">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
-                        </ul>
-                    </div>
                 </li>
                 <li class="nav-item nav-category">Administracion general</li>
 
@@ -161,33 +166,18 @@
                         <span class="menu-title" >Sucursales</span>
                     </a>
                 </li>
+                <li class="nav-item nav-category">Monitoreo inteligente</li>
                 <li class="nav-item">
                     <a class="nav-link" href="pages/charts/chartjs.html">
                         <span class="icon-bg"><i class="mdi mdi-chart-bar menu-icon"></i></span>
-                        <span class="menu-title">Charts</span>
+                        <span class="menu-title">Estante</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="pages/tables/basic-table.html">
                         <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
-                        <span class="menu-title">Tables</span>
+                        <span class="menu-title">Contenedor</span>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                        <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
-                        <span class="menu-title">User Pages</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="auth">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
-                            <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                            <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                            <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-                            <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
-                        </ul>
-                    </div>
                 </li>
             </ul>
         </nav>
@@ -212,7 +202,20 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <script src="../assets/js/dashboard.js"></script>
+    <script src="../assets/js/chart.js"></script>
+
     <!-- End custom js for this page -->
+    <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'></script>
+    <script type="text/javascript">
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#example').DataTable();
+        } );
+    </script>
 </div>
 </body>
 </html>

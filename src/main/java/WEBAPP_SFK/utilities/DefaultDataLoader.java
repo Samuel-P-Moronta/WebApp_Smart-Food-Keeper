@@ -3,11 +3,8 @@ package WEBAPP_SFK.utilities;
 
 import WEBAPP_SFK.controllers.ControllerCore;
 import WEBAPP_SFK.models.*;
-import WEBAPP_SFK.models.enums.Gender;
-import WEBAPP_SFK.models.enums.RoleApp;
 import WEBAPP_SFK.services.*;
 
-import javax.naming.ldap.Control;
 import java.util.*;
 
 public class DefaultDataLoader {
@@ -67,7 +64,7 @@ public class DefaultDataLoader {
         // Creating branch Office
         BranchOffice branchOffice = new BranchOffice(new Address("Calle 30 de Marzo","Santiago"),new Date(),ControllerCore.getInstance().findOrganizationById(1));
         //Creating super user
-
+        /*
         User user = new User(
                 "sfkproject@gmail.com",
                 "admin",
@@ -82,7 +79,7 @@ public class DefaultDataLoader {
                 "employee",
                 Collections.singleton(RoleApp.ROLE_EMPLOYEE),
                 null,
-                ControllerCore.getInstance().findBranchOfficeById(1)
+                ControllerCore.getInstance().findOrganizationById(1)
         );
 
         //Creating defulalt person
@@ -111,6 +108,8 @@ public class DefaultDataLoader {
              ControllerCore.getInstance().createPerson(person);
 
        }
+
+         */
     }
     public void createDefaultShelfData(){
         //First we have to create default shelf to bring shelf data

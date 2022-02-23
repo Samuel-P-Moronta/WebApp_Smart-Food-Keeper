@@ -10,7 +10,7 @@ public class Address {
     public Address() {
     }
 
-    public Address(String direction, String city) {
+    public Address(String city, String direction) {
         this.direction = direction;
         this.city = city;
     }
