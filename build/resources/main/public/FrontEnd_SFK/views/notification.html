@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="public/FrontEnd_SFK/views/template.html :: head"></head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row" th:replace="public/FrontEnd_SFK/views/template.html :: header">
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar" th:replace="public/FrontEnd_SFK/views/template.html::sidebar">
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="d-sm-flex justify-content-between align-items-center transaparent-tab-border {">
+                    <ul class="nav nav-tabs tab-transparent" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="pill"  href="#notification" role="tab" aria-selected="true">Historial de notificaciones en curso</a>
+                        </li>
+                    </ul>
+                    <div class="d-md-block d-none">
+                        <a href="#" class="text-light p-1"><i class="mdi mdi-view-dashboard"></i></a>
+                        <a href="#" class="text-light p-1"><i class="mdi mdi-dots-vertical"></i></a>
+                    </div>
+                </div>
+                <div class="tab-content tab-transparent-content">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <!---- CODE HERE CUSTOM TEMPLATE ---->
+
+                                <div id="notification" class="tab-pane fade show active pt-3">
+                                    <h4 class="card-title">Listado de notificaciones</h4>
+
+                                    <div class="table-responsive">
+                                        <table id="example" class="table table-hover table-bordered" style="width:100%">
+                                            <thead>
+                                            <tr>
+                                                <th>Sucursal</th>
+                                                <th>Evento</th>
+                                                <th>Tipo de notificacion</th>
+                                                <th>Accion</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td><label class="badge badge-success">Activo</label></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Garrett Winters</td>
+                                                <td>Accountant</td>
+                                                <td><label class="badge badge-success">Activo</label></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Ashton Cox</td>
+                                                <td>Junior Technical Author</td>
+                                                <td><label class="badge badge-success">Activo</label></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Cedric Kelly</td>
+                                                <td>Senior Javascript Developer</td>
+                                                <td><label class="badge badge-danger">Inactivo</label></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Airi Satou</td>
+                                                <td>Accountant</td>
+                                                <td><label class="badge badge-success">Activo</label></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Fiona Green</td>
+                                                <td>Chief Operating Officer (COO)</td>
+                                                <td><label class="badge badge-danger">Inactivo</label></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Shou Itou</td>
+                                                <td>Regional Marketing</td>
+                                                <td><label class="badge badge-danger">Inactivo</label></td>
+                                            </tr>
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th>Sucursal</th>
+                                                <th>Tipo de notificacion</th>
+                                                <th>Evento</th>
+                                                <th>Accion</th>
+
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="public/FrontEnd_SFK/views/template.html::javascript"></div>
+</body>
+</html>
