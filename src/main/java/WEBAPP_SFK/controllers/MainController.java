@@ -21,8 +21,8 @@ public class MainController extends BaseController{
         //Welcome
         app.routes(() ->{
             path("/",() ->{
+                /*-------------------------Welcome portal------------------------------------------*/
                 get("/", ctx -> ctx.redirect("/portal"));
-
                 /* To get back on portal page (landingPage) */
                 post("/portal", ctx -> {
                     ctx.redirect("public/FrontEnd_SFK/views/portal.html");
@@ -30,13 +30,16 @@ public class MainController extends BaseController{
                 get("/portal", ctx -> {
                     ctx.render("public/FrontEnd_SFK/views/portal.html",model);
                 });
-                /*To get started in SFK system */
+                /*-------------------------------------------------------------------------------*/
+                /*---------------------Organization login----------------------------------------*/
                 post("/organization", ctx -> {
                     ctx.render("public/FrontEnd_SFK/views/login.html",model);
                 });
                 get("/organization", ctx -> {
                     ctx.render("public/FrontEnd_SFK/views/login.html");
                 });
+                /*-------------------------------------------------------------------------------*/
+                /*---------------------Organization register or login----------------------------*/
                 /* To register a new company */
                 post("/organizationRegister", ctx ->{
                     ctx.render("/public/FrontEnd_SFK/views/login.html");
@@ -46,6 +49,7 @@ public class MainController extends BaseController{
                 });
             });
             path("/management",() ->{
+                /*--------------------------Dashboard--------------------------------------------*/
                 /*Dashboard init page when administrator get started*/
                 post("/dashboard", ctx ->{
                     ctx.render("/public/FrontEnd_SFK/views/dashboard.html");
@@ -53,6 +57,8 @@ public class MainController extends BaseController{
                 get("/dashboard", ctx ->{
                     ctx.render("/public/FrontEnd_SFK/views/dashboard.html",model);
                 });
+                /*-------------------------------------------------------------------------------*/
+                /*-------------------- Employee management---------------------------------------*/
                 post("/employee", ctx ->{
                     ctx.render("/public/FrontEnd_SFK/views/employee.html");
                 });
@@ -65,12 +71,31 @@ public class MainController extends BaseController{
                 get("/employeeList", ctx ->{
                     ctx.render("/public/FrontEnd_SFK/views/employeeList.html",model);
                 });
+                /*-----------------------------------------------------------------------------*/
+                /*---------------------Branch office management--------------------------------*/
                 post("/branchOffice", ctx ->{
                     ctx.render("/public/FrontEnd_SFK/views/branchOffice.html");
                 });
                 get("/branchOffice", ctx ->{
                     ctx.render("/public/FrontEnd_SFK/views/branchOffice.html",model);
                 });
+                /*---------------------------------------------------------------------------*/
+                /*---------------------Notifications management------------------------------*/
+                post("/notification", ctx ->{
+                    ctx.render("/public/FrontEnd_SFK/views/notification.html");
+                });
+                get("/notification", ctx ->{
+                    ctx.render("/public/FrontEnd_SFK/views/notification.html",model);
+                });
+                /*---------------------------------------------------------------------------*/
+                /*--------------------------Trueque management------------------------------*/
+                post("/trueque", ctx ->{
+                    ctx.render("/public/FrontEnd_SFK/views/trueque.html");
+                });
+                get("/trueque", ctx ->{
+                    ctx.render("/public/FrontEnd_SFK/views/trueque.html",model);
+                });
+                /*---------------------------------------------------------------------------*/
             });
 
             //
