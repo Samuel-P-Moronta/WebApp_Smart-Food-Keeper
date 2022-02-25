@@ -79,6 +79,22 @@ public class MainController extends BaseController{
                 get("/branchOffice", ctx ->{
                     ctx.render("/public/FrontEnd_SFK/views/branchOffice.html",model);
                 });
+                /*-----------------------------------------------------------------------------*/
+                /*-----------------------------Shelf management--------------------------------*/
+                post("/shelfMgmt", ctx ->{
+                    ctx.render("/public/FrontEnd_SFK/views/shelfMgmt.html");
+                });
+                get("/shelfMgmt", ctx ->{
+                    ctx.render("/public/FrontEnd_SFK/views/shelfMgmt.html",model);
+                });
+                /*-----------------------------------------------------------------------------*/
+                /*-----------------------------Container management----------------------------*/
+                post("/containerMgmt", ctx ->{
+                    ctx.render("/public/FrontEnd_SFK/views/containerMgmt.html");
+                });
+                get("/containerMgmt", ctx ->{
+                    ctx.render("/public/FrontEnd_SFK/views/containerMgmt.html",model);
+                });
                 /*---------------------------------------------------------------------------*/
                 /*---------------------Notifications management------------------------------*/
                 post("/notification", ctx ->{
