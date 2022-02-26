@@ -14,26 +14,134 @@
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-
-            <!-- CODE HERE VIEWS OF PAGE -->
-            <div class="tab-content tab-transparent-content">
-              <div class="col-md-12 grid-margin stretch-card">
+            <div class="d-xl-flex justify-content-between align-items-start">
+              <h2 class="text-dark font-weight-bold mb-2">MONITOREO DE ESTANTES</h2>
+            </div>
+            <div class="row">
+              <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-
+                    <div class="row">
+                      <div class="form-group col-md-4">
+                        <label for="sucursalSelelect">Seleccionar sucursal: </label>
+                        <select class="form-control" id="sucursalSelelect" style="line-height: 2.0;">
+                          <option>Navarrete</option>
+                          <option>Distrito Nacional</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="containerSelect">Seleccionar estante</label>
+                        <select class="form-control" id="containerSelect" style="line-height: 2.0;">
+                          <option>CO-0001</option>
+                          <option>CO-0002</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="productionSelect">Seleccionar produccion</label>
+                        <select class="form-control" id="productionSelect" style="line-height: 2.0;">
+                          <option>Lechosa</option>
+                          <option>Pina</option>
+                        </select>
+                      </div>
+                    <button id="empty" type="button" class="btn btn-primary">DESPLEGAR DATOS EN TIEMPO REAL DEL ESTANTE</button>                  </div>
                   </div>
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-xl-2 col-lg-6 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body text-center">
+                    <h2 class="mb-4 text-dark font-weight-bold" id="unripe">0</h2>
+                    <h2 class="mb-4 text-dark font-weight-bold" id="fruitType"></h2>
+                    <h5 class="mb-2 text-dark font-weight-normal">Verde</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-2 col-lg-6 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body text-center">
+                    <h2 class="mb-4 text-dark font-weight-bold" id="ripe"></h2>
+                    <h5 class="mb-2 text-dark font-weight-normal">Maduro</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-2 col-lg-6 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body text-center">
+                    <h2 class="mb-4 text-dark font-weight-bold" id="overripe"></h2>
+                    <h5 class="mb-2 text-dark font-weight-normal">Muy Maduro</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-2 col-lg-6 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body text-center">
+                    <h2 class="mb-4 text-dark font-weight-bold" id="cantFruit"></h2>
+                    <h5 class="mb-2 text-dark font-weight-normal">Cantidad de frutas</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-2 col-lg-6 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body text-center">
+                    <h2 class="mb-4 text-dark font-weight-bold"></h2>
+                    <h5 class="mb-2 text-dark font-weight-normal" id="temperature">Temperatura</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-2 col-lg-6 col-sm-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body text-center">
+                    <h2 class="mb-4 text-dark font-weight-bold"></h2>
+                    <h5 class="mb-2 text-dark font-weight-normal" id="humidity">Humedad</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Cantidad de frutas</h4>
+                    <canvas id="doughnutChartRipenessRealTime" style="height:230px"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="d-sm-flex justify-content-between align-items-center transaparent-tab-border {">
+                <!-- Credit card form tabs -->
+                <ul role="tablist" class="nav nav-tabs tab-transparent">
+                  <li class="nav-item"> <a data-toggle="pill" href="#tempertureRealtime" class="nav-link active "> <i class="fas fa-credit-card mr-2"></i>Temperatura</a> </li>
+                  <li class="nav-item"> <a data-toggle="pill" href="#humidityRealTime"     class="nav-link"> <i class="fab fa-paypal mr-2"></i>Humedad</a> </li>
+                  <li class="nav-item"> <a data-toggle="pill" href="#container"     class="nav-link"> <i class="fab fa-paypal mr-2"></i>Seguimiento de desechos</a> </li>
 
-
-
-
-
+                </ul>
+              </div>
+              <div class="tab-content tab-transparent-content">
+                <div class="col-md-12 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="tab-content tab-transparent-content">
+                        <div id="tempertureRealtime" class="tab-pane fade show active pt-3">
+                          <h4 class="card-title">Temperatura</h4>
+                          <canvas id="areaCharttempertureRealtime" style="height:50px"></canvas>
+                        </div>
+                        <div id="humidityRealTime" class="tab-pane fade">
+                          <h4 class="card-title">Humedad</h4>
+                          <canvas id="areaChartHumidityRealtime" style="height:50px"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div th:replace="public/FrontEnd_SFK/views/template.html::javascript"></div>
   </body>
+  <script src="../js/graphicsRealTime.js"></script>
+
 </html>

@@ -10,14 +10,11 @@ import java.util.Collection;
 import java.util.Date;
 
 @Entity
-@Table(name = "NOTIFICATION")
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "TITLE")
     private String title;
-    @Column(name = "DESCRIPTION")
     private String description;
     @CreationTimestamp
     private Date sendDate;

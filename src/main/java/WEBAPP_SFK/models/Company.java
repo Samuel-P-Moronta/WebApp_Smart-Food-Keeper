@@ -3,32 +3,33 @@ package WEBAPP_SFK.models;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "ORGANIZATION")
-public class Organization implements Serializable {
+public class Company implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(name = "NAME")
+    private Long id;
     private String name;
-    @Column(name = "REGISTER_DATE")
     private Date registerDate;
+    @OneToMany(mappedBy = "company",fetch = FetchType.EAGER)
+    private Set<BranchOffice> branchOfficeList = new HashSet<>();
 
-    public Organization(){
+    public Company(){
 
     }
 
-    public Organization(String name, Date registerDate) {
+    public Company(String name, Date registerDate) {
         this.name = name;
         this.registerDate = registerDate;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -46,5 +47,13 @@ public class Organization implements Serializable {
 
     public void setRegisterDate(Date registerDate) {
         this.registerDate = registerDate;
+    }
+
+    public Set<BranchOffice> getBranchOfficeList() {
+        return branchOfficeList;
+    }
+
+    public void setBranchOfficeList(Set<BranchOffice> branchOfficeList) {
+        this.branchOfficeList = branchOfficeList;
     }
 }

@@ -7,12 +7,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "CONTAINER_DATA")
 public class ContainerData implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int measureId;
-    @Column(name = "WEIGHT")
     private float weight;
     @OneToOne
     private Container container;

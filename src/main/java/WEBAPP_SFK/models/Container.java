@@ -7,14 +7,21 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "CONTAINER")
 public class Container implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "REGISTER_DATE")
     @CreationTimestamp
     private Date registerDate;
+    @ManyToOne
+    private BranchOffice branchOffice;
+    public BranchOffice getBranchOffice() {
+        return branchOffice;
+    }
+
+    public void setBranchOffice(BranchOffice branchOffice) {
+        this.branchOffice = branchOffice;
+    }
     //OneToOne
    // private BranchOffice branchOffice;
 

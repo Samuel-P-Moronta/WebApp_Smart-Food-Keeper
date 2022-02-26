@@ -278,6 +278,7 @@ $(function() {
     });
   }
 
+
   if ($("#lineChart").length) {
     var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
     var lineChart = new Chart(lineChartCanvas, {

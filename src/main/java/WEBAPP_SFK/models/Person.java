@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "PERSON")
 public class Person implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,13 +15,11 @@ public class Person implements Serializable {
     private String identificationCard;
     private String firstName;
     private String LastName;
-    @Column(unique = true,nullable = false)
     private String email;
     @CreationTimestamp
     private Date registerDate;
     @Embedded
     private Address address;
-
     @OneToOne
     private User user;
 

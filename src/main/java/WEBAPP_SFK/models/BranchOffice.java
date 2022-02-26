@@ -1,15 +1,18 @@
 package WEBAPP_SFK.models;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
 
-import javax.naming.Name;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "BRANCH_OFFICE")
 public class BranchOffice implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,17 +21,21 @@ public class BranchOffice implements Serializable {
     @CreationTimestamp
     private Date registerDate;
     @ManyToOne
-    private Organization organization;
+    private Company company;
+    @OneToMany(mappedBy = "branchOffice",fetch = FetchType.EAGER)
+    private Set<Shelf> shelfList = new HashSet<>();
+    @OneToMany(mappedBy = "branchOffice",fetch = FetchType.EAGER)
+    private Set<Container> containerList = new HashSet<>();
 
     public BranchOffice(){
 
     }
 
 
-    public BranchOffice(Address address, Date registerDate, Organization organization) {
+    public BranchOffice(Address address, Date registerDate, Company company) {
         this.address = address;
         this.registerDate = registerDate;
-        this.organization = organization;
+        this.company = company;
     }
 
     public Long getId() {
@@ -47,12 +54,12 @@ public class BranchOffice implements Serializable {
         this.registerDate = registerDate;
     }
 
-    public Organization getOrganization() {
-        return organization;
+    public Company getOrganization() {
+        return company;
     }
 
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
+    public void setOrganization(Company company) {
+        this.company = company;
     }
 
     public Address getAddress() {
@@ -61,5 +68,21 @@ public class BranchOffice implements Serializable {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Set<Shelf> getShelfList() {
+        return shelfList;
+    }
+
+    public void setShelfList(Set<Shelf> shelfList) {
+        this.shelfList = shelfList;
+    }
+
+    public Set<Container> getContainerList() {
+        return containerList;
+    }
+
+    public void setContainerList(Set<Container> containerList) {
+        this.containerList = containerList;
     }
 }

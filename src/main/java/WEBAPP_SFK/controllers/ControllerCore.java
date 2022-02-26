@@ -2,7 +2,6 @@ package WEBAPP_SFK.controllers;
 
 import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.services.*;
-import WEBAPP_SFK.utilities.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,7 @@ public class ControllerCore {
     public static final ShelfDataServices SHELF_DATA_SERVICES = new ShelfDataServices();
     public static final ContainerServices CONTAINER_SERVICES = new ContainerServices();
     public static final ContainerDataServices CONTAINER_DATA_SERVICES = new ContainerDataServices();
-    public static final OrganizationServices ORGANIZATION_SERVICES = new OrganizationServices();
+    public static final CompanyServices ORGANIZATION_SERVICES = new CompanyServices();
     private static final BranchOfficeServices BRANCH_OFFICE_SERVICES = new BranchOfficeServices();
     private static final NotificationServices NOTIFICATION_SERVICES = new NotificationServices();
 
@@ -58,12 +57,12 @@ public class ControllerCore {
     public Container findContainerById(int id){return CONTAINER_SERVICES.find(id);}
 
     //----------------------------------ORGANIZATION-----------------------------------------------//
-    public boolean createOrganization(Organization organization){
-        return ORGANIZATION_SERVICES.update(organization);
+    public boolean createOrganization(Company company){
+        return ORGANIZATION_SERVICES.update(company);
     }
-    public Organization findOrganizationById(int id){return ORGANIZATION_SERVICES.find(id);}
-    public Organization findOrganizationByName(String name){return ORGANIZATION_SERVICES.findOrganizationByName(name);}
-    public Organization findOrganizationByBranchOffice(long idBranchOffice){return ORGANIZATION_SERVICES.findOrganizationByBranchOffice(idBranchOffice);}
+    public Company findOrganizationById(int id){return ORGANIZATION_SERVICES.find(id);}
+    public Company findOrganizationByName(String name){return ORGANIZATION_SERVICES.findOrganizationByName(name);}
+    public Company findOrganizationByBranchOffice(Long idBranchOffice){return ORGANIZATION_SERVICES.findOrganizationByBranchOffice(idBranchOffice);}
 
     //--------------------------BRANCH OFFICE------------------------------------------------------------//
     public boolean createBranchOffice(BranchOffice branchOffice){return BRANCH_OFFICE_SERVICES.create(branchOffice);}
@@ -93,5 +92,13 @@ public class ControllerCore {
         }else{
             return false;
         }
+    }
+
+    public BranchOffice findBranchOfficeDirection(String branchOfficeDirection) {
+        return BRANCH_OFFICE_SERVICES.findBranchOfficeDirection(branchOfficeDirection);
+    }
+
+    public BranchOffice findBranchOfficeByCompany(long idCompany) {
+        return BRANCH_OFFICE_SERVICES.findBranchOfficeByCompany(idCompany);
     }
 }

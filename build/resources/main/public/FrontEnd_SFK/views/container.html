@@ -12,26 +12,37 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar" th:replace="public/FrontEnd_SFK/views/template.html::sidebar">
         </nav>
         <!-- partial -->
+        <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-
-            <!-- CODE HERE VIEWS OF PAGE -->
+            <div class="d-xl-flex justify-content-between align-items-start">
+              <h2 class="text-dark font-weight-bold mb-2">Monitoreo de contenedor</h2>
+            </div>
             <div class="tab-content tab-transparent-content">
               <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label for="sucursalSelelect">Seleccionar sucursal: </label>
+                        <select class="form-control" id="sucursalSelelect" style="line-height: 2.0;">
+                          <option>Navarrete</option>
+                          <option>Distrito Nacional</option>
+                        </select>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="containerSelect">Seleccionar Contenedor</label>
+                        <select class="form-control" id="containerSelect" style="line-height: 2.0;">
+                          <option>CO-0001</option>
+                          <option>CO-0002</option>
+                        </select>
+                      </div>
+                        <button id="empty" type="button" class="btn btn-primary">DESPLEGAR DATOS EN TIEMPO REAL</button>
+                    </div>
                   </div>
-                </div>
               </div>
             </div>
-
-
-
-
-
           </div>
-        </div>
       </div>
     </div>
     <div th:replace="public/FrontEnd_SFK/views/template.html::javascript"></div>

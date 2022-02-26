@@ -28,39 +28,45 @@ public class DefaultDataLoader {
         }
         return instance;
     }
-    public void createDefaultOrganization(){
-        Logger.getInstance().getLog(this.getClass()).info("Creating default organizations [...]");
-        Organization organization1 = new Organization("El nacional", new Date());
-        Organization organization2 = new Organization("El Bravo", new Date());
-        Organization organization3 = new Organization("Caco de botella", new Date());
+    public void createDefaultCompany(){
+        Logger.getInstance().getLog(this.getClass()).info("Creating default company [...]");
+        Company company1 = new Company("El nacional", new Date());
+        Company company2 = new Company("El Bravo", new Date());
+        Company company3 = new Company("Caco de botella", new Date());
 
-        ControllerCore.getInstance().createOrganization(organization1);
-        ControllerCore.getInstance().createOrganization(organization2);
-        ControllerCore.getInstance().createOrganization(organization3);
+        ControllerCore.getInstance().createOrganization(company1);
+        ControllerCore.getInstance().createOrganization(company2);
+        ControllerCore.getInstance().createOrganization(company3);
     }
     public void createDefaultBranchOffice(){
         Logger.getInstance().getLog(this.getClass()).info("Creating default branch offices [...]");
-        Address address = new Address("Etrella Sadhala","Santiago" );
-        Address address1 = new Address("Calle el bravo XD", "Santiago");
-        Address address2 = new Address("Calle 16 de agosto", "Navarrete");
+        Address address = new Address("Navarrete","Calle Barrio Duarte" );
+        Address address1 = new Address("Villa Gonzalez", "Calle principal");
+        Address address2 = new Address("Esperanza", "Calle secundaria");
+        Address address3 = new Address("Santo Domingo Oeste", "Timotes");
+        Address address4 = new Address("Boca Chica", "Calle 24");
+
 
         ControllerCore controllerCore1 = new ControllerCore();
-        ControllerCore controllerCore2 = new ControllerCore();
-        ControllerCore controllerCore3 = new ControllerCore();
-
         BranchOffice branchOffice1 = new BranchOffice(address, new Date(),controllerCore1.findOrganizationByName("El nacional"));
         BranchOffice branchOffice2 = new BranchOffice(address1, new Date(),controllerCore1.findOrganizationByName("El Bravo"));
         BranchOffice branchOffice3 = new BranchOffice(address2, new Date(),controllerCore1.findOrganizationByName("Caco de botella"));
+        BranchOffice branchOffice4 = new BranchOffice(address3, new Date(),controllerCore1.findOrganizationByName("El nacional"));
+        BranchOffice branchOffice5 = new BranchOffice(address4, new Date(),controllerCore1.findOrganizationByName("El nacional"));
+
 
         ControllerCore.getInstance().createBranchOffice(branchOffice1);
         ControllerCore.getInstance().createBranchOffice(branchOffice2);
         ControllerCore.getInstance().createBranchOffice(branchOffice3);
+        ControllerCore.getInstance().createBranchOffice(branchOffice4);
+        ControllerCore.getInstance().createBranchOffice(branchOffice5);
+
 
     }
     public void createDefaultSuperUser(){
         Logger.getInstance().getLog(this.getClass()).info("Creating default users [...]");
-        // Creating organization
-        Organization organization = new Organization("La Sirena",new Date());
+        // Creating company
+        Company company = new Company("La Sirena",new Date());
         // Creating branch Office
         BranchOffice branchOffice = new BranchOffice(new Address("Calle 30 de Marzo","Santiago"),new Date(),ControllerCore.getInstance().findOrganizationById(1));
         //Creating super user
@@ -102,7 +108,7 @@ public class DefaultDataLoader {
         );
 
         if(ControllerCore.getInstance().findUserByEmail("root@gmail.com") == null){
-             ControllerCore.getInstance().createOrganization(organization);
+             ControllerCore.getInstance().createOrganization(company);
              ControllerCore.getInstance().createBranchOffice(branchOffice);
              ControllerCore.getInstance().createUser(user2);
              ControllerCore.getInstance().createPerson(person);
@@ -111,38 +117,10 @@ public class DefaultDataLoader {
 
          */
     }
-    public void createDefaultShelfData(){
-        //First we have to create default shelf to bring shelf data
-        Shelf shelf = new Shelf("SH001",new Date());
-        Shelf shelfAux = ControllerCore.getInstance().getShelfByDeviceName("SH001");
-        if(shelfAux == null){
-            ControllerCore.getInstance().addShelf(shelf);
-            int i = 0;
-
-
-            while (i < 3) {
-                float temperature = (float) Math.floor(Math.random() * (40 - 20 + 1) + 20);
-                float humidity = (float) Math.floor(Math.random() * (40 - 20 + 1) + 20);
-                int cantFrutas = 4;
-                int cantOverripe = 1;
-                int cantRipe = 2;
-                int cantUnripe = 1;
-                Date currentSampleDate = new Date(System.currentTimeMillis());
-                ShelfData sd = new ShelfData(
-                        temperature,
-                        humidity, cantFrutas,
-                        "PINEAPPLE",
-                        cantOverripe,
-                        cantRipe,
-                        cantUnripe,
-                        currentSampleDate,
-                        ControllerCore.getInstance().getShelfByDeviceName("SH001"));
-                ControllerCore.getInstance().addShelfData(sd);
-                ++i;
-            }
-
-
-        }
+    public void createDefaultShelf(){
+        BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(1);
+        Shelf shelfAux = new Shelf(new Date(),branchOffice);
+        ControllerCore.getInstance().addShelf(shelfAux);
     }
     public void createDefaultContainerData(){
         Container containerAux = ControllerCore.getInstance().findContainerById(1);

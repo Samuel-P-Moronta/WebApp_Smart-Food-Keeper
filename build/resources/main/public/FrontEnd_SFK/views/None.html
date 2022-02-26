@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="public/FrontEnd_SFK/views/template.html :: head"></head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row" th:replace="public/FrontEnd_SFK/views/template.html :: header">
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar" th:replace="public/FrontEnd_SFK/views/template.html::sidebar">
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="d-xl-flex justify-content-between align-items-start">
+                    <h2 class="text-dark font-weight-bold mb-2">Monitoreo de estante</h2>
+                </div>
+                <div class="tab-content tab-transparent-content">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="sucursalSelelect">Seleccionar sucursal: </label>
+                                        <select class="form-control" id="sucursalSelelect" style="line-height: 2.0;">
+                                            <option>Navarrete</option>
+                                            <option>Distrito Nacional</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="containerSelect">Seleccionar estante</label>
+                                        <select class="form-control" id="containerSelect" style="line-height: 2.0;">
+                                            <option>CO-0001</option>
+                                            <option>CO-0002</option>
+                                        </select>
+                                    </div>
+                                    <button id="empty" type="button" class="btn btn-primary">DESPLEGAR DATOS EN TIEMPO REAL DEL ESTANTE</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Cantidad de frutas</h4>
+                                            <canvas id="barChart" style="height:230px"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Cantidad de frutas totales por categoria de madurez</h4>
+                                            <canvas id="doughnutChart" style="height:250px"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="card border-primary mb-3" style="max-width: 18rem;">
+                                        <div class="card-header">Header</div>
+                                        <div class="card-body text-primary">
+                                            <h5 class="card-title">Primary card title</h5>
+                                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body" style=" height: 5rem;">
+                                        <h4 class="card-title mb-0 text-uppercase">Sucursal: </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="public/FrontEnd_SFK/views/template.html::javascript"></div>
+</body>
+</html>

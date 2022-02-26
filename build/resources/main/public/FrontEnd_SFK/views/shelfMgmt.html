@@ -29,22 +29,25 @@
                       <div class="tab-content tab-transparent-content">
                         <div id="shelfMgmt" class="tab-pane fade show active pt-3">
                           <h4 class="card-title">Nuevo Estante</h4>
-                          <form>
+                          <form method="post" action="/management/shelfRegister">
                             <div class="form-group">
                               <div class="form-group">
-                                <label for="ID">ID</label>
-                                <input type="text" class="form-control" id="name" placeholder="CO-001">
+                                <label for="companyShelf">Seleccionar empresa: </label>
+                                <select class="form-control" id="companyShelf" style="line-height: 2.0;" name="companyShelf" onchange="enableBranchOfficeSelect()">
+                                  <option th:each="company, cStatus: ${companySheflList}" th:value="${company.id}" th:text="${company.name}" th:selected="${cStatus.index==0}" selected></option>
+                                </select>
                               </div>
                               <div class="form-group">
-                                <label for="Company">Empresa</label>
-                                <input type="text" class="form-control" id="direction" placeholder=" La Sirena">
-                              </div>
-                              <div class="form-group">
-                                <label for="office">Surcusal</label>
-                                <input type="text" class="form-control" id="city" placeholder="Ej. Calle 16 de agosto #10">
+                                <label for="branchOfficeShelf">Seleccionar sucursal: </label>
+                                <select disabled class="form-control" id="branchOfficeShelf" name="branchOfficeShelf" style="line-height: 2.0;" onchange="enableAddButton()">
+                                  <option th:text="${branchOfficeByCompany}" selected></option>
+                                  <!---
+                                  <option th:each="branchOffice, bStatus: ${branchOfficeList}" th:value="${branchOffice.id}" th:text="${branchOffice.address.city}" th:selected="${bStatus.index==0}" selected></option>
+                                  --->
+                                </select>
                               </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">REGISTRAR ESTANTE</button>
+                            <button type="submit" class="btn btn-primary" disabled id="add">REGISTRAR ESTANTE</button>
                           </form>
                         </div>
                         <div id="shelfList" class="tab-pane fade">
@@ -88,6 +91,7 @@
                               </tfoot>
                             </table>
                           </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -105,6 +109,7 @@
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
+    <script></script>
     <div th:replace="public/FrontEnd_SFK/views/template.html::javascript"></div>
   </body>
 </html>
