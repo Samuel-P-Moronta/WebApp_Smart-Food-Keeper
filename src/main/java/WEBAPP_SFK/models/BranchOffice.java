@@ -1,5 +1,6 @@
 package WEBAPP_SFK.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 
@@ -18,7 +19,6 @@ public class BranchOffice implements Serializable {
     private Long id;
     @Embedded
     private Address address;
-    @CreationTimestamp
     private Date registerDate;
     @ManyToOne
     private Company company;
@@ -46,6 +46,14 @@ public class BranchOffice implements Serializable {
         this.id = id;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     public Date getRegisterDate() {
         return registerDate;
     }
@@ -54,20 +62,12 @@ public class BranchOffice implements Serializable {
         this.registerDate = registerDate;
     }
 
-    public Company getOrganization() {
+    public Company getCompany() {
         return company;
     }
 
-    public void setOrganization(Company company) {
+    public void setCompany(Company company) {
         this.company = company;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public Set<Shelf> getShelfList() {

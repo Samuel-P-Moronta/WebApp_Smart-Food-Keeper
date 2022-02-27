@@ -119,7 +119,7 @@ public class DefaultDataLoader {
     }
     public void createDefaultShelf(){
         BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(1);
-        Shelf shelfAux = new Shelf(new Date(),branchOffice);
+        Shelf shelfAux = new Shelf(branchOffice);
         ControllerCore.getInstance().addShelf(shelfAux);
     }
     public void createDefaultContainerData(){

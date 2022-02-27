@@ -56,7 +56,7 @@ public class Main {
 
 
         //DefaultDataLoader.getInstance().createDefaultCompany();
-       //DefaultDataLoader.getInstance().createDefaultBranchOffice();
+       DefaultDataLoader.getInstance().createDefaultBranchOffice();
        //DefaultDataLoader.getInstance().createDefaultShelf();
 
 

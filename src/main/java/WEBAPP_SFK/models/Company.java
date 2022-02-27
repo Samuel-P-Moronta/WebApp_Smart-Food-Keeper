@@ -1,5 +1,7 @@
 package WEBAPP_SFK.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -13,6 +15,8 @@ public class Company implements Serializable {
     private Long id;
     private String name;
     private Date registerDate;
+    //To avoid JSON infinite recursion issue 2/26/2022
+    @JsonIgnore
     @OneToMany(mappedBy = "company",fetch = FetchType.EAGER)
     private Set<BranchOffice> branchOfficeList = new HashSet<>();
 

@@ -1,33 +1,23 @@
 package WEBAPP_SFK.models;
 
-import WEBAPP_SFK.models.enums.StatusShelf;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Entity
-public class Shelf implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ShelfJSON {
     private String deviceId;
     private String registerDate;
-    @JsonIgnore
-    @ManyToOne
     private BranchOffice branchOffice;
 
-
-    public Shelf(){
-
-    }
-    public Shelf(BranchOffice branchOffice) {
+    public ShelfJSON(BranchOffice branchOffice) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.registerDate = sdf.format(new Date());
         this.branchOffice = branchOffice;
-
     }
 
     public String getDeviceId() {

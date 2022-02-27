@@ -1,8 +1,13 @@
 package WEBAPP_SFK.webservices;
 
 import WEBAPP_SFK.controllers.BaseController;
+import WEBAPP_SFK.controllers.ControllerCore;
+import WEBAPP_SFK.models.Company;
 import WEBAPP_SFK.models.ErrorResponse;
+import WEBAPP_SFK.models.Shelf;
 import WEBAPP_SFK.services.BranchOfficeServices;
+import WEBAPP_SFK.services.CompanyServices;
+import WEBAPP_SFK.services.ShelfServices;
 import com.google.gson.JsonObject;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -23,10 +28,18 @@ public class RestApi extends BaseController {
                 after(ctx -> {
                     ctx.header("Content-Type", "application/json");
                 });
-                get("/findBranchOfficeByCompany/:id", ctx -> {
-                    long idCompany = Long.parseLong(ctx.pathParam("id",String.class).get());
+                get("/findBranchOfficeByCompany/:idCompany", ctx -> {
+                    long idCompany = Long.parseLong(ctx.pathParam("idCompany",String.class).get());
                     System.out.println("Company: "+ idCompany);
-                    ctx.json(new BranchOfficeServices().findBranchOfficeByCompany(idCompany));
+                    Company company = ControllerCore.getInstance().findOrganizationById(idCompany);
+                    ctx.json(company.getBranchOfficeList());
+                });
+                get("/companyList", ctx -> {
+                    ctx.json(new CompanyServices().findAll());
+                });
+                //findAllShelf
+                get("/shelfList", ctx -> {
+                    ctx.json(new ShelfServices().findAllShelf());
                 });
             });
         });

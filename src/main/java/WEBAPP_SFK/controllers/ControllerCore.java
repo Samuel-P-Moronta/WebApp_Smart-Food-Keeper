@@ -36,7 +36,7 @@ public class ControllerCore {
     public List<ShelfData> getShelfDataByShelf(String deviceName){
         List<ShelfData> sh1 = new ArrayList<ShelfData>();
         for(ShelfData s: listShelfData()){
-            if(s.getShelf().getDevice_name().equals(deviceName)){
+            if(s.getShelf().getDeviceId().equals(deviceName)){
                 sh1.add(s);
             }
         }
@@ -60,7 +60,7 @@ public class ControllerCore {
     public boolean createOrganization(Company company){
         return ORGANIZATION_SERVICES.update(company);
     }
-    public Company findOrganizationById(int id){return ORGANIZATION_SERVICES.find(id);}
+    public Company findOrganizationById(long id){return ORGANIZATION_SERVICES.find(id);}
     public Company findOrganizationByName(String name){return ORGANIZATION_SERVICES.findOrganizationByName(name);}
     public Company findOrganizationByBranchOffice(Long idBranchOffice){return ORGANIZATION_SERVICES.findOrganizationByBranchOffice(idBranchOffice);}
 
@@ -98,7 +98,4 @@ public class ControllerCore {
         return BRANCH_OFFICE_SERVICES.findBranchOfficeDirection(branchOfficeDirection);
     }
 
-    public BranchOffice findBranchOfficeByCompany(long idCompany) {
-        return BRANCH_OFFICE_SERVICES.findBranchOfficeByCompany(idCompany);
-    }
 }

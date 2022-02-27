@@ -1,6 +1,7 @@
 package WEBAPP_SFK.services;
 
 import WEBAPP_SFK.models.BranchOffice;
+import WEBAPP_SFK.models.Company;
 import WEBAPP_SFK.models.Notification;
 import WEBAPP_SFK.models.User;
 import WEBAPP_SFK.services.connect.DataBaseRepository;
@@ -36,17 +37,4 @@ public class BranchOfficeServices extends DataBaseRepository<BranchOffice> {
         }
         return null;
     }
-    public BranchOffice findBranchOfficeByCompany(long idCompany) {
-        EntityManager em = getEntityManager();
-        String sql = "";
-        sql+= "SELECT * FROM BRANCHOFFICE WHERE BRANCHOFFICE.COMPANY_ID = :idCompany";
-        Query query = em.createQuery(sql, BranchOffice.class);
-        query.setParameter("idCompany", idCompany);
-        List<BranchOffice> branchOfficeList = query.getResultList();
-        if (branchOfficeList.size() > 0) {
-            return branchOfficeList.get(0);
-        }
-        return null;
-    }
-
 }

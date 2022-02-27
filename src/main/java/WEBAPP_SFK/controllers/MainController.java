@@ -1,7 +1,6 @@
 package WEBAPP_SFK.controllers;
 
 import WEBAPP_SFK.models.BranchOffice;
-import WEBAPP_SFK.models.Company;
 import WEBAPP_SFK.models.Shelf;
 import WEBAPP_SFK.services.BranchOfficeServices;
 import WEBAPP_SFK.services.CompanyServices;
@@ -37,10 +36,10 @@ public class MainController extends BaseController{
                 });
                 /*-------------------------------------------------------------------------------*/
                 /*---------------------Company login----------------------------------------*/
-                post("/organization", ctx -> {
+                post("/company", ctx -> {
                     ctx.render("public/FrontEnd_SFK/views/login.html",model);
                 });
-                get("/organization", ctx -> {
+                get("/company", ctx -> {
                     ctx.render("public/FrontEnd_SFK/views/login.html");
                 });
                 /*-------------------------------------------------------------------------------*/
@@ -91,14 +90,10 @@ public class MainController extends BaseController{
                 });
                 get("/shelfMgmt", ctx ->{
                     System.out.println("Estoy dentro del endpoint");
-                    model.put("companySheflList", CompanyServices.getInstance().findAll());
-                    model.put("branchOfficeList", BranchOfficeServices.getInstance().findAll());
+                   // model.put("companySheflList", CompanyServices.getInstance().findAll());
+                    //model.put("branchOfficeList", BranchOfficeServices.getInstance().findAll());
                     ctx.render("/public/FrontEnd_SFK/views/shelfMgmt.html",model);
                 });
-                after(ctx -> {
-                    ctx.header("Content-Type", "application/json");
-                });
-
                 /*-----------------------------------------------------------------------------*/
                 /*-----------------------------Container management----------------------------*/
                 post("/containerMgmt", ctx ->{
@@ -134,7 +129,7 @@ public class MainController extends BaseController{
                         branchOffice = ControllerCore.getInstance().findBranchOfficeById(Long.parseLong(branchOfficeShelf));
                     }
                     if(branchOffice !=null){
-                        Shelf shelf = new Shelf(registerDate,branchOffice);
+                        Shelf shelf = new Shelf(branchOffice);
                         ControllerCore.getInstance().addShelf(shelf);
                     }
                     ctx.render("/public/FrontEnd_SFK/views/shelf.html");

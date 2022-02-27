@@ -32,67 +32,55 @@
                           <form method="post" action="/management/shelfRegister">
                             <div class="form-group">
                               <div class="form-group">
-                                <label for="companyShelf">Seleccionar empresa: </label>
-                                <select class="form-control" id="companyShelf" style="line-height: 2.0;" name="companyShelf" onchange="enableBranchOfficeSelect()">
-                                  <option th:each="company, cStatus: ${companySheflList}" th:value="${company.id}" th:text="${company.name}" th:selected="${cStatus.index==0}" selected></option>
+                                <label for="idCompany">Seleccionar empresa: </label>
+                                <select class="form-control" id="idCompany" style="line-height: 2.0;" name="idCompany" onchange="enableBranchOfficeSelect()">
+                                  <option value="-1" selected> Seleccionar Empresa</option>
                                 </select>
                               </div>
                               <div class="form-group">
                                 <label for="branchOfficeShelf">Seleccionar sucursal: </label>
                                 <select disabled class="form-control" id="branchOfficeShelf" name="branchOfficeShelf" style="line-height: 2.0;" onchange="enableAddButton()">
-                                  <option th:text="${branchOfficeByCompany}" selected></option>
-                                  <!---
-                                  <option th:each="branchOffice, bStatus: ${branchOfficeList}" th:value="${branchOffice.id}" th:text="${branchOffice.address.city}" th:selected="${bStatus.index==0}" selected></option>
-                                  --->
+                                  <option value="-1" selected>Seleccionar sucursal</option>
                                 </select>
                               </div>
                             </div>
                             <button type="submit" class="btn btn-primary" disabled id="add">REGISTRAR ESTANTE</button>
                           </form>
-                        </div>
-                        <div id="shelfList" class="tab-pane fade">
                           <h4 class="card-title">Listado</h4>
+                            <div class="table-responsive">
+                              <table id="example" class="table table-hover table-bordered" style="width:100%">
+                                <thead>
+                                <tr>
+                                  <th>ID</th>
+                                  <th>Empresa</th>
+                                  <th>Sucursal</th>
+                                  <th>Fecha de Registro</th>
+                                </tr>
+                                </thead>
+                                <tbody id="shelfList" name="shelfList">
 
-                          <div class="table-responsive">
-                            <table id="example" class="table table-hover table-bordered" style="width:100%">
-                              <thead>
-                              <tr>
-                                <th>ID</th>
-                                <th>Empresa</th>
-                                <th>Sucursal</th>
-                                <th>Status</th>
-                                <th>Fecha de Registro</th>
-                              </tr>
-                              </thead>
-                              <tbody>
-                              <tr>
-                                <td>co-001</td>
-                                <td>La Sirena</td>
-                                <td>Reparto Universitario</td>
-                                <td><label class="badge badge-success">Activo</label></td>
-                                <td>24/02/2022</td>
-                              </tr>    
-                              <tr>
-                                <td>sa-001</td>
-                                <td>Nacional</td>
-                                <td>Villa Olga</td>
-                                <td><label class="badge badge-success">Activo</label></td>
-                                <td>28/02/2022</td>
-                              </tr>    
-                              </tbody>
-                              <tfoot>
-                              <tr>
-                                <th>ID</th>
-                                <th>Empresa</th>
-                                <th>Sucursal</th>
-                                <th>Status</th>
-                                <th>Fecha de Registro</th>
-                              </tr>
-                              </tfoot>
-                            </table>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                  <th>ID</th>
+                                  <th>Empresa</th>
+                                  <th>Sucursal</th>
+                                  <th>Fecha de Registro</th>
+                                </tr>
+                                </tfoot>
+                              </table>
+                            </div>
                           </div>
+
+
+
                         </div>
+
                       </div>
+
+
+
+
                     </div>
                   </div>
                 </div>
