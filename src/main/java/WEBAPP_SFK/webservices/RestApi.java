@@ -2,6 +2,7 @@ package WEBAPP_SFK.webservices;
 
 import WEBAPP_SFK.controllers.BaseController;
 import WEBAPP_SFK.controllers.ControllerCore;
+import WEBAPP_SFK.models.BranchOffice;
 import WEBAPP_SFK.models.Company;
 import WEBAPP_SFK.models.ErrorResponse;
 import WEBAPP_SFK.models.Shelf;
@@ -11,6 +12,9 @@ import WEBAPP_SFK.services.ShelfServices;
 import com.google.gson.JsonObject;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
@@ -39,7 +43,9 @@ public class RestApi extends BaseController {
                 });
                 //findAllShelf
                 get("/shelfList", ctx -> {
-                    ctx.json(new ShelfServices().findAllShelf());
+                    List<Shelf> shelfList;
+                    shelfList = new ShelfServices().findAll();
+                    ctx.json(shelfList);
                 });
             });
         });

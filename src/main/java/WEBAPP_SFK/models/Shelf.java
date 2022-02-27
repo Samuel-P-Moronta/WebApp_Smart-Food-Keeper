@@ -2,6 +2,7 @@ package WEBAPP_SFK.models;
 
 import WEBAPP_SFK.models.enums.StatusShelf;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -15,7 +16,6 @@ public class Shelf implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String deviceId;
     private String registerDate;
-    @JsonIgnore
     @ManyToOne
     private BranchOffice branchOffice;
 

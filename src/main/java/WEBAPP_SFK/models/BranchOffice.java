@@ -22,8 +22,11 @@ public class BranchOffice implements Serializable {
     private Date registerDate;
     @ManyToOne
     private Company company;
+    /*
     @OneToMany(mappedBy = "branchOffice",fetch = FetchType.EAGER)
     private Set<Shelf> shelfList = new HashSet<>();
+
+     */
     @OneToMany(mappedBy = "branchOffice",fetch = FetchType.EAGER)
     private Set<Container> containerList = new HashSet<>();
 
@@ -69,7 +72,7 @@ public class BranchOffice implements Serializable {
     public void setCompany(Company company) {
         this.company = company;
     }
-
+    /*
     public Set<Shelf> getShelfList() {
         return shelfList;
     }
@@ -77,6 +80,8 @@ public class BranchOffice implements Serializable {
     public void setShelfList(Set<Shelf> shelfList) {
         this.shelfList = shelfList;
     }
+
+     */
 
     public Set<Container> getContainerList() {
         return containerList;

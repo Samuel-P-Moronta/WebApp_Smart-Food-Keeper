@@ -88,7 +88,7 @@ function shelfList(){
     Http.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             serverResponse = JSON.parse(Http.responseText);
-            console.log("Respuesta servidor: ",serverResponse);
+            console.log("Respuesta servidor shelf list: ",serverResponse);
             if (serverResponse != null) {
                 if (serverResponse.length > 0) {
                     shelfListTable(serverResponse);
@@ -103,15 +103,14 @@ function shelfListTable(data){
     for(var key in data){
         row += "<tr>"
         row += "<td>" + "SH-"+data[key].deviceId + "</td>"
-        row += "<td>" + "</td>"
-        row += "<td>" + "</td>"
-
+        row += "<td>" + data[key].branchOffice.company.name+"</td>"
+        row += "<td>" + data[key].branchOffice.address.city+"</td>"
         row += "<td>" + data[key].registerDate+"</td>"
         row += "<tr>"
 
         console.log("id: ", data[key].deviceId);
         console.log("Register date: ", data[key].registerDate);
-        console.log("Company: ", data[key].branchOffice.city);
+        console.log("Company: ", data[key].branchOffice.address.city);
     }
     document.getElementById("shelfList").innerHTML = row;
 
