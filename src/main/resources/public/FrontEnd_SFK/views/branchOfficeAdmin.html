@@ -22,136 +22,9 @@
                   <div class="card-body">
                     <div class="row">
                       <div class="tab-content tab-transparent-content">
-                        <div id="shelfMgmt" class="tab-pane fade">
-                          <h4 class="card-title">Nuevo Estante</h4>
-                          <form method="post" action="/projectAdmin">
-                            <div class="row">
-                              <div class="form-group col-md-6">
-                                <label for="idCompany">Seleccionar empresa: </label>
-                                <select class="form-control" id="idCompany" style="line-height: 2.0;" name="idCompany" onchange="enableBranchOfficeSelect()">
-                                  <option value="-1" selected> Seleccionar Empresa</option>
-                                </select>
-                              </div>
-                              <div class="form-group col-md-6">
-                                <label for="branchOfficeShelf">Seleccionar sucursal: </label>
-                                <select disabled class="form-control" id="branchOfficeShelf" name="branchOfficeShelf" style="line-height: 2.0;" onchange="enableAddButton()">
-                                  <option value="-1" selected>Seleccionar sucursal</option>
-                                </select>
-                              </div>
-                            </div>
-                              <button type="submit" class="btn btn-primary" disabled id="add">REGISTRAR ESTANTE</button>
-                          </form>
-                          <hr>
-                          <h4 class="card-title">LISTADO DE ESTANTES</h4>
-                            <div class="table-responsive">
-                              <table id="tableShelfList" name="tableShelfList" class="table table-hover table-bordered" style="width:100%">
-                                <thead>
-                                <tr>
-                                  <th>ID</th>
-                                  <th>Empresa</th>
-                                  <th>Sucursal</th>
-                                  <th>Fecha de Registro</th>
-                                  <th>Accion</th>
-
-                                </tr>
-                                </thead>
-                                <tbody id="shelfList" name="shelfList">
-
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                  <th>ID</th>
-                                  <th>Empresa</th>
-                                  <th>Sucursal</th>
-                                  <th>Fecha de Registro</th>
-                                </tr>
-                                </tfoot>
-                              </table>
-                            </div>
-                          </div>
-                        <div id="containerManagement" class="tab-pane fade">
-                          <h4 class="card-title text-uppercase">Nuevo contenedor</h4>
-                          <form>
-                            <div class="row">
-                              <div class="form-group col-md-6">
-                                <label for="activateCodeContainer">Codigo de activacion</label>
-                                <input type="text" class="form-control" id="activateCodeContainer" placeholder="codigo">
-                              </div>
-                              <div class="form-group col-md-6">
-                                <label for="branchOfficeContainer">Asignar a sucursal</label>
-                                <input type="text" class="form-control" id="branchOfficeContainer" placeholder="Sucursal">
-                              </div>
-                              <div class="form-group col-md-4">
-                                <button type="button" class="btn btn-primary">REGISTRAR CONTENEDOR</button>
-                              </div>
-                            </div>
-                          </form>
-                          <hr>
-                          <h4 class="card-title text-uppercase">Listado de contenedores</h4>
-                          <div class="table-responsive">
-                            <table id="example" class="table table-hover table-bordered" style="width:100%">
-                              <thead>
-                              <tr>
-                                <th>Sucursal</th>
-                                <th>Fecha de registro</th>
-                                <th>Status</th>
-                              </tr>
-                              </thead>
-                              <tbody>
-                              <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td><label class="badge badge-success">Activo</label></td>
-
-                              </tr>
-                              <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td><label class="badge badge-success">Activo</label></td>
-
-                              </tr>
-                              <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td><label class="badge badge-success">Activo</label></td>
-
-                              </tr>
-                              <tr>
-                                <td>Cedric Kelly</td>
-                                <td>Senior Javascript Developer</td>
-                                <td><label class="badge badge-danger">Inactivo</label></td>
-
-                              </tr>
-                              <tr>
-                                <td>Airi Satou</td>
-                                <td>Accountant</td>
-                                <td><label class="badge badge-success">Activo</label></td>
-
-                              </tr>
-                              <tr>
-                                <td>Fiona Green</td>
-                                <td>Chief Operating Officer (COO)</td>
-                                <td><label class="badge badge-danger">Inactivo</label></td>
-                              </tr>
-                              <tr>
-                                <td>Shou Itou</td>
-                                <td>Regional Marketing</td>
-                                <td><label class="badge badge-danger">Inactivo</label></td>
-                              </tr>
-                              </tbody>
-                              <tfoot>
-                              <tr>
-                                <th>Sucursal</th>
-                                <th>Fecha de registro</th>
-                                <th>Status</th>
-                              </tr>
-                              </tfoot>
-                            </table>
-                          </div>
-                        </div>
                         <div id="branchOfficeMgmt" class="tab-pane fade show active pt-3">
                           <h4 class="card-title text-uppercase">NUEVA SUCURSAL</h4>
-                          <form>
+                          <form method="post" action="/projectAdmin">
                             <div class="form-group col-md-12">
                               <label for="idCompany">Seleccionar empresa donde pertenece la sucursal: </label>
                               <select class="form-control" id="idCompany" style="line-height: 2.0;" name="idCompany" onchange="enableBranchOfficeSelect()">
@@ -162,73 +35,46 @@
                             <div class="form-group">
                               <div class="form-group">
                                 <label for="direction">Direccion</label>
-                                <input type="text" class="form-control" id="direction" placeholder=" Ej. Calle 16 de agosto #10">
+                                <input type="text" class="form-control" id="direction" name="direction" placeholder=" Ej. Calle 16 de agosto #10">
                               </div>
                               <div class="form-group">
                                 <label for="city">Ciudad</label>
-                                <input type="text" class="form-control" id="city" placeholder="Santiago">
+                                <input type="text" class="form-control" id="city" name="city" placeholder="Santiago">
                               </div>
                             </div>
                             <button type="submit" class="btn btn-primary">REGISTRAR SUCURSAL</button>
                           </form>
-                          <hr>
                           <h4 class="card-title text-uppercase">LISTADO DE SUCURSALES</h4>
                           <div class="table-responsive">
                             <table id="example" class="table table-hover table-bordered" style="width:100%">
                               <thead>
                               <tr>
-                                <th>Sucursal</th>
+                                <th>Empresa</th>
+                                <th>Ciudad</th>
+                                <th>Direccion</th>
                                 <th>Fecha de registro</th>
-                                <th>Status</th>
+                                <th>Accion</th>
                               </tr>
                               </thead>
                               <tbody>
-                              <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td><label class="badge badge-success">Activo</label></td>
-
-                              </tr>
-                              <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td><label class="badge badge-success">Activo</label></td>
-
-                              </tr>
-                              <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td><label class="badge badge-success">Activo</label></td>
-
-                              </tr>
-                              <tr>
-                                <td>Cedric Kelly</td>
-                                <td>Senior Javascript Developer</td>
-                                <td><label class="badge badge-danger">Inactivo</label></td>
-
-                              </tr>
-                              <tr>
-                                <td>Airi Satou</td>
-                                <td>Accountant</td>
-                                <td><label class="badge badge-success">Activo</label></td>
-
-                              </tr>
-                              <tr>
-                                <td>Fiona Green</td>
-                                <td>Chief Operating Officer (COO)</td>
-                                <td><label class="badge badge-danger">Inactivo</label></td>
-                              </tr>
-                              <tr>
-                                <td>Shou Itou</td>
-                                <td>Regional Marketing</td>
-                                <td><label class="badge badge-danger">Inactivo</label></td>
+                              <tr th:each="branchOffice: ${branchOfficeList}">
+                                <td class="text-left" th:text="${branchOffice.company.name}">Id</td>
+                                <td class="text-left" th:text="${branchOffice.address.city}">Empresa</td>
+                                <td class="text-left" th:text="${branchOffice.address.city}">Sucursal</td>
+                                <td class="text-left" th:text="${branchOffice.registerDate}">Fecha de registro</td>
+                                <td class="text-center">
+                                  <a><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalEdit">Delete</button></a>
+                                  <a><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Delete</button></a>
+                                </td>
                               </tr>
                               </tbody>
                               <tfoot>
                               <tr>
-                                <th>Sucursal</th>
+                                <th>Empresa</th>
+                                <th>Ciudad</th>
+                                <th>Direccion</th>
                                 <th>Fecha de registro</th>
-                                <th>Status</th>
+                                <th>Accion</th>
                               </tr>
                               </tfoot>
                             </table>

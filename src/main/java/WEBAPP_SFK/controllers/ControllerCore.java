@@ -50,11 +50,11 @@ public class ControllerCore {
     public Shelf getShelfByDeviceName(String shelf){return SHELF_SERVICES.find(shelf);}
 
     //----------------------------------CONTAINER--------------------------------------------------//
-    public boolean createContainer(Container container){return CONTAINER_SERVICES.create(container);}
+    public boolean addContainer(Container container){return CONTAINER_SERVICES.create(container);}
     public boolean updateContainer(Container container){return CONTAINER_SERVICES.update(container);}
     public boolean deleteContainer(Container container){return CONTAINER_SERVICES.delete(container);}
     public boolean createContainerData(ContainerData containerData){return CONTAINER_DATA_SERVICES.create(containerData);}
-    public Container findContainerById(int id){return CONTAINER_SERVICES.find(id);}
+    public Container findContainerById(long id){return CONTAINER_SERVICES.find(id);}
 
     //----------------------------------ORGANIZATION-----------------------------------------------//
     public boolean createOrganization(Company company){

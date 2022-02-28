@@ -1,5 +1,3 @@
-
-
 function findBranchOfficeByCompany(idCompany){
     let serverResponse = "";
     let endpoint = "findBranchOfficeByCompany"
@@ -50,7 +48,8 @@ function loadCompanyList(data){
     }
 }
 function loadBranchOfficeList(data){
-    var branchOffice = document.getElementById("branchOfficeShelf");
+    var branchOffice = document.getElementById("branchOffice");
+
     branchOffice.length = data.length + 1;
     let j = 0;
     for(let i in data){
@@ -61,16 +60,27 @@ function loadBranchOfficeList(data){
 }
 function enableBranchOfficeSelect() {
     var idCompany = document.getElementById('idCompany').value;
-    var branchOffice = document.getElementById("branchOfficeShelf");
+    var branchOffice = document.getElementById("branchOffice");
 
     branchOffice.disabled = true;
     if(branchOffice != -1){
         branchOffice.disabled = false;
         findBranchOfficeByCompany(idCompany)
     }
+
+}
+function enableBranchOfficeSelectContainer() {
+    var idCompany = document.getElementById('idCompany').value;
+    var branchOfficeContainer = document.getElementById("branchOfficeContainer");
+
+    branchOfficeContainer.disabled = true;
+    if(branchOfficeContainer != -1){
+        branchOfficeContainer.disabled = false;
+        findBranchOfficeByCompany(idCompany)
+    }
 }
 function enableAddButton() {
-    var idBranchOffice = document.getElementById('branchOfficeShelf').value;
+    var idBranchOffice = document.getElementById('branchOffice').value;
     let add = document.getElementById('add');
     add.disabled = true;
     if (idBranchOffice != -1) {
@@ -107,6 +117,10 @@ function shelfListTable(data){
         row += "<td>" + data[key].branchOffice.address.city+"</td>"
         row += "<td>" + data[key].registerDate+"</td>"
         row += "<tr>"
+
+        console.log("id: ", data[key].deviceId);
+        console.log("Register date: ", data[key].registerDate);
+        console.log("Company: ", data[key].branchOffice.address.city);
     }
     document.getElementById("shelfList").innerHTML = row;
 

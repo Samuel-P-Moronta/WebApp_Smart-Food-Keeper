@@ -6,6 +6,7 @@ import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,24 +20,26 @@ public class BranchOffice implements Serializable {
     private Long id;
     @Embedded
     private Address address;
-    private Date registerDate;
+    private String registerDate;
     @ManyToOne
     private Company company;
     /*
     @OneToMany(mappedBy = "branchOffice",fetch = FetchType.EAGER)
     private Set<Shelf> shelfList = new HashSet<>();
-     */
+
     @OneToMany(mappedBy = "branchOffice",fetch = FetchType.EAGER)
     private Set<Container> containerList = new HashSet<>();
+
+     */
 
     public BranchOffice(){
 
     }
 
-
-    public BranchOffice(Address address, Date registerDate, Company company) {
+    public BranchOffice(Address address, Company company) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.registerDate = sdf.format(new Date());
         this.address = address;
-        this.registerDate = registerDate;
         this.company = company;
     }
 
@@ -56,11 +59,11 @@ public class BranchOffice implements Serializable {
         this.address = address;
     }
 
-    public Date getRegisterDate() {
+    public String getRegisterDate() {
         return registerDate;
     }
 
-    public void setRegisterDate(Date registerDate) {
+    public void setRegisterDate(String registerDate) {
         this.registerDate = registerDate;
     }
 
@@ -80,7 +83,7 @@ public class BranchOffice implements Serializable {
         this.shelfList = shelfList;
     }
 
-     */
+
 
     public Set<Container> getContainerList() {
         return containerList;
@@ -89,4 +92,6 @@ public class BranchOffice implements Serializable {
     public void setContainerList(Set<Container> containerList) {
         this.containerList = containerList;
     }
+
+     */
 }

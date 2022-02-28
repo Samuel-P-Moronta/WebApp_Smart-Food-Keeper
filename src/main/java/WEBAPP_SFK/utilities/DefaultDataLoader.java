@@ -48,6 +48,7 @@ public class DefaultDataLoader {
 
 
         ControllerCore controllerCore1 = new ControllerCore();
+        /*
         BranchOffice branchOffice1 = new BranchOffice(address, new Date(),controllerCore1.findOrganizationByName("El nacional"));
         BranchOffice branchOffice2 = new BranchOffice(address1, new Date(),controllerCore1.findOrganizationByName("El Bravo"));
         BranchOffice branchOffice3 = new BranchOffice(address2, new Date(),controllerCore1.findOrganizationByName("Caco de botella"));
@@ -61,6 +62,8 @@ public class DefaultDataLoader {
         ControllerCore.getInstance().createBranchOffice(branchOffice4);
         ControllerCore.getInstance().createBranchOffice(branchOffice5);
 
+         */
+
 
     }
     public void createDefaultSuperUser(){
@@ -68,7 +71,7 @@ public class DefaultDataLoader {
         // Creating company
         Company company = new Company("La Sirena",new Date());
         // Creating branch Office
-        BranchOffice branchOffice = new BranchOffice(new Address("Calle 30 de Marzo","Santiago"),new Date(),ControllerCore.getInstance().findOrganizationById(1));
+        //BranchOffice branchOffice = new BranchOffice(new Address("Calle 30 de Marzo","Santiago"),new Date(),ControllerCore.getInstance().findOrganizationById(1));
         //Creating super user
         /*
         User user = new User(
@@ -122,11 +125,16 @@ public class DefaultDataLoader {
         Shelf shelfAux = new Shelf(branchOffice);
         ControllerCore.getInstance().addShelf(shelfAux);
     }
+    public void createDefaultContainer(){
+        BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(1);
+        Container container = new Container(branchOffice);
+        ControllerCore.getInstance().addContainer(container);
+    }
     public void createDefaultContainerData(){
         Container containerAux = ControllerCore.getInstance().findContainerById(1);
         if(containerAux!=null){
-            Container container = new Container(new Date());
-            ControllerCore.getInstance().createContainer(container);
+          //  Container container = new Container(new Date());
+           // ControllerCore.getInstance().createContainer(container);
             /*
             int index = 0;
             while(index < 2){
