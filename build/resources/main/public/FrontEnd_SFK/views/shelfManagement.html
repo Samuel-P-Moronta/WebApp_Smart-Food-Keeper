@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head th:replace="public/FrontEnd_SFK/views/template.html :: head"></head>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row" th:replace="public/FrontEnd_SFK/views/template.html :: header">
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar" th:replace="public/FrontEnd_SFK/views/template.html::sidebar">
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="d-xl-flex justify-content-between align-items-start" th:replace="public/FrontEnd_SFK/views/adminTemplate.html::adminTittle"></div>
+            <div class="row" th:replace="public/FrontEnd_SFK/views/adminTemplate.html::adminStats"></div>
+            <div class="tab-content tab-transparent-content">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="tab-content tab-transparent-content">
+                        <div id="shelfMgmt" class="tab-pane fade show active pt-3">
+                          <h4 class="card-title">Nuevo Estante</h4>
+                          <form method="post" action="/projectAdmin/shelfManagement">
+                            <div class="row">
+                              <div class="form-group col-md-6">
+                                <label for="idCompany">Seleccionar empresa: </label>
+                                <select class="form-control" id="idCompany" style="line-height: 2.0;" name="idCompany" onchange="enableBranchOfficeSelect()">
+                                  <option value="-1" selected> Seleccionar Empresa</option>
+                                </select>
+                              </div>
+                              <div class="form-group col-md-6">
+                                <label for="branchOfficeShelf">Seleccionar sucursal: </label>
+                                <select disabled class="form-control" id="branchOfficeShelf" name="branchOfficeShelf" style="line-height: 2.0;" onchange="enableAddButton()">
+                                  <option value="-1" selected>Seleccionar sucursal</option>
+                                </select>
+                              </div>
+                            </div>
+                              <button type="submit" class="btn btn-primary" disabled id="add">REGISTRAR ESTANTE</button>
+                          </form>
+                          <hr>
+                          <h4 class="card-title">LISTADO DE ESTANTES</h4>
+                            <div class="table-responsive">
+                              <table id="tableShelfList" name="tableShelfList" class="table table-hover table-bordered" style="width:100%">
+                                <thead>
+                                <tr>
+                                  <th>ID</th>
+                                  <th>Empresa</th>
+                                  <th>Sucursal</th>
+                                  <th>Fecha de Registro</th>
+                                  <th>Accion</th>
+
+                                </tr>
+                                </thead>
+                                <tbody id="shelfList" name="shelfList">
+
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                  <th>ID</th>
+                                  <th>Empresa</th>
+                                  <th>Sucursal</th>
+                                  <th>Fecha de Registro</th>
+                                </tr>
+                                </tfoot>
+                              </table>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script></script>
+    <div th:replace="public/FrontEnd_SFK/views/template.html::javascript"></div>
+  </body>
+</html>

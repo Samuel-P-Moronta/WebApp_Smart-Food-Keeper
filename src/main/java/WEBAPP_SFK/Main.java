@@ -1,9 +1,6 @@
 package WEBAPP_SFK;
 
-import WEBAPP_SFK.controllers.ControllerCore;
-import WEBAPP_SFK.controllers.MainController;
-import WEBAPP_SFK.controllers.SFKException;
-import WEBAPP_SFK.controllers.WebSocketController;
+import WEBAPP_SFK.controllers.*;
 import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.services.connect.DataBaseServices;
 import WEBAPP_SFK.utilities.DefaultDataLoader;
@@ -52,11 +49,12 @@ public class Main {
         new SFKException(app).aplicarRutas();
         new WebSocketController(app).aplicarRutas();
         new MainController(app).aplicarRutas();
+        new SfkProjectAdmin(app).aplicarRutas();
         new RestApi(app).aplicarRutas();
 
 
       //  DefaultDataLoader.getInstance().createDefaultCompany();
-      DefaultDataLoader.getInstance().createDefaultBranchOffice();
+      //DefaultDataLoader.getInstance().createDefaultBranchOffice();
        //DefaultDataLoader.getInstance().createDefaultShelf();
 
 

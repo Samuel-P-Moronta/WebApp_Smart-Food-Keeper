@@ -4,6 +4,8 @@ import WEBAPP_SFK.models.BranchOffice;
 import WEBAPP_SFK.models.Shelf;
 import WEBAPP_SFK.services.BranchOfficeServices;
 import WEBAPP_SFK.services.CompanyServices;
+import WEBAPP_SFK.services.ContainerServices;
+import WEBAPP_SFK.services.ShelfServices;
 import io.javalin.Javalin;
 
 import java.util.*;
@@ -84,17 +86,6 @@ public class MainController extends BaseController{
                     ctx.render("/public/FrontEnd_SFK/views/branchOffice.html",model);
                 });
                 /*-----------------------------------------------------------------------------*/
-                /*-----------------------------Shelf management--------------------------------*/
-                post("/shelfMgmt", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/shelfMgmt.html");
-                });
-                get("/shelfMgmt", ctx ->{
-                    System.out.println("Estoy dentro del endpoint");
-                   // model.put("companySheflList", CompanyServices.getInstance().findAll());
-                    //model.put("branchOfficeList", BranchOfficeServices.getInstance().findAll());
-                    ctx.render("/public/FrontEnd_SFK/views/shelfMgmt.html",model);
-                });
-                /*-----------------------------------------------------------------------------*/
                 /*-----------------------------Container management----------------------------*/
                 post("/containerMgmt", ctx ->{
                     ctx.render("/public/FrontEnd_SFK/views/containerMgmt.html");
@@ -121,17 +112,6 @@ public class MainController extends BaseController{
                 /*---------------------------------------------------------------------------*/
                 /*--------------------------Shelf------------------------------*/
                 post("/shelfRegister", ctx ->{
-                    String branchOfficeShelf = ctx.formParam("branchOfficeShelf");
-                    Date registerDate = new Date();
-                    System.out.println("Branch office: "+branchOfficeShelf);
-                    BranchOffice branchOffice = null;
-                    if(branchOfficeShelf !=null){
-                        branchOffice = ControllerCore.getInstance().findBranchOfficeById(Long.parseLong(branchOfficeShelf));
-                    }
-                    if(branchOffice !=null){
-                        Shelf shelf = new Shelf(branchOffice);
-                        ControllerCore.getInstance().addShelf(shelf);
-                    }
                     ctx.render("/public/FrontEnd_SFK/views/shelf.html");
                 });
                 get("/shelf", ctx ->{

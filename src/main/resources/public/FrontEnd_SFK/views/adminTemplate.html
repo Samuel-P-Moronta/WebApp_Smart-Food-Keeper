@@ -2,45 +2,38 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head">
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>SFK Project</title>
     <!-- plugins:css -->
-    <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css" />
 
     <!--
-    <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
-    --->
-    <link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css">
-    <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+<link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
+--->
+    <link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css" />
+    <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css" />
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
 
     <!--<link rel="stylesheet" href="../vendors/font-awesome/css/font-awesome.min.css" />-->
-    <link rel="stylesheet" href="../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <!-- endinject -->
     <!-- Layout styles -->
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css" />
     <!-- End layout styles -->
     <link rel="shortcut icon" href="../assets/images/favicon.png" />
 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
 
-    <script type='text/javascript' src='https://code.jquery.com/jquery-3.5.1.js'></script>
-    <script type='text/javascript' src='https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js'></script>
-    <script type='text/javascript' src='https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js'></script>
-
-
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css"  type="text/css">
-
-
-
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css" type="text/css" />
 </head>
 <body>
 <div class="container-scroller">
@@ -56,12 +49,10 @@
             </button>
 
             <ul class="navbar-nav navbar-nav-right">
-
-
                 <li class="nav-item nav-profile dropdown">
                     <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="nav-profile-img">
-                            <img src="../assets/images/faces/face28.png" alt="image">
+                            <img src="../assets/images/faces/face28.png" alt="image" />
                         </div>
                         <div class="nav-profile-text">
                             <p class="mb-1 text-black">Henry Klein</p>
@@ -69,7 +60,7 @@
                     </a>
                     <div class="dropdown-menu navbar-dropdown dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="profileDropdown" data-x-placement="bottom-end">
                         <div class="p-3 text-center bg-primary">
-                            <img class="img-avatar img-avatar48 img-avatar-thumb" src="../assets/images/faces/face28.png" alt="">
+                            <img class="img-avatar img-avatar48 img-avatar-thumb" src="../assets/images/faces/face28.png" alt="" />
                         </div>
                         <div class="p-2">
                             <h5 class="dropdown-header text-uppercase ps-2 text-dark">User Options</h5>
@@ -99,7 +90,7 @@
                             </div>
                             <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
                                 <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
-                                <p class="text-gray ellipsis mb-0"> Just a reminder that you have an event today </p>
+                                <p class="text-gray ellipsis mb-0">Just a reminder that you have an event today</p>
                             </div>
                         </a>
                         <div class="dropdown-divider"></div>
@@ -111,7 +102,7 @@
                             </div>
                             <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
                                 <h6 class="preview-subject font-weight-normal mb-1">Settings</h6>
-                                <p class="text-gray ellipsis mb-0"> Update dashboard </p>
+                                <p class="text-gray ellipsis mb-0">Update dashboard</p>
                             </div>
                         </a>
                         <div class="dropdown-divider"></div>
@@ -123,7 +114,7 @@
                             </div>
                             <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
                                 <h6 class="preview-subject font-weight-normal mb-1">Launch Admin</h6>
-                                <p class="text-gray ellipsis mb-0"> New admin wow! </p>
+                                <p class="text-gray ellipsis mb-0">New admin wow!</p>
                             </div>
                         </a>
                         <div class="dropdown-divider"></div>
@@ -183,7 +174,7 @@
                 </li>
                 <li class="nav-item nav-category">Administracion global</li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/projectAdmin/branchOffice">
+                    <a class="nav-link" href="/projectAdmin">
                         <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
                         <span class="menu-title">Sucursales</span>
                     </a>
@@ -200,14 +191,47 @@
                         <span class="menu-title">Container</span>
                     </a>
                 </li>
-
             </ul>
         </nav>
-        <!-- partial -->
 
-        <!-- main-panel ends -->
+        <div class="d-xl-flex justify-content-between align-items-start" th:fragment="adminTittle">
+            <h2 class="text-dark font-weight-bold mb-2">ADMINISTRACION SFK-PROJECT</h2>
+        </div>
+        <div class="row" th:fragment="adminStats">
+            <div class="col-lg-3 mb-4" style="height: 8rem;">
+                <div class="card border-left-danger shadow h-100">
+                    <div class="card-body">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">EMPRESAS</div>
+                        <h2 class="mb-4 text-dark font-weight-bold" th:text="${allCompany}"></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 mb-4" style="height: 8rem;">
+                <div class="card border-left-success shadow h-100">
+                    <div class="card-body">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">SUCURSALES</div>
+                        <h2 class="mb-4 text-dark font-weight-bold" th:text="${allBranchOffice}"></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 mb-4" style="height: 8rem;">
+                <div class="card border-left-success shadow h-100">
+                    <div class="card-body">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">ESTANTES</div>
+                        <h2 class="mb-4 text-dark font-weight-bold" th:text="${allShelf}"></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 mb-4" style="height: 8rem;">
+                <div class="card border-left-success shadow h-100">
+                    <div class="card-body">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">CONTENEDORES</div>
+                        <h2 class="mb-4 text-dark font-weight-bold" th:text="${allContainer}"></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- page-body-wrapper ends -->
 </div>
 <!-- container-scroller -->
 <!-- plugins:js -->
@@ -227,18 +251,18 @@
     <script src="../assets/js/chart.js"></script>
 
     <!-- End custom js for this page -->
-    <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'></script>
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript">
-        $(function() {
-            $('[data-toggle="tooltip"]').tooltip()
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
     <script type="text/javascript">
-        $(document).ready(function() {
-            $('#example').DataTable();
-        } );
+        $(document).ready(function () {
+            $("#example").DataTable();
+        });
     </script>
-    <script type='text/javascript' src="../js/sfkProjectAdmin.js"></script>
+    <script type="text/javascript" src="../js/sfkProjectAdmin.js"></script>
 </div>
 </body>
 </html>

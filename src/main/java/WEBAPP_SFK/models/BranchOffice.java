@@ -25,7 +25,6 @@ public class BranchOffice implements Serializable {
     /*
     @OneToMany(mappedBy = "branchOffice",fetch = FetchType.EAGER)
     private Set<Shelf> shelfList = new HashSet<>();
-
      */
     @OneToMany(mappedBy = "branchOffice",fetch = FetchType.EAGER)
     private Set<Container> containerList = new HashSet<>();

@@ -16,6 +16,7 @@ public class Shelf implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String deviceId;
     private String registerDate;
+    //JSON IGNORE
     @ManyToOne
     private BranchOffice branchOffice;
 

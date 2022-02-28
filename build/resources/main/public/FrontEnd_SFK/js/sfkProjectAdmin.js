@@ -107,10 +107,6 @@ function shelfListTable(data){
         row += "<td>" + data[key].branchOffice.address.city+"</td>"
         row += "<td>" + data[key].registerDate+"</td>"
         row += "<tr>"
-
-        console.log("id: ", data[key].deviceId);
-        console.log("Register date: ", data[key].registerDate);
-        console.log("Company: ", data[key].branchOffice.address.city);
     }
     document.getElementById("shelfList").innerHTML = row;
 

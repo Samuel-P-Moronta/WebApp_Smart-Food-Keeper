@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
   <head th:replace="public/FrontEnd_SFK/views/template.html :: head"></head>
   <body>
     <div class="container-scroller">
@@ -14,13 +14,8 @@
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-            <div class="d-sm-flex justify-content-between align-items-center transaparent-tab-border {">
-              <!-- Credit card form tabs -->
-              <ul role="tablist" class="nav nav-tabs tab-transparent">
-                <li class="nav-item"> <a data-toggle="pill" href="#shelfMgmt" class="nav-link active "> <i class="fas fa-credit-card mr-2"></i>Nuevo Estante</a> </li>
-                <li class="nav-item"> <a data-toggle="pill" href="#shelfList"     class="nav-link"> <i class="fab fa-paypal mr-2"></i>Listado de Estantes</a> </li>
-              </ul>
-            </div>
+            <div class="d-xl-flex justify-content-between align-items-start" th:replace="public/FrontEnd_SFK/views/adminTemplate.html::adminTittle"></div>
+            <div class="row" th:replace="public/FrontEnd_SFK/views/adminTemplate.html::adminStats"></div>
             <div class="tab-content tab-transparent-content">
               <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
@@ -28,33 +23,36 @@
                     <div class="row">
                       <div class="tab-content tab-transparent-content">
                         <div id="shelfMgmt" class="tab-pane fade show active pt-3">
-                          <h4 class="card-title">Nuevo Estante</h4>
-                          <form method="post" action="/management/shelfRegister">
-                            <div class="form-group">
-                              <div class="form-group">
+                          <h4 class="card-title">Nuevo contenedor</h4>
+                          <form method="post" action="/projectAdmin/containerManagement">
+                            <div class="row">
+                              <div class="form-group col-md-6">
                                 <label for="idCompany">Seleccionar empresa: </label>
                                 <select class="form-control" id="idCompany" style="line-height: 2.0;" name="idCompany" onchange="enableBranchOfficeSelect()">
                                   <option value="-1" selected> Seleccionar Empresa</option>
                                 </select>
                               </div>
-                              <div class="form-group">
+                              <div class="form-group col-md-6">
                                 <label for="branchOfficeShelf">Seleccionar sucursal: </label>
                                 <select disabled class="form-control" id="branchOfficeShelf" name="branchOfficeShelf" style="line-height: 2.0;" onchange="enableAddButton()">
                                   <option value="-1" selected>Seleccionar sucursal</option>
                                 </select>
                               </div>
                             </div>
-                            <button type="submit" class="btn btn-primary" disabled id="add">REGISTRAR ESTANTE</button>
+                              <button type="submit" class="btn btn-primary" disabled id="add">REGISTRAR CONTENEDOR</button>
                           </form>
-                          <h4 class="card-title">Listado</h4>
+                          <hr>
+                          <h4 class="card-title">LISTADO DE CONTENEDORES</h4>
                             <div class="table-responsive">
-                              <table id="example" class="table table-hover table-bordered" style="width:100%">
+                              <table id="tableShelfList" name="tableShelfList" class="table table-hover table-bordered" style="width:100%">
                                 <thead>
                                 <tr>
                                   <th>ID</th>
                                   <th>Empresa</th>
                                   <th>Sucursal</th>
                                   <th>Fecha de Registro</th>
+                                  <th>Accion</th>
+
                                 </tr>
                                 </thead>
                                 <tbody id="shelfList" name="shelfList">
@@ -71,32 +69,16 @@
                               </table>
                             </div>
                           </div>
-
-
-
-                        </div>
-
                       </div>
-
-
-
-
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
-          <!-- partial -->
         </div>
-        <!-- main-panel ends -->
       </div>
-      <!-- page-body-wrapper ends -->
     </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
     <script></script>
     <div th:replace="public/FrontEnd_SFK/views/template.html::javascript"></div>
   </body>
