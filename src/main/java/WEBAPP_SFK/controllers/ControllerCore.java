@@ -98,4 +98,7 @@ public class ControllerCore {
         return BRANCH_OFFICE_SERVICES.findBranchOfficeDirection(branchOfficeDirection);
     }
 
+    public Person findPersonByIdentificationCard(String identificationCard) {
+        return PERSON_SERVICES.findPersonByIdentificationCard(identificationCard);
+    }
 }

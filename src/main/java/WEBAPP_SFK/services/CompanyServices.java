@@ -48,16 +48,4 @@ public class CompanyServices extends DataBaseRepository<Company> {
         }
         return null;
     }
-    public Company createOrganization(Company entidad) throws IllegalArgumentException, PersistenceException {
-        EntityManager em = getEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.persist(entidad);
-            em.getTransaction().commit();
-
-        } finally {
-            em.close();
-        }
-        return entidad;
-    }
 }

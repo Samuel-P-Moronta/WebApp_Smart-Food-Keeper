@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +15,7 @@ public class Company implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Date registerDate;
+    private String registerDate;
     //To avoid JSON infinite recursion issue 2/26/2022
     @JsonIgnore
     @OneToMany(mappedBy = "company",fetch = FetchType.EAGER)
@@ -24,9 +25,10 @@ public class Company implements Serializable {
 
     }
 
-    public Company(String name, Date registerDate) {
+    public Company(String name) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.registerDate = sdf.format(new Date());
         this.name = name;
-        this.registerDate = registerDate;
     }
 
     public Long getId() {
@@ -45,11 +47,11 @@ public class Company implements Serializable {
         this.name = name;
     }
 
-    public Date getRegisterDate() {
+    public String getRegisterDate() {
         return registerDate;
     }
 
-    public void setRegisterDate(Date registerDate) {
+    public void setRegisterDate(String registerDate) {
         this.registerDate = registerDate;
     }
 

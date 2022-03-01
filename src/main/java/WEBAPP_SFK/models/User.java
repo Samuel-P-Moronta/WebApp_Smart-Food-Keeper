@@ -19,33 +19,26 @@ public class User implements Serializable {
     private Set<RoleApp> rolesList;
     @OneToMany(mappedBy = "user")
     private Collection<Notification> notifications;
-    // Hacemos un Join con el Id de la persona
     @JoinColumn(name = "ID_PERSON")
-    // Se debe de indicar el atributo mappedBy dado que no es
-    // La clase duena de la relacion
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Person person;
     @ManyToOne
-    // Muchos usuarios pueden pertenecer a una misma empresa
     private BranchOffice branchOffice;
 
 
     public User() {
     }
 
-    public User(String email, String password, Set<RoleApp> rolesList, Person person, BranchOffice branchOffice) {
+    public User(String email, String password, Set<RoleApp> rolesList, Person person) {
         this.email = email;
         this.password = password;
         this.rolesList = rolesList;
         this.person = person;
-        this.branchOffice = branchOffice;
     }
 
-    public User(String email, String password,Set<RoleApp> rolesList) {
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
-        this.rolesList = rolesList;
-
     }
 
     public String getEmail() {
@@ -72,7 +65,6 @@ public class User implements Serializable {
         this.rolesList = rolesList;
     }
 
-
     public Collection<Notification> getNotifications() {
         return notifications;
     }
@@ -80,7 +72,6 @@ public class User implements Serializable {
     public void setNotifications(Collection<Notification> notifications) {
         this.notifications = notifications;
     }
-
 
     public Person getPerson() {
         return person;

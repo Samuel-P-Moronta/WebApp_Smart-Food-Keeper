@@ -30,9 +30,9 @@ public class DefaultDataLoader {
     }
     public void createDefaultCompany(){
         Logger.getInstance().getLog(this.getClass()).info("Creating default company [...]");
-        Company company1 = new Company("El nacional", new Date());
-        Company company2 = new Company("El Bravo", new Date());
-        Company company3 = new Company("Caco de botella", new Date());
+        Company company1 = new Company("El nacional");
+        Company company2 = new Company("El Bravo");
+        Company company3 = new Company("Caco de botella");
 
         ControllerCore.getInstance().createOrganization(company1);
         ControllerCore.getInstance().createOrganization(company2);
@@ -69,7 +69,7 @@ public class DefaultDataLoader {
     public void createDefaultSuperUser(){
         Logger.getInstance().getLog(this.getClass()).info("Creating default users [...]");
         // Creating company
-        Company company = new Company("La Sirena",new Date());
+        Company company = new Company("La Sirena");
         // Creating branch Office
         //BranchOffice branchOffice = new BranchOffice(new Address("Calle 30 de Marzo","Santiago"),new Date(),ControllerCore.getInstance().findOrganizationById(1));
         //Creating super user

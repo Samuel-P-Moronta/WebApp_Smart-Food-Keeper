@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Connect Plus</title>
     <!-- plugins:css -->
-    <link rel="stylesheet" href="./assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="./assets/vendors/flag-icon-css/css/flag-icon.min.css">
-    <link rel="stylesheet" href="./assets/vendors/css/vendor.bundle.base.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -24,37 +26,81 @@
       <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="content-wrapper d-flex align-items-center auth">
           <div class="row flex-grow">
-            <div class="col-lg-8 mx-auto stretch-card col-lg-4">
+            <div class="col-lg-6 mx-auto stretch-card col-lg-4">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">REGISTRA TU EMPRESA</h4>
-                  <form class="forms-sample" method="post" action="/organizationRegister">
+                  <form class="forms-sample needs-validation" method="post" action="/organizationRegister" novalidate>
+                    <div th:if="${ErrorAuth}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                      <strong>Error de autenticacion!</strong> Este correo ya esta registrado en nuestro sistema
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div th:if="${IdentificationCardExist}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <strong>Cedula!</strong> Esta cedula ya esta registrada en nuestro sistema
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
                     <div class="form-group">
                       <h5 class="pb-2">Datos personales</h5>
                       <hr>
-                      <input type="text" class="form-control" id="identificationCard" placeholder="Cedula">
+                      <input type="text" class="form-control" id="identificationCard" name="identificationCard" placeholder="Cedula" required>
+                      <div class="invalid-feedback">
+                        Por favor, digite su cedula!.
+                      </div>
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="firstName" placeholder="Nombre">
+                      <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Nombre" required>
+                      <div class="invalid-feedback">
+                        Por favor, digite su nombre!.
+                      </div>
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" id="lastName" placeholder="Apellido">
+                      <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Apellido" required>
+                      <div class="invalid-feedback">
+                        Por favor, digite su apellido!
+                      </div>
                     </div>
-                    <div class="form-group">
-                      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Correo electronico">
-                    </div>
-                    <div class="form-group">
-                      <input type="password" class="form-control" id="password" placeholder="Password">
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <input type="text" class="form-control" id="city" name="city" placeholder="Ciudad" required>
+                        <div class="invalid-feedback">
+                          Por favor, digite su ciudad de residencia!
+                        </div>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <input type="text" class="form-control" id="direction" name="direction" placeholder="Direccion" required>
+                        <div class="invalid-feedback">
+                          Por favor, digite su direccion de domicilio!
+                        </div>
+                      </div>
                     </div>
                     <div class="form-group">
                       <h5 class="pb-2">Datos de la empresa</h5>
                       <hr>
-                      <input type="password" class="form-control" id="organizationName" placeholder="Nombre de la empresa">
+                      <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Nombre de la empresa" required>
+                      <div class="invalid-feedback">
+                        Por favor, digite el nombre de su empresa!
+                      </div>
                     </div>
-                    <div class="form-group">
-                      <input type="password" class="form-control" id="RNC" placeholder="RNC">
+                    <h5 class="pb-2">Autenticacion en el sistema</h5>
+                    <hr>
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Correo electronico" required>
+                        <div class="invalid-feedback">
+                          Por favor, digite su correo electronico!
+                        </div>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                        <div class="invalid-feedback">
+                          Por favor, digite una contrasena!
+                        </div>
+                      </div>
                     </div>
-
                     <div class="form-check form-check-flat form-check-primary">
                       <label class="form-check-label">
                         <input type="checkbox" class="form-check-input"> Remember me <i class="input-helper"></i></label>
@@ -73,6 +119,7 @@
         <!-- content-wrapper ends -->
       </div>
       <!-- page-body-wrapper ends -->
+
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
@@ -85,5 +132,34 @@
     <script src="../../assets/js/hoverable-collapse.js"></script>
     <script src="../../assets/js/misc.js"></script>
     <!-- endinject -->
+    <script>
+      $(document).ready(function() {
+        $('.close').click(function(){
+          $("div.alert").hide();
+        });
+      } );
+    </script>
+    <script>
+        (function () {
+          'use strict'
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.querySelectorAll('.needs-validation')
+
+          // Loop over them and prevent submission
+          Array.prototype.slice.call(forms)
+                  .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                      if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                      }
+
+                      form.classList.add('was-validated')
+                    }, false)
+                  })
+        })()
+    </script>
+
+
   </body>
 </html>

@@ -4,6 +4,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -14,10 +15,8 @@ public class Person implements Serializable {
     @Column(name = "IDENTIFICATION_CARD", unique = true, nullable = false)
     private String identificationCard;
     private String firstName;
-    private String LastName;
-    private String email;
-    @CreationTimestamp
-    private Date registerDate;
+    private String lastName;
+    private String registerDate;
     @Embedded
     private Address address;
     @OneToOne
@@ -28,15 +27,16 @@ public class Person implements Serializable {
     public Person() {
     }
 
-    public Person(String identificationCard, String firstName, String lastName, String email, Address address, User user) {
+    public Person(String identificationCard, String firstName, String lastName, Address address, User user) {
         this.identificationCard = identificationCard;
         this.firstName = firstName;
-        LastName = lastName;
-        this.email = email;
+        this.lastName = lastName;
         this.address = address;
         this.user = user;
-    }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.registerDate = sdf.format(new Date());
 
+    }
 
     public Long getId() {
         return id;
@@ -63,18 +63,17 @@ public class Person implements Serializable {
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
-
-    public Date getRegisterDate() {
+    public String getRegisterDate() {
         return registerDate;
     }
 
-    public void setRegisterDate(Date registerDate) {
+    public void setRegisterDate(String registerDate) {
         this.registerDate = registerDate;
     }
 
@@ -85,6 +84,7 @@ public class Person implements Serializable {
     public void setAddress(Address address) {
         this.address = address;
     }
+
     public User getUser() {
         return user;
     }
@@ -92,15 +92,4 @@ public class Person implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-
-
 }
