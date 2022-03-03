@@ -19,9 +19,6 @@ public class User implements Serializable {
     private Set<RoleApp> rolesList;
     @OneToMany(mappedBy = "user")
     private Collection<Notification> notifications;
-    @JoinColumn(name = "ID_PERSON")
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    private Person person;
     @ManyToOne
     private BranchOffice branchOffice;
 
@@ -29,11 +26,10 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String email, String password, Set<RoleApp> rolesList, Person person) {
+    public User(String email, String password, Set<RoleApp> rolesList) {
         this.email = email;
         this.password = password;
         this.rolesList = rolesList;
-        this.person = person;
     }
 
     public User(String email, String password) {
@@ -71,14 +67,6 @@ public class User implements Serializable {
 
     public void setNotifications(Collection<Notification> notifications) {
         this.notifications = notifications;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
     }
 
     public BranchOffice getBranchOffice() {

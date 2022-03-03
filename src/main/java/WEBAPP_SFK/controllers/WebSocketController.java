@@ -186,15 +186,12 @@ public class WebSocketController extends BaseController {
                     auxShelf);
             for (Session session : USERS_CONNECTED_S) {
                 try {
-                    Logger.getInstance().getLog(this.getClass()).info("Sending msg shelf data to connect clients [...]");
                     session.getRemote().sendString(new Gson().toJson(auxShelfData));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            Logger.getInstance().getLog(this.getClass()).info("Saving into data base from websocket client [...]");
-
-          //  ControllerCore.getInstance().addShelfData(auxShelfData);
+            ControllerCore.getInstance().addShelfData(auxShelfData);
         }
     }
 

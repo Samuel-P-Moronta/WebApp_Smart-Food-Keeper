@@ -35,5 +35,11 @@ public class ShelfServices extends DataBaseRepository<Shelf> {
         }
         return null;
     }
+    public List<Shelf> findShelfByBranchOffice(long idBranchOffice) {
+        EntityManager entityManager = getEntityManager();
+        Query query = entityManager.createQuery("SELECT S FROM Shelf S WHERE S.branchOffice.id = :idBranchOffice");
+        query.setParameter("idBranchOffice",idBranchOffice);
+        return query.getResultList();
+    }
 
 }

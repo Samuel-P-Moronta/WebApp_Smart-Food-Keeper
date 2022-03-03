@@ -48,14 +48,16 @@ function loadCompanyList(data){
     }
 }
 function loadBranchOfficeList(data){
+    console.log(data['id'])
     var branchOffice = document.getElementById("branchOffice");
+    console.log("ID BRANCH OFFICE EN SHELF MANAGEMENT ", branchOffice)
 
     branchOffice.length = data.length + 1;
     let j = 0;
     for(let i in data){
         j = parseInt(i) + 1;
         branchOffice.options[j].value = data[i].id;
-        branchOffice.options[j].text = " " + data[i].address.direction;
+        branchOffice.options[j].text = " " + data[i].address.city + " " +"("+data[i].address.direction+")";
     }
 }
 function enableBranchOfficeSelect() {

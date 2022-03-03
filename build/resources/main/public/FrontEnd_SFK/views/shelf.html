@@ -15,104 +15,26 @@
         <div class="main-panel">
           <div class="content-wrapper">
             <div class="d-xl-flex justify-content-between align-items-start">
-              <h2 class="text-dark font-weight-bold mb-2">ADMINISTRACION SFK-PROJECT</h2>
-            </div>
-            <div class="row">
-              <div class="col-lg-3 mb-4" style=" height: 8rem;">
-                <div class="card border-left-danger shadow h-100">
-                  <div class="card-body">
-                    <div class="text-xs  font-weight-bold text-primary text-uppercase mb-1">EMPRESAS</div>
-                    <h2 class="mb-4 text-dark font-weight-bold" th:text="${allCompany}"></h2>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3 mb-4" style=" height: 8rem;">
-                <div class="card border-left-success shadow h-100">
-                  <div class="card-body">
-                    <div class="text-xs  font-weight-bold text-primary text-uppercase mb-1">SUCURSALES</div>
-                    <h2 class="mb-4 text-dark font-weight-bold" th:text="${allBranchOffice}"></h2>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3 mb-4" style=" height: 8rem;">
-                <div class="card border-left-success shadow h-100">
-                  <div class="card-body">
-                    <div class="text-xs  font-weight-bold text-success text-uppercase mb-1">ESTANTES</div>
-                    <h2 class="mb-4 text-dark font-weight-bold" th:text="${allShelf}"></h2>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3 mb-4" style=" height: 8rem;">
-                <div class="card border-left-success shadow h-100">
-                  <div class="card-body">
-                    <div class="text-xs  font-weight-bold text-success text-uppercase mb-1">CONTENEDORES</div>
-                    <h2 class="mb-4 text-dark font-weight-bold" th:text="${allContainer}"></h2>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="d-sm-flex justify-content-between align-items-center transaparent-tab-border {">
-              <!-- Credit card form tabs -->
-              <ul role="tablist" class="nav nav-tabs tab-transparent">
-                <li class="nav-item"> <a data-toggle="pill" href="#branchOfficeMgmt" class="nav-link active "> <i class="fas fa-credit-card mr-2"></i>+ Sucursal</a> </li>
-                <li class="nav-item"> <a data-toggle="pill" href="/projectAdmin/shelfManagement" class="nav-link"> <i class="fas fa-credit-card mr-2" ></i>+ Estante</a> </li>
-                <li class="nav-item"> <a data-toggle="pill" href="#containerManagement"     class="nav-link"> <i class="fab fa-paypal mr-2"></i>+ Contenedor</a> </li>
-              </ul>
+              <h2 class="text-dark font-weight-bold mb-2">Monitoreo de contenedor</h2>
             </div>
             <div class="tab-content tab-transparent-content">
               <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
                     <div class="row">
-                      <div class="tab-content tab-transparent-content">
-                        <div id="shelfMgmt" class="tab-pane fade">
-                          <h4 class="card-title">Nuevo Estante</h4>
-                          <form method="post" action="/projectAdmin/shelfManagement`">
-                            <div class="row">
-                              <div class="form-group col-md-6">
-                                <label for="idCompany">Seleccionar empresa: </label>
-                                <select class="form-control" id="idCompany" style="line-height: 2.0;" name="idCompany" onchange="enableBranchOfficeSelect()">
-                                  <option value="-1" selected> Seleccionar Empresa</option>
-                                </select>
-                              </div>
-                              <div class="form-group col-md-6">
-                                <label for="branchOfficeShelf">Seleccionar sucursal: </label>
-                                <select disabled class="form-control" id="branchOfficeShelf" name="branchOfficeShelf" style="line-height: 2.0;" onchange="enableAddButton()">
-                                  <option value="-1" selected>Seleccionar sucursal</option>
-                                </select>
-                              </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary" disabled id="add">REGISTRAR ESTANTE</button>
-                          </form>
-                        </div>
-                        <hr>
-                        <h4 class="card-title">LISTADO DE ESTANTES</h4>
-                        <div class="table-responsive">
-                          <table id="tableShelfList" name="tableShelfList" class="table table-hover table-bordered" style="width:100%">
-                            <thead>
-                            <tr>
-                              <th>ID</th>
-                              <th>Empresa</th>
-                              <th>Sucursal</th>
-                              <th>Fecha de Registro</th>
-                              <th>Accion</th>
-
-                            </tr>
-                            </thead>
-                            <tbody id="shelfList" name="shelfList">
-
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                              <th>ID</th>
-                              <th>Empresa</th>
-                              <th>Sucursal</th>
-                              <th>Fecha de Registro</th>
-                            </tr>
-                            </tfoot>
-                          </table>
-                        </div>
+                      <div class="form-group col-md-6">
+                        <label for="idBranchOffice-S">Seleccionar empresa: </label>
+                        <select class="form-control" id="idBranchOffice-S" style="line-height: 2.0;" name="idBranchOffice-S" onchange="enableShelfSelect()">
+                          <option value="-1" selected> Seleccionar Sucursal</option>
+                        </select>
                       </div>
+                      <div class="form-group col-md-6">
+                        <label for="idShelf">Seleccionar estante: </label>
+                        <select disabled class="form-control" id="idShelf" name="idShelf" style="line-height: 2.0;" onchange="enableButtonShowShelf()">
+                          <option value="-1" selected>Seleccionar sucursal</option>
+                        </select>
+                      </div>
+                      <button id="showShelfButton" name="showShelfButton" type="button" class="btn btn-primary">DESPLEGAR DATOS EN TIEMPO REAL</button>
                     </div>
                   </div>
                 </div>
@@ -125,5 +47,6 @@
     <div th:replace="public/FrontEnd_SFK/views/template.html::javascript"></div>
   </body>
   <script src="../js/graphicsRealTime.js"></script>
+  <script type='text/javascript' src="../js/shelfMonitoring.js"></script>
 
 </html>

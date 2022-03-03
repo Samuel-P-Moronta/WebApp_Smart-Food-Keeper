@@ -2,10 +2,6 @@ package WEBAPP_SFK.controllers;
 
 import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.models.enums.RoleApp;
-import WEBAPP_SFK.services.BranchOfficeServices;
-import WEBAPP_SFK.services.CompanyServices;
-import WEBAPP_SFK.services.ContainerServices;
-import WEBAPP_SFK.services.ShelfServices;
 import io.javalin.Javalin;
 
 import java.util.*;
@@ -88,21 +84,10 @@ public class MainController extends BaseController{
                             model.put("ErrorAuth","Este correo electronico ya esta registrado en nuestro sistema");
                         }
                     }
-
-                    model.put("identificationCard",identificationCard);
-                    model.put("firstName",firstName);
-                    model.put("lastName",lastName);
-                    model.put("lastName",lastName);
-                    model.put("city",city);
-                    model.put("direction",direction);
-                    model.put("email",email);
-                    model.put("password",password);
-                    ctx.render("/public/FrontEnd_SFK/views/organizationRegister.html",model);
-
-
+                    ctx.render("/public/FrontEnd_SFK/views/companyRegister.html",model);
                 });
                 get("/organizationRegister", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/organizationRegister.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/companyRegister.html",model);
                 });
             });
             path("/management",() ->{

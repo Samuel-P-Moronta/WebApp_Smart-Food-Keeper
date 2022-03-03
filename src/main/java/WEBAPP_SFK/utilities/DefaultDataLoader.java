@@ -48,12 +48,12 @@ public class DefaultDataLoader {
 
 
         ControllerCore controllerCore1 = new ControllerCore();
-        /*
-        BranchOffice branchOffice1 = new BranchOffice(address, new Date(),controllerCore1.findOrganizationByName("El nacional"));
-        BranchOffice branchOffice2 = new BranchOffice(address1, new Date(),controllerCore1.findOrganizationByName("El Bravo"));
-        BranchOffice branchOffice3 = new BranchOffice(address2, new Date(),controllerCore1.findOrganizationByName("Caco de botella"));
-        BranchOffice branchOffice4 = new BranchOffice(address3, new Date(),controllerCore1.findOrganizationByName("El nacional"));
-        BranchOffice branchOffice5 = new BranchOffice(address4, new Date(),controllerCore1.findOrganizationByName("El nacional"));
+
+        BranchOffice branchOffice1 = new BranchOffice(address, controllerCore1.findOrganizationByName("El nacional"));
+        BranchOffice branchOffice2 = new BranchOffice(address1, controllerCore1.findOrganizationByName("El Bravo"));
+        BranchOffice branchOffice3 = new BranchOffice(address2, controllerCore1.findOrganizationByName("Caco de botella"));
+        BranchOffice branchOffice4 = new BranchOffice(address3, controllerCore1.findOrganizationByName("El nacional"));
+        BranchOffice branchOffice5 = new BranchOffice(address4,controllerCore1.findOrganizationByName("El nacional"));
 
 
         ControllerCore.getInstance().createBranchOffice(branchOffice1);
@@ -61,10 +61,6 @@ public class DefaultDataLoader {
         ControllerCore.getInstance().createBranchOffice(branchOffice3);
         ControllerCore.getInstance().createBranchOffice(branchOffice4);
         ControllerCore.getInstance().createBranchOffice(branchOffice5);
-
-         */
-
-
     }
     public void createDefaultSuperUser(){
         Logger.getInstance().getLog(this.getClass()).info("Creating default users [...]");

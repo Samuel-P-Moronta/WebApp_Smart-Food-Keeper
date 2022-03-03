@@ -23,6 +23,7 @@ public class BranchOffice implements Serializable {
     private String registerDate;
     @ManyToOne
     private Company company;
+
     /*
     @OneToMany(mappedBy = "branchOffice",fetch = FetchType.EAGER)
     private Set<Shelf> shelfList = new HashSet<>();
