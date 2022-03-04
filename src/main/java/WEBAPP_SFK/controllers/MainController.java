@@ -53,8 +53,6 @@ public class MainController extends BaseController{
                     String email = ctx.formParam("email");
                     String password = ctx.formParam("password");
 
-
-
                     if(!email.equals("") && !password.equals("")){
                         User userAux = new User();
                         userAux.setEmail(email);
@@ -148,10 +146,10 @@ public class MainController extends BaseController{
                 /*---------------------------------------------------------------------------*/
                 /*--------------------------Shelf------------------------------*/
                 post("/shelfRegister", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/shelf.html");
+                    ctx.render("/public/FrontEnd_SFK/views/shelfMonitoring.html");
                 });
                 get("/shelf", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/shelf.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/shelfMonitoring.html",model);
                 });
                 /*---------------------------------------------------------------------------*/
                 /*--------------------------Container------------------------------*/

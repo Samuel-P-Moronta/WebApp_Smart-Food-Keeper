@@ -47,6 +47,7 @@ public class WebSocketController extends BaseController {
                 ShelfDataJSON sdj = gson.fromJson(ctx.message(), ShelfDataJSON.class);
 
                 addDataToShelf(Collections.singletonList(sdj));
+                /*
                 User user = ControllerCore.getInstance().findUserByEmail("employee@gmail.com");
                 boolean notificationMadurez = new ControllerCore().findNotificationByTypeAndUser(1,user);
                 boolean notificationSuministro = new ControllerCore().findNotificationByTypeAndUser(2,user);
@@ -104,6 +105,8 @@ public class WebSocketController extends BaseController {
                         }
                     }
                 }
+
+                 */
             });
             ws.onClose(ctx -> {
                 System.out.println("La conexión se ha  cerrado - " + ctx.getSessionId());
@@ -191,7 +194,7 @@ public class WebSocketController extends BaseController {
                     e.printStackTrace();
                 }
             }
-            ControllerCore.getInstance().addShelfData(auxShelfData);
+           // ControllerCore.getInstance().addShelfData(auxShelfData);
         }
     }
 

@@ -2,12 +2,10 @@ package WEBAPP_SFK.webservices;
 
 import WEBAPP_SFK.controllers.BaseController;
 import WEBAPP_SFK.controllers.ControllerCore;
-import WEBAPP_SFK.models.BranchOffice;
-import WEBAPP_SFK.models.Company;
-import WEBAPP_SFK.models.ErrorResponse;
-import WEBAPP_SFK.models.Shelf;
+import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.services.BranchOfficeServices;
 import WEBAPP_SFK.services.CompanyServices;
+import WEBAPP_SFK.services.ContainerServices;
 import WEBAPP_SFK.services.ShelfServices;
 import WEBAPP_SFK.utilities.JSONParser;
 import com.google.gson.JsonObject;
@@ -48,7 +46,6 @@ public class RestApi extends BaseController {
                 });
                 get("/findShelfByBranchOffice/:idBranchOffice-S", ctx -> {
                     long idBranchOffice = Long.parseLong(ctx.pathParam("idBranchOffice-S",String.class).get());
-                    System.out.println("ID BRANCH OFFICE: "+idBranchOffice);
                     BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(idBranchOffice);
                     long idBranchOfficeAux = branchOffice.getId();
 
@@ -56,7 +53,15 @@ public class RestApi extends BaseController {
                     shelfList.stream().forEach(shelf -> shelf.getDeviceId());
                     ctx.json(shelfList);
                 });
-                //findAllShelf
+                get("/findContainerByBranchOffice/:idBranchOffice-C", ctx -> {
+                    long idBranchOffice = Long.parseLong(ctx.pathParam("idBranchOffice-C",String.class).get());
+                    BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(idBranchOffice);
+                    long idBranchOfficeAux = branchOffice.getId();
+
+                    List<Container> containerList = ContainerServices.getInstance().findContainerfByBranchOffice(idBranchOfficeAux);
+                    containerList.stream().forEach(shelf -> shelf.getId());
+                    ctx.json(containerList);
+                });
                 get("/shelfList", ctx -> {
                     List<Shelf> shelfList;
                     shelfList = new ShelfServices().findAll();

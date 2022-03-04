@@ -1,21 +1,5 @@
-var webSocket;
-var webSocket2;
-
-function connect1()
-{
-    webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/server/shelf");
-    webSocket.onmessage = function(event) { getDataFromServerShelf(event); };
-
-
-}
-function connect2()
-{
-    webSocket2 = new WebSocket("ws://" + location.hostname + ":" + location.port + "/server/container");
-    webSocket2.onmessage = function(event) { getDataFromServerContainer(event); };
-}
-
 function loadRipenessGraphicsRealTime(unripe,ripe,overripe){
-
+    console.log("Entrando a la funcion para cargar el grafico real time")
     var doughnutPieData = {
         datasets: [{
             data: [unripe, ripe, overripe],
@@ -100,68 +84,12 @@ function loadTemperature(temperature){
             }
         }
     }
+    if ($("#lineChartTempHum").length) {
+        var lineChartTempHum = $("#lineChartTempHum").get(0).getContext("2d");
+        var lineChartTempHum = new Chart(lineChartTempHum, {type: 'line', data: areaData, options: areaOptions});
 
-    if ($("#areaCharttempertureRealtime").length) {
-        var areaCharttempertureRealtime = $("#areaCharttempertureRealtime").get(0).getContext("2d");
-        var areaCharttempertureRealtime = new Chart(areaCharttempertureRealtime, {
-            type: 'line',
-            data: areaData,
-            options: areaOptions
-        });
+        if(lineChartTempHum.data.labels.length !=15){
+            lineChartTempHum.data.labels.push(data)
+        }
     }
-}
-
-function getDataFromServerShelf(evt)
-{
-    console.log("Estoy dentro de la funcion getDataFromServerShelf")
-    var data = JSON.parse(evt.data);
-
-    var cant_unripe = data['cantUnripe']
-    var cant_ripe = data['cantRipe'];
-    var cant_overripe = data['cantOverripe'];
-    var temperature = data['temperature'];
-
-    console.log("Overripe: ", cant_overripe)
-    console.log("Temperature: ", temperature)
-
-
-    loadTemperature(temperature);
-    loadRipenessGraphicsRealTime(cant_unripe,cant_ripe,cant_overripe)
-
-}
-function getDataFromServerContainer(evt)
-{
-    var data = JSON.parse(evt.data);
-    //  document.getElementById('container_id').innerHTML = data['container']['id'];
-    document.getElementById('weight').innerHTML = data['weight'];
-    // MINIMO = 1 MEDIO = 2 LLENO = 3 COMPLETAMENTE VACIO = 0
-    switch (data['statusCode']) {
-        case 0:
-            document.getElementById('statuscode').innerHTML = "Vacio";
-            break;
-        case 1:
-            document.getElementById('statuscode').innerHTML = "Normal";
-            break;
-        case 2:
-            document.getElementById('statuscode').innerHTML = "Medio";
-            break;
-        case 3:
-            document.getElementById('statuscode').innerHTML = "Lleno";
-            break;
-        default:
-    }
-    var measure_date = new Date();
-    var date = measure_date.getMonth()+"/"+
-        measure_date.getDay()+"/"+
-        measure_date.getFullYear()+":"+
-        measure_date.getHours()+":"+
-        measure_date.getMinutes();
-
-    document.getElementById('measure_container_date').innerHTML = date;
-}
-
-window.onload = function(e)   {
-    connect1();
-    connect2();
-
 }

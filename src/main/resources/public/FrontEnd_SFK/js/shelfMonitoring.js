@@ -61,7 +61,7 @@ function loadShelfList(data){
     let j = 0;
     for(let i in data){
         j = parseInt(i) + 1;
-        idShelf.options[j].text ="SH-"+data[i].deviceId;
+        idShelf.options[j].text ="SH-"+data[i].deviceId + " " + "Sucursal: "+data[i].branchOffice.address.direction;
     }
 }
 function enableButtonShowShelf(){
