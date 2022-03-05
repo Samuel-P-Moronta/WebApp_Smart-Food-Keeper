@@ -154,10 +154,10 @@ public class MainController extends BaseController{
                 /*---------------------------------------------------------------------------*/
                 /*--------------------------Container------------------------------*/
                 post("/container", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/container.html");
+                    ctx.render("/public/FrontEnd_SFK/views/containerMonitoring.html");
                 });
                 get("/container", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/container.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/containerMonitoring.html",model);
                 });
                 /*---------------------------------------------------------------------------*/
             });

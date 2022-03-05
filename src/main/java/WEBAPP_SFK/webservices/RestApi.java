@@ -72,6 +72,11 @@ public class RestApi extends BaseController {
                     shelfList = new ShelfServices().findAll();
                     ctx.json(shelfList);
                 });
+                get("/containerList", ctx -> {
+                    List<Container> containerList;
+                    containerList = new ContainerServices().findAll();
+                    ctx.json(containerList);
+                });
             });
         });
     }
