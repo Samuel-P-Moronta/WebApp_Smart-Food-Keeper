@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head th:replace="public/FrontEnd_SFK/views/template.html :: head"></head>
-  <body onload="javascript:init()">
+  <body>
     <div class="container-scroller">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row" th:replace="public/FrontEnd_SFK/views/template.html :: header">
@@ -34,7 +34,11 @@
                           <option value="-1" selected>Seleccionar estante</option>
                         </select>
                       </div>
-                      <button disabled id="showShelfButton" name="showShelfButton" type="button" class="btn btn-primary" onchange="showGraphRealTime()">DESPLEGAR DATOS EN TIEMPO REAL</button>
+                      <h3 disabled id="headerRealtime"> Sucural:
+                        <span id="branchOfficeHeader"></span> Codigo:
+                        <span id="shelfHeader"></span> Fecha:
+                        <span id="measure_shelf_date"></span>
+                      </h3>
                     </div>
                   </div>
                 </div>

@@ -15,7 +15,9 @@ public class Container implements Serializable {
     private String registerDate;
     @ManyToOne
     private BranchOffice branchOffice;
+
     public BranchOffice getBranchOffice() {
+
         return branchOffice;
     }
 

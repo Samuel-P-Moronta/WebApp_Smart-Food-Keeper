@@ -19,19 +19,14 @@ public class ShelfData implements Serializable {
     private int cantRipe;
     private int cantUnripe;
     private Date currentSampleDate;
+    private String deviceId;
 
 
-    @OneToOne
-    private Shelf shelf;
     public ShelfData(){
 
     }
 
-    public ShelfData(Float temperature, Float humidity,
-                     int fruitCant, String fruitType,
-                     int cantOverripe, int cantRipe,
-                     int cantUnripe, Date currentSampleDate,Shelf shelf) {
-
+    public ShelfData(Float temperature, Float humidity, int fruitCant, String fruitType, int cantOverripe, int cantRipe, int cantUnripe, Date currentSampleDate, String deviceId) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.fruitCant = fruitCant;
@@ -39,15 +34,16 @@ public class ShelfData implements Serializable {
         this.cantOverripe = cantOverripe;
         this.cantRipe = cantRipe;
         this.cantUnripe = cantUnripe;
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.currentSampleDate = currentSampleDate;
-        this.shelf = shelf;
+        this.deviceId = deviceId;
     }
 
-    public ShelfData(Float temperature, Float humidity) {
-        this.temperature = temperature;
-        this.humidity = humidity;
+    public int getMeasureId() {
+        return measureId;
+    }
+
+    public void setMeasureId(int measureId) {
+        this.measureId = measureId;
     }
 
     public Float getTemperature() {
@@ -86,24 +82,24 @@ public class ShelfData implements Serializable {
         return cantOverripe;
     }
 
-    public void setCantOverripe(int percentageOverripe) {
-        this.cantOverripe = percentageOverripe;
+    public void setCantOverripe(int cantOverripe) {
+        this.cantOverripe = cantOverripe;
     }
 
     public int getCantRipe() {
         return cantRipe;
     }
 
-    public void setCantRipe(int percentageRipe) {
-        this.cantRipe = percentageRipe;
+    public void setCantRipe(int cantRipe) {
+        this.cantRipe = cantRipe;
     }
 
     public int getCantUnripe() {
         return cantUnripe;
     }
 
-    public void setCantUnripe(int percentage_unripe) {
-        this.cantUnripe = percentage_unripe;
+    public void setCantUnripe(int cantUnripe) {
+        this.cantUnripe = cantUnripe;
     }
 
     public Date getCurrentSampleDate() {
@@ -113,22 +109,12 @@ public class ShelfData implements Serializable {
     public void setCurrentSampleDate(Date currentSampleDate) {
         this.currentSampleDate = currentSampleDate;
     }
-    public Shelf getShelf() {
-        return shelf;
+
+    public String getDeviceId() {
+        return deviceId;
     }
 
-    public void setShelf(Shelf shelf) {
-        this.shelf = shelf;
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
-    public int getMeasureId() {
-        return measureId;
-    }
-
-    public void setMeasureId(int measureId) {
-        this.measureId = measureId;
-    }
-
-
-
-
 }

@@ -31,6 +31,11 @@ public class Shelf implements Serializable {
 
     }
 
+    public Shelf(String deviceId, BranchOffice branchOffice) {
+        this.deviceId = deviceId;
+        this.branchOffice = branchOffice;
+    }
+
     public String getDeviceId() {
         return deviceId;
     }

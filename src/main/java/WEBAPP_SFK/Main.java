@@ -53,12 +53,11 @@ public class Main {
         new RestApi(app).aplicarRutas();
 
 
-      //DefaultDataLoader.getInstance().createDefaultCompany();
-      //DefaultDataLoader.getInstance().createDefaultBranchOffice();
-      //DefaultDataLoader.getInstance().createDefaultShelf();
+        //DefaultDataLoader.getInstance().createDefaultCompany();
+        //DefaultDataLoader.getInstance().createDefaultBranchOffice();
+        //DefaultDataLoader.getInstance().createDefaultShelf();
+        DefaultDataLoader.getInstance().createDefaultData();
        //DefaultDataLoader.getInstance().createDefaultContainer();
-
-
 
 
         app.start(7000);

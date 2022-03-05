@@ -13,13 +13,13 @@ public class ShelfDataJSON {
     private int cantRipe;
     private int cantUnripe;
     private Date currentSampleDate;
-    private String Shelf;
+    private String deviceId;
 
 
     public ShelfDataJSON() {
     }
 
-    public ShelfDataJSON(Float temperature, Float humidity, int fruitCant, String fruitType, int cantOverripe, int cantRipe, int cantUnripe, Date currentSampleDate, String shelf) {
+    public ShelfDataJSON(Float temperature, Float humidity, int fruitCant, String fruitType, int cantOverripe, int cantRipe, int cantUnripe, Date currentSampleDate, String deviceId) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.fruitCant = fruitCant;
@@ -28,7 +28,7 @@ public class ShelfDataJSON {
         this.cantRipe = cantRipe;
         this.cantUnripe = cantUnripe;
         this.currentSampleDate = currentSampleDate;
-        Shelf = shelf;
+        this.deviceId = deviceId;
     }
 
     public int getMeasureId() {
@@ -71,24 +71,6 @@ public class ShelfDataJSON {
         this.fruitType = fruitType;
     }
 
-
-
-    public Date getCurrentSampleDate() {
-        return currentSampleDate;
-    }
-
-    public void setCurrentSampleDate(Date currentSampleDate) {
-        this.currentSampleDate = currentSampleDate;
-    }
-
-    public String getShelf() {
-        return Shelf;
-    }
-
-    public void setShelf(String shelf) {
-        Shelf = shelf;
-    }
-
     public int getCantOverripe() {
         return cantOverripe;
     }
@@ -111,5 +93,21 @@ public class ShelfDataJSON {
 
     public void setCantUnripe(int cantUnripe) {
         this.cantUnripe = cantUnripe;
+    }
+
+    public Date getCurrentSampleDate() {
+        return currentSampleDate;
+    }
+
+    public void setCurrentSampleDate(Date currentSampleDate) {
+        this.currentSampleDate = currentSampleDate;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 }

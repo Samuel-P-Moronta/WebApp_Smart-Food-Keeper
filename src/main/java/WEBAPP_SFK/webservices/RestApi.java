@@ -62,6 +62,11 @@ public class RestApi extends BaseController {
                     containerList.stream().forEach(shelf -> shelf.getId());
                     ctx.json(containerList);
                 });
+                get("/findShelfByDeviceId/:idShelf", ctx -> {
+                    String deviceId = ctx.pathParam("idShelf");
+                    Shelf shelf = ControllerCore.controllerCore.findShelfByDeviceId(deviceId);
+                    ctx.json(shelf);
+                });
                 get("/shelfList", ctx -> {
                     List<Shelf> shelfList;
                     shelfList = new ShelfServices().findAll();

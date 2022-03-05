@@ -36,7 +36,7 @@ public class ControllerCore {
     public List<ShelfData> getShelfDataByShelf(String deviceName){
         List<ShelfData> sh1 = new ArrayList<ShelfData>();
         for(ShelfData s: listShelfData()){
-            if(s.getShelf().getDeviceId().equals(deviceName)){
+            if(s.getDeviceId().equals(deviceName)){
                 sh1.add(s);
             }
         }
@@ -47,7 +47,7 @@ public class ControllerCore {
     public boolean updateShelf(Shelf shelf){return SHELF_SERVICES.update(shelf);}
     public boolean deleteShelf(Shelf shelf){return SHELF_SERVICES.delete(shelf);}
     public boolean addShelfData(ShelfData sh){return SHELF_DATA_SERVICES.create(sh);}
-    public Shelf getShelfByDeviceName(String shelf){return SHELF_SERVICES.find(shelf);}
+    public Shelf findShelfByDeviceId(String shelf){return SHELF_SERVICES.find(shelf);}
 
     //----------------------------------CONTAINER--------------------------------------------------//
     public boolean addContainer(Container container){return CONTAINER_SERVICES.create(container);}
@@ -65,7 +65,9 @@ public class ControllerCore {
     public Company findOrganizationByBranchOffice(Long idBranchOffice){return ORGANIZATION_SERVICES.findOrganizationByBranchOffice(idBranchOffice);}
 
     //--------------------------BRANCH OFFICE------------------------------------------------------------//
-    public boolean createBranchOffice(BranchOffice branchOffice){return BRANCH_OFFICE_SERVICES.create(branchOffice);}
+    public boolean createBranchOffice(BranchOffice branchOffice){
+        return BRANCH_OFFICE_SERVICES.create(branchOffice);
+    }
     public boolean updateBranchOffice(BranchOffice branchOffice){return BRANCH_OFFICE_SERVICES.update(branchOffice);}
     public boolean deleteBranchOffice(long idbranchOffice){return BRANCH_OFFICE_SERVICES.delete(idbranchOffice);}
     public BranchOffice findBranchOfficeById(long id){return BRANCH_OFFICE_SERVICES.find(id);}

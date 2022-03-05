@@ -182,19 +182,21 @@ public class WebSocketController extends BaseController {
         for (ShelfDataJSON f : shelf) {
             Date currentSampleDate = new Date(System.currentTimeMillis());
 
-            auxShelf = ControllerCore.getInstance().getShelfByDeviceName("SH001");
+            auxShelf = ControllerCore.getInstance().findShelfByDeviceId(f.getDeviceId());
 
-            auxShelfData = new ShelfData(f.getTemperature(),f.getHumidity(), f.getFruitCant(),
-                    f.getFruitType(), f.getCantOverripe(), f.getCantRipe(), f.getCantUnripe(), currentSampleDate,
-                    auxShelf);
-            for (Session session : USERS_CONNECTED_S) {
-                try {
-                    session.getRemote().sendString(new Gson().toJson(auxShelfData));
-                } catch (Exception e) {
-                    e.printStackTrace();
+            if(auxShelf !=null){
+                auxShelfData = new ShelfData(f.getTemperature(),f.getHumidity(), f.getFruitCant(), f.getFruitType(), f.getCantOverripe(), f.getCantRipe(), f.getCantUnripe(), currentSampleDate,f.getDeviceId());
+                for (Session session : USERS_CONNECTED_S) {
+                    try {
+                        session.getRemote().sendString(new Gson().toJson(auxShelfData));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+                ControllerCore.getInstance().addShelfData(auxShelfData);
+            }else{
+                System.out.println("Este estante no existe");
             }
-           // ControllerCore.getInstance().addShelfData(auxShelfData);
         }
     }
 
@@ -210,10 +212,10 @@ public class WebSocketController extends BaseController {
         Float temperature = ShelfDataServices.getInstance().getLastEnvironmentalData(0);
         Float humidity = ShelfDataServices.getInstance().getLastEnvironmentalData(1);
 
-        Shelf auxShelf = ControllerCore.getInstance().getShelfByDeviceName("SH001");
+        Shelf auxShelf = ControllerCore.getInstance().findShelfByDeviceId("SH001");
 
 
-        auxShelfData = new ShelfData(temperature,humidity,fruitCant,fruitType,cantOverripe,cantRipe,cantUnripe,null,auxShelf);
+        auxShelfData = new ShelfData(temperature,humidity,fruitCant,fruitType,cantOverripe,cantRipe,cantUnripe,null,"SH001");
         for(Session sesionConectada : USERS_CONNECTED_S){
             try {
                 Logger.getInstance().getLog(this.getClass()).info("Sending last data from shelf when websocket disconnect");

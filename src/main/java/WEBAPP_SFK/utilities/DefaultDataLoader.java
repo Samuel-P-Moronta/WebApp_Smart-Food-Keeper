@@ -29,7 +29,6 @@ public class DefaultDataLoader {
         return instance;
     }
     public void createDefaultCompany(){
-        Logger.getInstance().getLog(this.getClass()).info("Creating default company [...]");
         Company company1 = new Company("El nacional");
         Company company2 = new Company("El Bravo");
         Company company3 = new Company("Caco de botella");
@@ -39,7 +38,6 @@ public class DefaultDataLoader {
         ControllerCore.getInstance().createOrganization(company3);
     }
     public void createDefaultBranchOffice(){
-        Logger.getInstance().getLog(this.getClass()).info("Creating default branch offices [...]");
         Address address = new Address("Navarrete","Calle Barrio Duarte" );
         Address address1 = new Address("Villa Gonzalez", "Calle principal");
         Address address2 = new Address("Esperanza", "Calle secundaria");
@@ -116,10 +114,38 @@ public class DefaultDataLoader {
 
          */
     }
+    public void createDefaultData(){
+        createDefaultCompany();
+        createDefaultBranchOffice();
+        createDefaultShelf();
+        createDefaultContainer();
+    }
     public void createDefaultShelf(){
-        BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(1);
-        Shelf shelfAux = new Shelf(branchOffice);
-        ControllerCore.getInstance().addShelf(shelfAux);
+        BranchOffice branchOffice1 = ControllerCore.getInstance().findBranchOfficeById(1);
+        BranchOffice branchOffice2 = ControllerCore.getInstance().findBranchOfficeById(2);
+        BranchOffice branchOffice3 = ControllerCore.getInstance().findBranchOfficeById(3);
+        BranchOffice branchOffice4 = ControllerCore.getInstance().findBranchOfficeById(4);
+
+        if(ControllerCore.getInstance().findShelfByDeviceId("1") == null){
+            Shelf shelfAux = new Shelf();
+            shelfAux.setBranchOffice(branchOffice1);
+            ControllerCore.getInstance().addShelf(shelfAux);
+        }
+        if(ControllerCore.getInstance().findShelfByDeviceId("2") == null){
+            Shelf shelfAux = new Shelf();
+            shelfAux.setBranchOffice(branchOffice2);
+            ControllerCore.getInstance().addShelf(shelfAux);
+        }
+        if(ControllerCore.getInstance().findShelfByDeviceId("3") == null){
+            Shelf shelfAux = new Shelf();
+            shelfAux.setBranchOffice(branchOffice3);
+            ControllerCore.getInstance().addShelf(shelfAux);
+        }
+        if(ControllerCore.getInstance().findShelfByDeviceId("4") == null){
+            Shelf shelfAux = new Shelf();
+            shelfAux.setBranchOffice(branchOffice4);
+            ControllerCore.getInstance().addShelf(shelfAux);
+        }
     }
     public void createDefaultContainer(){
         BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(1);
