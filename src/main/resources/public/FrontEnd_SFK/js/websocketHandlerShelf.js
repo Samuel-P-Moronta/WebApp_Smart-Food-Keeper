@@ -1,5 +1,4 @@
 var webSocket;
-var webSocket2;
 
 function connectWebSocketShelf() {
     webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/server/shelf");
@@ -7,13 +6,6 @@ function connectWebSocketShelf() {
         showWebsocketDataShelf(event);
     };
     loadTempHumGraph();
-}
-function connectWebSocketContainer() {
-    webSocket2 = new WebSocket("ws://" + location.hostname + ":" + location.port + "/server/container");
-    webSocket2.onmessage = function(event) {
-        showWebsocketDataContainer(event);
-    };
-    loadWeightGraph();
 }
 function showWebsocketDataShelf(evt) {
     console.log("Estoy en la funcion para recibir datos del websocket")
@@ -71,20 +63,7 @@ function showWebsocketDataShelf(evt) {
         document.getElementById('measure_shelf_date').innerHTML = date+" "+time;
     }
 }
-function showWebsocketDataContainer(evt)
-{
-    var data = JSON.parse(evt.data);
-
-    var weight = data['weight'];
-    console.log("Peso: ",weight);
-
-    var today = new Date();
-    var t = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-
-    addDataContainer(t,weight);
-}
 window.onload = function(e)   {
     connectWebSocketShelf();
-    connectWebSocketContainer();
 
 }

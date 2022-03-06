@@ -151,10 +151,10 @@ public class MainController extends BaseController{
                 /*-------------------------------------------------------------------------------*/
                 /*-------------------- Employee management---------------------------------------*/
                 post("/employee", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/employee.html");
+                    ctx.render("/public/FrontEnd_SFK/views/employeeRegister.html");
                 });
                 get("/employee", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/employee.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/employeeRegister.html",model);
                 });
                 post("/employeeList", ctx ->{
                     ctx.render("/public/FrontEnd_SFK/views/employeeList.html");

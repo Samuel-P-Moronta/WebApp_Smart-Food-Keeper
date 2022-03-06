@@ -44,8 +44,8 @@ public class RestApi extends BaseController {
                 get("/branchOfficeList", ctx -> {
                     ctx.json(new BranchOfficeServices().findAll());
                 });
-                get("/findShelfByBranchOffice/:idBranchOffice-S", ctx -> {
-                    long idBranchOffice = Long.parseLong(ctx.pathParam("idBranchOffice-S",String.class).get());
+                get("/findShelfByBranchOffice/:idBranchOffice", ctx -> {
+                    long idBranchOffice = Long.parseLong(ctx.pathParam("idBranchOffice",String.class).get());
                     BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(idBranchOffice);
                     long idBranchOfficeAux = branchOffice.getId();
 
@@ -53,8 +53,8 @@ public class RestApi extends BaseController {
                     shelfList.stream().forEach(shelf -> shelf.getDeviceId());
                     ctx.json(shelfList);
                 });
-                get("/findContainerByBranchOffice/:idBranchOffice-C", ctx -> {
-                    long idBranchOffice = Long.parseLong(ctx.pathParam("idBranchOffice-C",String.class).get());
+                get("/findContainerByBranchOffice/:idBranchOffice", ctx -> {
+                    long idBranchOffice = Long.parseLong(ctx.pathParam("idBranchOffice",String.class).get());
                     BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(idBranchOffice);
                     long idBranchOfficeAux = branchOffice.getId();
 

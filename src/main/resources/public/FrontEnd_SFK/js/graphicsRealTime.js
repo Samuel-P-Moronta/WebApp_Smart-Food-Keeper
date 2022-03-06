@@ -22,7 +22,7 @@ function loadTempHumGraph(){
     var lineTempHumGraphOptions = {
         responsive: true,
         legend: {
-            position: 'bottom',
+            position: 'top',
         },
         hover: {
             mode: 'label'
@@ -36,6 +36,10 @@ function loadTempHumGraph(){
                     stepValue: 5,
                     max: 80,
                     min:10
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Temperature (ªC) Humedad (ªF)'
                 }
             }]
         },
@@ -51,10 +55,11 @@ function loadWeightGraph(){
         labels: [],
         datasets: [{
             data: [],
-            label: "Temperatura (*C)",
+            label: "Peso (Kg)",
             borderColor: "#3e95cd",
             backgroundColor: 'rgba(33, 76, 229, 0.5)',
-            fill: true
+            steppedLine: 'before',
+            fill: false
         }]
     };
     var lineWeightOption = {
@@ -78,10 +83,32 @@ function loadWeightGraph(){
             }]
         },
     };
+    var plugins = {
+        afterDraw: chart => {
+                var ctx = chart.chart.ctx;
+                var xAxis = chart.scales['x-axis-0'];
+                var yAxis = chart.scales['y-axis-0'];
+                var dataset = chart.config.data.datasets[0];
+                var data = dataset.data;
+                var xFrom = xAxis.getPixelForTick(data.length - 1);
+                var xTo = xAxis.getPixelForTick(data.length);
+                var y = yAxis.getPixelForValue(data[data.length - 1]);
+                ctx.save();
+                ctx.strokeStyle = dataset.borderColor;
+                ctx.lineWidth = dataset.lineWidth;
+                ctx.setLineDash([8, 4]);
+                ctx.beginPath();
+                ctx.moveTo(xFrom, y);
+                ctx.lineTo(xTo, y);
+                ctx.stroke();
+                ctx.restore();
+            }
+    }
     dataplotWeight = new Chart(document.getElementById("lineChartWeight"), {
         type: 'line',
         data: lineWeightData,
-        options: lineWeightOption
+        options: lineWeightOption,
+        plugins: plugins
     });
 }
 function removeData(){

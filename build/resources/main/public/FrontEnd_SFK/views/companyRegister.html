@@ -53,7 +53,7 @@
                       <h5 class="pb-2">Datos personales</h5>
                       <hr>
                       <label for="identificationCard" class="form-label">Cedula</label>
-                      <input type="text" class="form-control" is-valid id="identificationCard" name="identificationCard" placeholder="XXX-XXXXXXX-X" required>
+                      <input type="text" class="form-control" id="identificationCard" name="identificationCard" placeholder="Inserta la cedula" is-invalid required data-mask="999-9999999-9" autocomplete="off" maxlength="13">
                       <div class="invalid-feedback">
                         Por favor, digite su cedula!.
                       </div>
@@ -149,36 +149,7 @@
     <script src="../assets/js/hoverable-collapse.js"></script>
     <script src="../assets/js/misc.js"></script>
     <script src="../js/validator.js"></script>
-
-    <!-- endinject -->
-    <script>
-      $(document).ready(function() {
-        $('.close').click(function(){
-          $("div.alert").hide();
-        });
-      } );
-    </script>
-    <script>
-        (function () {
-          'use strict'
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.querySelectorAll('.needs-validation')
-
-          // Loop over them and prevent submission
-          Array.prototype.slice.call(forms)
-                  .forEach(function (form) {
-                    form.addEventListener('submit', function (event) {
-                      if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                      }
-
-                      form.classList.add('was-validated')
-                    }, false)
-                  })
-        })()
-    </script>
-
-
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js'></script>
+  
   </body>
 </html>

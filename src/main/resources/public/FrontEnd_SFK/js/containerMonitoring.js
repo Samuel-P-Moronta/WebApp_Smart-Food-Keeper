@@ -8,7 +8,7 @@ function findContainerByBranchOffice(idBranchOffice){
     Http.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             serverResponse = JSON.parse(Http.responseText);
-            console.log("ID FROM API: ", serverResponse['deviceId']);
+            console.log("ID FROM API: ", serverResponse['containerId']);
             console.log("Respuesta servidor: ",serverResponse);
             if (serverResponse != null) {
                 if (serverResponse.length > 0) {
@@ -25,25 +25,35 @@ function loadContainerList(data){
 
 
     idContainer.length = data.length + 1;
-    console.log("ID CONTAINER",data['deviceId']);
+    console.log("ID",data['deviceId']);
     let j = 0;
     for(let i in data){
         j = parseInt(i) + 1;
-        idContainer.options[j].text = data[i].id;
+        idContainer.options[j].text = data[i].containerId;
         branchOfficeHeader.innerHTML = data[i].branchOffice.address.direction;
-        containerHeader.innerHTML = data[i].deviceId;
+        containerHeader.innerHTML = data[i].containerId;
         //idShelf.options[j].text ="SH-"+data[i].deviceId + " " + "Sucursal: "+data[i].branchOffice.address.direction;
     }
 }
-function enableContainerSelect(){
-    var idBranchOffice = document.getElementById('idBranchOffice-S').value;
-    var idContainer = document.getElementById("idContainer");
+function enableButtonShowContainer(){
+    var idContainer = document.getElementById('idContainer').value;
+    let showGraphContainer = document.getElementById('showGraphContainer');
     var headerRealtime = document.getElementById("headerRealtime");
 
     headerRealtime.disabled = true;
-    idContainer.disabled = true;
-    if(idContainer != -1){
-        idContainer.disabled = false;
-        findContainerByBranchOffice(idBranchOffice);
+    showGraphContainer.disabled = true;
+    if (idContainer != -1) {
+        headerRealtime.disabled = false;
+        showGraphContainer.disabled = false;
+        return;
     }
 }
+function showGraphContainer(){
+    let canvasGraph = document.getElementById("lineChartWeight");
+    let showGraphContainer = document.getElementById('showGraphContainer');
+    canvasGraph.disabled = true;
+    if(showGraphContainer.disabled === false){
+        canvasGraph.disabled = false;
+    }
+}
+findAllBranchOffice();
