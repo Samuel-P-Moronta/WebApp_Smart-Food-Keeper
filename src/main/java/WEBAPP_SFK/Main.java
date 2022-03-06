@@ -45,7 +45,7 @@ public class Main {
             JavalinRenderer.register(JavalinThymeleaf.INSTANCE, ".html");
 
         });
-       // DefaultDataLoader.getInstance().createDefaultSuperUser();
+        //DefaultDataLoader.getInstance().createDefaultSuperUser();
         new SFKException(app).aplicarRutas();
         new WebSocketController(app).aplicarRutas();
         new MainController(app).aplicarRutas();

@@ -3,6 +3,7 @@ package WEBAPP_SFK.utilities;
 
 import WEBAPP_SFK.controllers.ControllerCore;
 import WEBAPP_SFK.models.*;
+import WEBAPP_SFK.models.enums.RoleApp;
 import WEBAPP_SFK.services.*;
 
 import java.util.*;
@@ -61,60 +62,13 @@ public class DefaultDataLoader {
         ControllerCore.getInstance().createBranchOffice(branchOffice5);
     }
     public void createDefaultSuperUser(){
-        Logger.getInstance().getLog(this.getClass()).info("Creating default users [...]");
-        // Creating company
-        Company company = new Company("La Sirena");
-        // Creating branch Office
-        //BranchOffice branchOffice = new BranchOffice(new Address("Calle 30 de Marzo","Santiago"),new Date(),ControllerCore.getInstance().findOrganizationById(1));
-        //Creating super user
-        /*
-        User user = new User(
-                "sfkproject@gmail.com",
-                "admin",
-                "admin",
-                Collections.singleton(RoleApp.ROLE_ADMIN),
-                null,
-                ControllerCore.getInstance().findBranchOfficeById(1)
-        );
-        User user2 = new User(
-                "employee@gmail.com",
-                "employee",
-                "employee",
-                Collections.singleton(RoleApp.ROLE_EMPLOYEE),
-                null,
-                ControllerCore.getInstance().findOrganizationById(1)
-        );
-
-        //Creating defulalt person
-        Person person = new Person(
-                "222-2222222-2",
-                "Rafael",
-                "Dorville",
-                "employee@gmail.com",
-                Gender.MALE,
-                new Address("Calle 16 de Agosto","Santiago"),
-                user2
-        );
-        Person person2 = new Person(
-                "111-1111111-1",
-                "Yehudy",
-                "De Pena",
-                "Yehudy@gmail.com",
-                Gender.MALE,
-                new Address("Calle 16 de Agosto","San Francisco"),user
-        );
-
+        User userAux = new User("root@gmail.com","123", Set.of(RoleApp.ROLE_ADMIN));
         if(ControllerCore.getInstance().findUserByEmail("root@gmail.com") == null){
-             ControllerCore.getInstance().createOrganization(company);
-             ControllerCore.getInstance().createBranchOffice(branchOffice);
-             ControllerCore.getInstance().createUser(user2);
-             ControllerCore.getInstance().createPerson(person);
-
+            ControllerCore.getInstance().createUser(userAux);
        }
-
-         */
     }
     public void createDefaultData(){
+        createDefaultSuperUser();
         createDefaultCompany();
         createDefaultBranchOffice();
         createDefaultShelf();
@@ -153,8 +107,8 @@ public class DefaultDataLoader {
         ControllerCore.getInstance().addContainer(container);
     }
     public void createDefaultContainerData(){
-        Container containerAux = ControllerCore.getInstance().findContainerById(1);
-        if(containerAux!=null){
+       // Container containerAux = ControllerCore.getInstance().findContainerById(1);
+      //  if(containerAux!=null){
           //  Container container = new Container(new Date());
            // ControllerCore.getInstance().createContainer(container);
             /*
@@ -198,7 +152,7 @@ public class DefaultDataLoader {
 
              */
 
-        }
+       // }
     }
 
 }

@@ -9,7 +9,29 @@
   <!-- partial -->
   <div class="container-fluid page-body-wrapper">
     <!-- partial:partials/_sidebar.html -->
-    <nav class="sidebar sidebar-offcanvas" id="sidebar" th:replace="public/FrontEnd_SFK/views/template.html::sidebar">
+    <!-- partial:partials/_sidebar.html -->
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+      <ul class="nav">
+        <li class="nav-item nav-category">Administracion global</li>
+        <li class="nav-item">
+          <a class="nav-link" href="/projectAdmin">
+            <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
+            <span class="menu-title">Sucursales</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/projectAdmin/shelfManagement">
+            <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
+            <span class="menu-title">Estantes</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/projectAdmin/containerManagement">
+            <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
+            <span class="menu-title">Container</span>
+          </a>
+        </li>
+      </ul>
     </nav>
     <!-- partial -->
     <div class="main-panel">

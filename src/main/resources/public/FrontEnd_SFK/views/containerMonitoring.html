@@ -37,15 +37,27 @@
                           <option>CO-0002</option>
                         </select>
                       </div>
-                        <button id="empty" type="button" class="btn btn-primary">DESPLEGAR DATOS EN TIEMPO REAL</button>
+                      <button id="empty" type="button" class="btn btn-primary">DESPLEGAR DATOS EN TIEMPO REAL</button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <div class="col-lg-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Peso (KG)</h4>
+                  <canvas id="lineChartWeight" style="height:250px"></canvas>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
       </div>
     </div>
     <div th:replace="public/FrontEnd_SFK/views/template.html::javascript"></div>
   </body>
+  <script src="../js/graphicsRealTime.js"></script>
+  <script type='text/javascript' src="../js/containerMonitoring.js"></script>
+  <script type='text/javascript' src="../js/websocketHandler.js"></script>
 </html>

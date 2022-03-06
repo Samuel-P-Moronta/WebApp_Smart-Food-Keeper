@@ -1,6 +1,7 @@
 package WEBAPP_SFK.controllers;
 
 import WEBAPP_SFK.models.*;
+import WEBAPP_SFK.services.ContainerServices;
 import WEBAPP_SFK.services.ShelfDataServices;
 import WEBAPP_SFK.services.ShelfServices;
 import WEBAPP_SFK.utilities.Logger;
@@ -129,18 +130,13 @@ public class WebSocketController extends BaseController {
             });
             ws.onMessage(ctx -> {
                 System.out.println("RECIBIENDO MENSAJE DEL CLIENT [CONTAINER]+");
-                Gson gson = new Gson();
                 System.out.println("Informacion recibida: " + ctx.message());
                 System.out.println("Informacion recibido de : " + ctx.getSessionId());
 
-
-                ContainerDataJSON containerDataJSON = gson.fromJson(ctx.message(), ContainerDataJSON.class);
-
-                if(containerDataJSON.getWeight() == 0){
-
-                }
-                //addDataToContainer(Collections.singletonList(containerDataJSON));
-
+                Gson gson = new Gson();
+                ContainerDataJSON cdj = gson.fromJson(ctx.message(), ContainerDataJSON.class);
+                addDataToContainer(Collections.singletonList(cdj));
+                //sendContainerData(containerDataJSON);
 
             });
             ws.onClose(ctx -> {
@@ -158,23 +154,26 @@ public class WebSocketController extends BaseController {
 
     }
 
-    public void addDataToContainer(List<ContainerDataJSON> c) {
+    public void addDataToContainer(ContainerDataJSON c) {
         ContainerData auxContainerData = null;
-        for (ContainerDataJSON f : c) {
-            auxContainerData = new ContainerData(f.getWeight(), ControllerCore.getInstance().findContainerById(1), f.getStatusCode());
-            for (Session s : USERS_CONNECTED_C) {
-                try {
-                    Logger.getInstance().getLog(this.getClass()).info("Sending msg to connect clients [...]");
-                    s.getRemote().sendString(new Gson().toJson(auxContainerData));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            Logger.getInstance().getLog(this.getClass()).info("Saving into data base from websocket client [...]");
-            ControllerCore.getInstance().createContainerData(auxContainerData);
-        }
-    }
+        Container auxContainer = ControllerCore.getInstance().findContainerById(c.getContainerId());
+        System.out.println("ID CONTAINER: "+ auxContainer.getId());
+        Date currentSampleDate = new Date(System.currentTimeMillis());
 
+        if(auxContainer !=null) {
+            auxContainerData = new ContainerData(c.getWeight(), auxContainer, currentSampleDate);
+        }else{
+            System.out.println("Contenedor no existe");
+        }
+        for (Session s : USERS_CONNECTED_C) {
+            try {
+                s.getRemote().sendString(new Gson().toJson(auxContainerData));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        ControllerCore.getInstance().createContainerData(auxContainerData);
+    }
     private void addDataToShelf(List<ShelfDataJSON> shelf) {
         ShelfData auxShelfData = null;
         Shelf auxShelf = null;
@@ -196,6 +195,67 @@ public class WebSocketController extends BaseController {
                 ControllerCore.getInstance().addShelfData(auxShelfData);
             }else{
                 System.out.println("Este estante no existe");
+            }
+        }
+    }
+    private void addDataToContainer(List<ContainerDataJSON> containerDataJSONList) {
+        ContainerData auxContainerData = null;
+        Container containerAux = null;
+
+        for (ContainerDataJSON f : containerDataJSONList) {
+            Date currentSampleDate = new Date(System.currentTimeMillis());
+
+            containerAux = ControllerCore.getInstance().findContainerById(1);
+            System.out.println(containerAux.getId());
+
+
+            if(containerAux !=null){
+                auxContainerData = new ContainerData(f.getWeight(),containerAux,currentSampleDate);
+                for (Session session : USERS_CONNECTED_C) {
+                    try {
+                        session.getRemote().sendString(new Gson().toJson(auxContainerData));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                ControllerCore.getInstance().createContainerData(auxContainerData);
+            }else{
+                System.out.println("Este estante no existe");
+            }
+        }
+    }
+    /*
+    public void savedContainerData(ContainerDataJSON containerDataJSON){
+        Date currentSampledate = new Date();
+        Container containerAux = ControllerCore.getInstance().findContainerById(containerDataJSON.getContainerId());
+        System.out.println(cont);
+
+        if(containerAux !=null) {
+            ContainerData containerData = new ContainerData(containerDataJSON.getWeight(), containerAux,new Date());
+            for(Session sc : USERS_CONNECTED_C){
+                try {
+                    sc.getRemote().sendString(new Gson().toJson(containerData));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }else{
+            System.out.println("No existe este contenedor");
+        }
+
+    }
+
+     */
+    public void sendContainerData(ContainerDataJSON containerDataJSON){
+        Date currentSampledate = new Date();
+        Container containerAux = ControllerCore.getInstance().findContainerById(containerDataJSON.getContainerId());
+
+        ContainerData containerData = new ContainerData(containerDataJSON.getWeight(),containerAux,currentSampledate);
+        for(Session sc : USERS_CONNECTED_C){
+            try {
+                sc.getRemote().sendString(new Gson().toJson(containerData));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

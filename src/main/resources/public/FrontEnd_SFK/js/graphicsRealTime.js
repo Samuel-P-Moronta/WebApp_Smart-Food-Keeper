@@ -1,3 +1,7 @@
+var dataplot;
+var dataplotWeight;
+var maxDataPoints = 15;
+
 function loadTempHumGraph(){
     var lineTempHumGraphData = {
         labels: [],
@@ -42,9 +46,51 @@ function loadTempHumGraph(){
         options: lineTempHumGraphOptions
     });
 }
+function loadWeightGraph(){
+    var lineWeightData = {
+        labels: [],
+        datasets: [{
+            data: [],
+            label: "Temperatura (*C)",
+            borderColor: "#3e95cd",
+            backgroundColor: 'rgba(33, 76, 229, 0.5)',
+            fill: true
+        }]
+    };
+    var lineWeightOption = {
+        responsive: true,
+        legend: {
+            position: 'bottom',
+        },
+        hover: {
+            mode: 'label'
+        },
+        scales: {
+            yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero: true,
+                    steps: 10,
+                    stepValue: 5,
+                    max: 8,
+                    min:0
+                }
+            }]
+        },
+    };
+    dataplotWeight = new Chart(document.getElementById("lineChartWeight"), {
+        type: 'line',
+        data: lineWeightData,
+        options: lineWeightOption
+    });
+}
 function removeData(){
     dataPlot.data.labels.shift();
     dataPlot.data.datasets[0].data.shift();
+}
+function removeDataWeight(){
+    dataplotWeight.data.labels.shift();
+    dataplotWeight.data.datasets[0].data.shift();
 }
 function addData(label, temp,hum) {
     if(dataPlot.data.labels.length > maxDataPoints){
@@ -55,6 +101,15 @@ function addData(label, temp,hum) {
     dataPlot.data.datasets[1].data.push(hum);
     dataPlot.update();
 }
+function addDataContainer(label, weight) {
+    if(dataplotWeight.data.labels.length > maxDataPoints){
+        removeDataWeight();
+    }
+    dataplotWeight.data.labels.push(label);
+    dataplotWeight.data.datasets[0].data.push(weight);
+    dataplotWeight.update();
+}
+
 
 function loadRipenessGraphicsRealTime(unripe,ripe,overripe){
     console.log("Entrando a la funcion para cargar el grafico real time")
@@ -89,10 +144,27 @@ function loadRipenessGraphicsRealTime(unripe,ripe,overripe){
     };
     if ($("#doughnutChartRipenessRealTime").length) {
         var doughnutChartRipenessRealTime = $("#doughnutChartRipenessRealTime").get(0).getContext("2d");
-        var doughnutChartRipenessRealTime = new Chart(doughnutChartRipenessRealTime, {
+        var doughnutChartRipenessCanvas = new Chart(doughnutChartRipenessRealTime, {
             type: 'pie',
             data: doughnutPieData,
             options: doughnutPieOptions
+        });
+
+        Chart.plugins.register({
+            afterDraw: function(doughnutChartRipenessCanvas) {
+                if (doughnutChartRipenessCanvas.data.datasets[0].data.every(item => item === 0)) {
+                    let ctx = doughnutChartRipenessCanvas.chart.ctx;
+                    let width = doughnutChartRipenessCanvas.chart.width;
+                    let height = doughnutChartRipenessCanvas.chart.height;
+
+                    doughnutChartRipenessCanvas.clear();
+                    ctx.save();
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('No data to display', width / 2, height / 2);
+                    ctx.restore();
+                }
+            }
         });
     }
 }

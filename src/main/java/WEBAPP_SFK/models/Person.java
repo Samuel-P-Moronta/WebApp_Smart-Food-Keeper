@@ -16,7 +16,7 @@ public class Person implements Serializable {
     private String identificationCard;
     private String firstName;
     private String lastName;
-    private String registerDate;
+    private Date registerDate;
     @Embedded
     private Address address;
     @OneToOne
@@ -27,15 +27,13 @@ public class Person implements Serializable {
     public Person() {
     }
 
-    public Person(String identificationCard, String firstName, String lastName, Address address, User user) {
+    public Person(String identificationCard, String firstName, String lastName, Date registerDate, Address address, User user) {
         this.identificationCard = identificationCard;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.registerDate = registerDate;
         this.address = address;
         this.user = user;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.registerDate = sdf.format(new Date());
-
     }
 
     public Long getId() {
@@ -69,11 +67,12 @@ public class Person implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    public String getRegisterDate() {
+
+    public Date getRegisterDate() {
         return registerDate;
     }
 
-    public void setRegisterDate(String registerDate) {
+    public void setRegisterDate(Date registerDate) {
         this.registerDate = registerDate;
     }
 

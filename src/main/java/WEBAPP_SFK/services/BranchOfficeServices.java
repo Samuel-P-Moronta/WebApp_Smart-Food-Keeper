@@ -1,9 +1,6 @@
 package WEBAPP_SFK.services;
 
-import WEBAPP_SFK.models.BranchOffice;
-import WEBAPP_SFK.models.Company;
-import WEBAPP_SFK.models.Notification;
-import WEBAPP_SFK.models.User;
+import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.services.connect.DataBaseRepository;
 
 import javax.persistence.EntityManager;
@@ -31,6 +28,20 @@ public class BranchOfficeServices extends DataBaseRepository<BranchOffice> {
 
         Query query = em.createQuery(sql, BranchOffice.class);
         query.setParameter("name", name);
+        List<BranchOffice> branchOfficeList = query.getResultList();
+        if (branchOfficeList.size() > 0) {
+            return branchOfficeList.get(0);
+        }
+        return null;
+    }
+    public BranchOffice findBranchOfficeByAddress(String city, String direction) {
+        EntityManager em = getEntityManager();
+        String sql = "";
+        sql += " SELECT N from BranchOffice N WHERE N.address.city = :city and N.address.direction = :direction";
+
+        Query query = em.createQuery(sql, BranchOffice.class);
+        query.setParameter("city", city);
+        query.setParameter("direction",direction);
         List<BranchOffice> branchOfficeList = query.getResultList();
         if (branchOfficeList.size() > 0) {
             return branchOfficeList.get(0);

@@ -27,8 +27,6 @@ public class Notification {
     private int type;
 
 
-
-
     public Notification() {
     }
 

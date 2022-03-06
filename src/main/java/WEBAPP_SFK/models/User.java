@@ -1,6 +1,7 @@
 package WEBAPP_SFK.models;
 
 import WEBAPP_SFK.models.enums.RoleApp;
+import io.javalin.core.security.Role;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,6 +31,13 @@ public class User implements Serializable {
         this.email = email;
         this.password = password;
         this.rolesList = rolesList;
+    }
+
+    public User(String email, String password, Set<RoleApp> rolesList, BranchOffice branchOffice) {
+        this.email = email;
+        this.password = password;
+        this.rolesList = rolesList;
+        this.branchOffice = branchOffice;
     }
 
     public User(String email, String password) {
@@ -76,4 +84,14 @@ public class User implements Serializable {
     public void setBranchOffice(BranchOffice branchOffice) {
         this.branchOffice = branchOffice;
     }
+
+    public boolean hasRole(Role role){
+        for (RoleApp aux:rolesList){
+            if(aux.equals(role)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

@@ -27,13 +27,17 @@
             <div class="col-lg-8 mx-auto stretch-card col-lg-4">
               <div class="card">
                 <div class="card-body">
+                  <form method="get" action="/portal">
+                    <button type="submit" class="btn btn-danger">IR AL PORTAL</button>
+                  </form>
+                  <hr>
                   <h4 class="card-title">INICIA SESION EN TU EMPRESA</h4>
-                  <form class="forms-sample">
+                  <form class="forms-sample" method="post" action="/login">
                     <div class="form-group">
-                      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Correo electronico">
+                      <input type="email" class="form-control" id="email" name="email" placeholder="Correo electronico">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control" id="password" placeholder="Password">
+                      <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                     </div>
 
                     <div class="form-check form-check-flat form-check-primary">
@@ -41,12 +45,11 @@
                         <input type="checkbox" class="form-check-input">Recordar sesion<i class="input-helper"></i></label>
                     </div>
                     <div class="d-grid gap-2 d-md-block">
-                      <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="/management/dashboard">INICIAR SESION </a>
-                      <a class="btn btn-block btn-danger btn-lg font-weight-medium auth-form-btn" href="/portal">IR AL PORTAL</a>
+                      <button type="submit" class="btn btn-primary">INICIAR SESION</button>
                     </div>
-                    <div class="text-center mt-4 font-weight-light"> Aun no tienes una cuenta? <a href="/organizationRegister" class="text-primary">Crear cuenta</a>
-                    </div>
+                    <div class="text-center mt-4 font-weight-light"> Aun no tienes una cuenta? <a href="/organizationRegister" class="text-primary">Crear cuenta</a></div>
                   </form>
+
                 </div>
               </div>
             </div>

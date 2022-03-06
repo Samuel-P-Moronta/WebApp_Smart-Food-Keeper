@@ -39,16 +39,20 @@ public class SfkProjectAdmin extends BaseController{
                         Company company = ControllerCore.getInstance().findOrganizationById(Long.parseLong(idCompany));
                         if(company !=null){
                             BranchOffice branchOffice = new BranchOffice(address,company);
-                            ControllerCore.getInstance().createBranchOffice(branchOffice);
+                            if(BranchOfficeServices.getInstance().findBranchOfficeByAddress(city,direction) !=null){
+                                ControllerCore.getInstance().createBranchOffice(branchOffice);
+                            }else{
+                                System.out.println("Existe una misma sucursal con esta direccion");
+                            }
                         }
                     }
                     makeListHeader();
                     model.put("branchOfficeList",BranchOfficeServices.getInstance().findAll());
-                    ctx.render("/public/FrontEnd_SFK/views/branchOfficeAdmin.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/projectAdminPortal.html",model);
                 });
                 get("/", ctx ->{
                     makeListHeader();
-                    ctx.render("/public/FrontEnd_SFK/views/branchOfficeAdmin.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/projectAdminPortal.html",model);
                 });
                 post("/shelfManagement", ctx ->{
                     String branchOfficeShelf = ctx.formParam("branchOffice");

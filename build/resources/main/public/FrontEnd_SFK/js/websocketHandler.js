@@ -1,15 +1,21 @@
 var webSocket;
-var dataPlot;
-var maxDataPoints = 15;
+var webSocket2;
 
-function connectWebSocket() {
+function connectWebSocketShelf() {
     webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/server/shelf");
     webSocket.onmessage = function(event) {
-        showWebsocketData(event);
+        showWebsocketDataShelf(event);
     };
     loadTempHumGraph();
 }
-function showWebsocketData(evt) {
+function connectWebSocketContainer() {
+    webSocket2 = new WebSocket("ws://" + location.hostname + ":" + location.port + "/server/container");
+    webSocket2.onmessage = function(event) {
+        showWebsocketDataContainer(event);
+    };
+    loadWeightGraph();
+}
+function showWebsocketDataShelf(evt) {
     console.log("Estoy en la funcion para recibir datos del websocket")
     var data = JSON.parse(evt.data);
     console.log("DEVICE ID: ", data['deviceId'])
@@ -59,13 +65,26 @@ function showWebsocketData(evt) {
             document.getElementById('unripe').innerHTML = "0";
             loadRipenessGraphicsRealTime(0,0,0);
         }
-
         var measure_date = new Date();
         var date = measure_date.getFullYear()+'-'+(measure_date.getMonth()+1)+'-'+measure_date.getDate();
         var time = measure_date.getHours() + ":" + measure_date.getMinutes() + ":" + measure_date.getSeconds();
         document.getElementById('measure_shelf_date').innerHTML = date+" "+time;
     }
 }
+function showWebsocketDataContainer(evt)
+{
+    var data = JSON.parse(evt.data);
+
+    var weight = data['weight'];
+    console.log("Peso: ",weight);
+
+    var today = new Date();
+    var t = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+    addDataContainer(t,weight);
+}
 window.onload = function(e)   {
-    connectWebSocket();
+    connectWebSocketShelf();
+    connectWebSocketContainer();
+
 }
