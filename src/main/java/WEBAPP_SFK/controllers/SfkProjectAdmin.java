@@ -7,6 +7,7 @@ import WEBAPP_SFK.services.ContainerServices;
 import WEBAPP_SFK.services.ShelfServices;
 import io.javalin.Javalin;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,11 +67,13 @@ public class SfkProjectAdmin extends BaseController{
                         ControllerCore.getInstance().addShelf(shelf);
                     }
                     makeListHeader();
+                    model.put("shelfList",ShelfServices.getInstance().findAll());
                     ctx.render("/public/FrontEnd_SFK/views/shelfManagement.html",model);
 
                 });
                 get("/shelfManagement", ctx ->{
                     makeListHeader();
+                    model.put("shelfList",ShelfServices.getInstance().findAll());
                     ctx.render("/public/FrontEnd_SFK/views/shelfManagement.html",model);
                 });
                 post("/containerManagement", ctx ->{

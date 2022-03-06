@@ -18,7 +18,7 @@ public class ShelfData implements Serializable {
     private int cantOverripe;
     private int cantRipe;
     private int cantUnripe;
-    private Date currentSampleDate;
+    private String currentSampleDate;
     private String deviceId;
 
 
@@ -26,7 +26,7 @@ public class ShelfData implements Serializable {
 
     }
 
-    public ShelfData(Float temperature, Float humidity, int fruitCant, String fruitType, int cantOverripe, int cantRipe, int cantUnripe, Date currentSampleDate, String deviceId) {
+    public ShelfData(Float temperature, Float humidity, int fruitCant, String fruitType, int cantOverripe, int cantRipe, int cantUnripe, String deviceId) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.fruitCant = fruitCant;
@@ -34,7 +34,8 @@ public class ShelfData implements Serializable {
         this.cantOverripe = cantOverripe;
         this.cantRipe = cantRipe;
         this.cantUnripe = cantUnripe;
-        this.currentSampleDate = currentSampleDate;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.currentSampleDate = sdf.format(new Date());
         this.deviceId = deviceId;
     }
 
@@ -102,11 +103,11 @@ public class ShelfData implements Serializable {
         this.cantUnripe = cantUnripe;
     }
 
-    public Date getCurrentSampleDate() {
+    public String getCurrentSampleDate() {
         return currentSampleDate;
     }
 
-    public void setCurrentSampleDate(Date currentSampleDate) {
+    public void setCurrentSampleDate(String currentSampleDate) {
         this.currentSampleDate = currentSampleDate;
     }
 

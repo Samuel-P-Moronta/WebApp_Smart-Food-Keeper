@@ -135,7 +135,7 @@ public class WebSocketController extends BaseController {
 
                 Gson gson = new Gson();
                 ContainerDataJSON cdj = gson.fromJson(ctx.message(), ContainerDataJSON.class);
-                addDataToContainer(Collections.singletonList(cdj));
+                savedContainerData(cdj);
                 //sendContainerData(containerDataJSON);
 
             });
@@ -154,6 +154,7 @@ public class WebSocketController extends BaseController {
 
     }
 
+   /*
     public void addDataToContainer(ContainerDataJSON c) {
         ContainerData auxContainerData = null;
         Container auxContainer = ControllerCore.getInstance().findContainerById(c.getContainerId());
@@ -174,17 +175,18 @@ public class WebSocketController extends BaseController {
         }
         ControllerCore.getInstance().createContainerData(auxContainerData);
     }
+
+    */
     private void addDataToShelf(List<ShelfDataJSON> shelf) {
         ShelfData auxShelfData = null;
         Shelf auxShelf = null;
 
         for (ShelfDataJSON f : shelf) {
-            Date currentSampleDate = new Date(System.currentTimeMillis());
 
             auxShelf = ControllerCore.getInstance().findShelfByDeviceId(f.getDeviceId());
 
             if(auxShelf !=null){
-                auxShelfData = new ShelfData(f.getTemperature(),f.getHumidity(), f.getFruitCant(), f.getFruitType(), f.getCantOverripe(), f.getCantRipe(), f.getCantUnripe(), currentSampleDate,f.getDeviceId());
+                auxShelfData = new ShelfData(f.getTemperature(),f.getHumidity(), f.getFruitCant(), f.getFruitType(), f.getCantOverripe(), f.getCantRipe(), f.getCantUnripe(),f.getDeviceId());
                 for (Session session : USERS_CONNECTED_S) {
                     try {
                         session.getRemote().sendString(new Gson().toJson(auxShelfData));
@@ -198,6 +200,7 @@ public class WebSocketController extends BaseController {
             }
         }
     }
+    /*
     private void addDataToContainer(List<ContainerDataJSON> containerDataJSONList) {
         ContainerData auxContainerData = null;
         Container containerAux = null;
@@ -224,33 +227,32 @@ public class WebSocketController extends BaseController {
             }
         }
     }
-    /*
+
+     */
+
     public void savedContainerData(ContainerDataJSON containerDataJSON){
-        Date currentSampledate = new Date();
         Container containerAux = ControllerCore.getInstance().findContainerById(containerDataJSON.getContainerId());
-        System.out.println(cont);
+        ContainerData containerData = new ContainerData(containerDataJSON.getWeight(), containerDataJSON.getContainerId());
 
         if(containerAux !=null) {
-            ContainerData containerData = new ContainerData(containerDataJSON.getWeight(), containerAux,new Date());
-            for(Session sc : USERS_CONNECTED_C){
-                try {
-                    sc.getRemote().sendString(new Gson().toJson(containerData));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            ControllerCore.getInstance().addContainerData(containerData);
         }else{
             System.out.println("No existe este contenedor");
         }
 
-    }
+        for (Session session : USERS_CONNECTED_C) {
+            try {
+                session.getRemote().sendString(new Gson().toJson(containerData));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
-     */
+    }
     public void sendContainerData(ContainerDataJSON containerDataJSON){
-        Date currentSampledate = new Date();
         Container containerAux = ControllerCore.getInstance().findContainerById(containerDataJSON.getContainerId());
 
-        ContainerData containerData = new ContainerData(containerDataJSON.getWeight(),containerAux,currentSampledate);
+        ContainerData containerData = new ContainerData(containerDataJSON.getWeight(),containerDataJSON.getContainerId());
         for(Session sc : USERS_CONNECTED_C){
             try {
                 sc.getRemote().sendString(new Gson().toJson(containerData));
@@ -275,7 +277,7 @@ public class WebSocketController extends BaseController {
         Shelf auxShelf = ControllerCore.getInstance().findShelfByDeviceId("SH001");
 
 
-        auxShelfData = new ShelfData(temperature,humidity,fruitCant,fruitType,cantOverripe,cantRipe,cantUnripe,null,"SH001");
+        auxShelfData = new ShelfData(temperature,humidity,fruitCant,fruitType,cantOverripe,cantRipe,cantUnripe,"SH001");
         for(Session sesionConectada : USERS_CONNECTED_S){
             try {
                 Logger.getInstance().getLog(this.getClass()).info("Sending last data from shelf when websocket disconnect");

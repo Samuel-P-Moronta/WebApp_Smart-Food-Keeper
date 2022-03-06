@@ -1,5 +1,6 @@
 package WEBAPP_SFK.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -11,30 +12,31 @@ import java.util.Date;
 public class Container implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String containerId;
     private String registerDate;
     @ManyToOne
     private BranchOffice branchOffice;
-
-    public BranchOffice getBranchOffice() {
-
-        return branchOffice;
-    }
-
-    public Container() {
-    }
 
     public Container(BranchOffice branchOffice) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.registerDate = sdf.format(new Date());
         this.branchOffice = branchOffice;
     }
-    public long getId() {
-        return id;
+
+    public String getId() {
+        return containerId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setId(String id) {
+        this.containerId = containerId;
+    }
+
+    public String getContainerId() {
+        return containerId;
+    }
+
+    public void setContainerId(String containerId) {
+        this.containerId = containerId;
     }
 
     public String getRegisterDate() {
@@ -48,4 +50,12 @@ public class Container implements Serializable {
     public void setBranchOffice(BranchOffice branchOffice) {
         this.branchOffice = branchOffice;
     }
+    public BranchOffice getBranchOffice() {
+
+        return branchOffice;
+    }
+
+    public Container() {
+    }
+
 }

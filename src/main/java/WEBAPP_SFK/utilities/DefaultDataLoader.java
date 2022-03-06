@@ -81,24 +81,20 @@ public class DefaultDataLoader {
         BranchOffice branchOffice4 = ControllerCore.getInstance().findBranchOfficeById(4);
 
         if(ControllerCore.getInstance().findShelfByDeviceId("1") == null){
-            Shelf shelfAux = new Shelf();
-            shelfAux.setBranchOffice(branchOffice1);
-            ControllerCore.getInstance().addShelf(shelfAux);
+            Shelf shelfAux1 = new Shelf(branchOffice1);
+            ControllerCore.getInstance().addShelf(shelfAux1);
         }
         if(ControllerCore.getInstance().findShelfByDeviceId("2") == null){
-            Shelf shelfAux = new Shelf();
-            shelfAux.setBranchOffice(branchOffice2);
-            ControllerCore.getInstance().addShelf(shelfAux);
+            Shelf shelfAux2 = new Shelf(branchOffice2);
+            ControllerCore.getInstance().addShelf(shelfAux2);
         }
         if(ControllerCore.getInstance().findShelfByDeviceId("3") == null){
-            Shelf shelfAux = new Shelf();
-            shelfAux.setBranchOffice(branchOffice3);
-            ControllerCore.getInstance().addShelf(shelfAux);
+            Shelf shelfAux3 = new Shelf(branchOffice3);
+            ControllerCore.getInstance().addShelf(shelfAux3);
         }
         if(ControllerCore.getInstance().findShelfByDeviceId("4") == null){
-            Shelf shelfAux = new Shelf();
-            shelfAux.setBranchOffice(branchOffice4);
-            ControllerCore.getInstance().addShelf(shelfAux);
+            Shelf shelfAux4 = new Shelf(branchOffice4);
+            ControllerCore.getInstance().addShelf(shelfAux4);
         }
     }
     public void createDefaultContainer(){

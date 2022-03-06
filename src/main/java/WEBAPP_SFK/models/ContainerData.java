@@ -1,9 +1,11 @@
 package WEBAPP_SFK.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -12,19 +14,19 @@ public class ContainerData implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int measureId;
     private float weight;
-    @OneToOne
-    private Container container;
-    private Date currentSampleDate;
+    private String currentSampleDate;
+    private String containerId;
 
 
 
     public ContainerData() {
     }
 
-    public ContainerData(float weight, Container container, Date currentSampleDate) {
+    public ContainerData(float weight, String containerId) {
         this.weight = weight;
-        this.container = container;
-        this.currentSampleDate = currentSampleDate;
+        this.containerId = containerId;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.currentSampleDate = sdf.format(new Date());
     }
 
     public int getMeasureId() {
@@ -43,19 +45,19 @@ public class ContainerData implements Serializable {
         this.weight = weight;
     }
 
-    public Container getContainer() {
-        return container;
+    public String getContainerId() {
+        return containerId;
     }
 
-    public void setContainer(Container container) {
-        this.container = container;
+    public void setContainerId(String containerId) {
+        this.containerId = containerId;
     }
 
-    public Date getCurrentSampleDate() {
+    public String getCurrentSampleDate() {
         return currentSampleDate;
     }
 
-    public void setCurrentSampleDate(Date currentSampleDate) {
+    public void setCurrentSampleDate(String currentSampleDate) {
         this.currentSampleDate = currentSampleDate;
     }
 }

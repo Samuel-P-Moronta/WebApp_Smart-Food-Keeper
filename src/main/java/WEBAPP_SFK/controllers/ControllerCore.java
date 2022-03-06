@@ -53,8 +53,8 @@ public class ControllerCore {
     public boolean addContainer(Container container){return CONTAINER_SERVICES.create(container);}
     public boolean updateContainer(Container container){return CONTAINER_SERVICES.update(container);}
     public boolean deleteContainer(Container container){return CONTAINER_SERVICES.delete(container);}
-    public boolean createContainerData(ContainerData containerData){return CONTAINER_DATA_SERVICES.create(containerData);}
-    public Container findContainerById(long id){return CONTAINER_SERVICES.find(id);}
+    public boolean addContainerData(ContainerData containerData){return CONTAINER_DATA_SERVICES.create(containerData);}
+    public Container findContainerById(String id){return CONTAINER_SERVICES.find(id);}
 
     //----------------------------------ORGANIZATION-----------------------------------------------//
     public boolean createOrganization(Company company){
