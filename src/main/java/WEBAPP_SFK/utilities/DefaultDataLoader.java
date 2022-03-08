@@ -62,7 +62,7 @@ public class DefaultDataLoader {
         ControllerCore.getInstance().createBranchOffice(branchOffice5);
     }
     public void createDefaultSuperUser(){
-        User userAux = new User("root@gmail.com","123", Set.of(RoleApp.ROLE_ADMIN));
+        User userAux = new User("root@gmail.com","123", Set.of(RoleApp.ROLE_ROOT));
         if(ControllerCore.getInstance().findUserByEmail("root@gmail.com") == null){
             ControllerCore.getInstance().createUser(userAux);
        }

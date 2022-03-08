@@ -2,9 +2,12 @@ package WEBAPP_SFK.controllers;
 
 import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.models.enums.RoleApp;
+import WEBAPP_SFK.services.PersonServices;
+import WEBAPP_SFK.services.ShelfServices;
 import WEBAPP_SFK.services.UserServices;
 import io.javalin.Javalin;
 
+import javax.management.relation.Role;
 import java.util.*;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
@@ -55,7 +58,7 @@ public class MainController extends BaseController{
                     String password = ctx.formParam("password");
 
                     if(!email.equals("") && !password.equals("")){
-                        User userAux = new User(email,password,Set.of(RoleApp.ROLE_ADMIN,RoleApp.ROLE_EMPLOYEE));
+                        User userAux = new User(email,password,Set.of(RoleApp.ROLE_ADMIN));
                         System.out.println(email + " " + password);
                         User userId = ControllerCore.getInstance().findUserByEmail(email);
 
@@ -93,45 +96,6 @@ public class MainController extends BaseController{
                         ctx.render("/public/FrontEnd_SFK/views/login.html",model);
                     }
                 });
-                post("/employeeRegister",ctx->{
-
-                    String identificationCard = ctx.formParam("identificationCard");
-                    String firstName = ctx.formParam("firstName");
-                    String lastName = ctx.formParam("lastName");
-                    String companyName = ctx.formParam("companyName");
-                    String city = ctx.formParam("city");
-                    String direction = ctx.formParam("direction");
-                    String email = ctx.formParam("email");
-                    String password = ctx.formParam("password");
-                    String branchOffice = ctx.formParam("branchOffice");
-                    System.out.println(identificationCard);
-
-                    BranchOffice branchOffice1 = ControllerCore.getInstance().findBranchOfficeById(Long.parseLong(branchOffice));
-
-                    if(!email.equals("") && !password.equals("")){
-                        if(branchOffice1 !=null){
-                            User userAux = new User(email,password,Set.of(RoleApp.ROLE_EMPLOYEE),branchOffice1);
-                            System.out.println(email + " " + password);
-                            User userId = ControllerCore.getInstance().findUserByEmail(email);
-                            if(userId == null) {
-                                ControllerCore.getInstance().createUser(userAux);
-                            }else{
-                                model.put("ErrorAuth","Este correo electronico ya esta registrado en nuestro sistema");
-                            }
-                            if(!identificationCard.equals("") && !firstName.equals("") && !lastName.equals("") && !city.equals("") && !direction.equals("") && !branchOffice.equals("")){
-                                Person personAux = new Person(identificationCard,firstName,lastName, new Date(),new Address(city,direction),ControllerCore.getInstance().findUserByEmail(email));
-                                Company company = new Company(companyName);
-                                if(ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard) == null){
-                                    ControllerCore.getInstance().createPerson(personAux);
-                                    ControllerCore.getInstance().createOrganization(company);
-                                }else{
-                                    model.put("IdentificationCardExist","Esta cedula ya se encuerntra registrada");
-                                }
-                            }
-                        }
-                    }
-                    ctx.render("/employeeRegister",model);
-                });
                 get("/login",ctx -> {
                     ctx.render("public/FrontEnd_SFK/views/login.html");
                 });
@@ -150,16 +114,67 @@ public class MainController extends BaseController{
                 });
                 /*-------------------------------------------------------------------------------*/
                 /*-------------------- Employee management---------------------------------------*/
-                post("/employee", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/employeeRegister.html");
+                post("/employeeRegister",ctx->{
+
+                    String identificationCard = ctx.formParam("identificationCard");
+                    System.out.println(identificationCard);
+                    String firstName = ctx.formParam("firstName");
+                    System.out.println(firstName);
+                    String lastName = ctx.formParam("lastName");
+                    System.out.println(lastName);
+                    String city = ctx.formParam("city");
+                    System.out.println(city);
+                    String direction = ctx.formParam("direction");
+                    System.out.println(direction);
+                    String email = ctx.formParam("email");
+                    System.out.println(email);
+                    String password = ctx.formParam("password");
+                    System.out.println(password);
+                    String branchOffice = ctx.formParam("idBranchOffice");
+                    System.out.println(branchOffice);
+
+                    BranchOffice branchOffice1 = ControllerCore.getInstance().findBranchOfficeById(Long.parseLong(branchOffice));
+
+                    if(!email.equals("") && !password.equals("")){
+                        if(branchOffice1 !=null){
+                            User userAux = new User(email,password,Set.of(RoleApp.ROLE_EMPLOYEE),branchOffice1);
+                            System.out.println(email + " " + password);
+                            User userId = ControllerCore.getInstance().findUserByEmail(email);
+                            if(userId == null) {
+                                ControllerCore.getInstance().createUser(userAux);
+                            }else{
+                                model.put("ErrorAuth","Este correo electronico ya esta registrado en nuestro sistema");
+                            }
+                            if(!identificationCard.equals("") && !firstName.equals("") && !lastName.equals("") && !city.equals("") && !direction.equals("") && !branchOffice.equals("")){
+                                Person personAux = new Person(identificationCard,firstName,lastName, new Date(),new Address(city,direction),ControllerCore.getInstance().findUserByEmail(email));
+                                if(ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard) == null){
+                                    ControllerCore.getInstance().createPerson(personAux);
+                                }else{
+                                    model.put("IdentificationCardExist","Esta cedula ya se encuerntra registrada");
+                                }
+                            }
+                        }
+                    }
+                    ctx.render("/public/FrontEnd_SFK/views/employeeRegister.html",model);
                 });
-                get("/employee", ctx ->{
+                get("/employeeRegister", ctx ->{
+                    ctx.render("/public/FrontEnd_SFK/views/employeeRegister.html",model);
+                });
+                get("/employeeEdit/:id", ctx ->{
+                    Person person = ControllerCore.getInstance().findPersonById(ctx.pathParam("id",Long.class).get());
+                    System.out.println("Person id"+ person.getId());
+                    model.put("action_form","/management/employeeEdit/"+person.getId());
+                    model.put("employeeRegister",person);
                     ctx.render("/public/FrontEnd_SFK/views/employeeRegister.html",model);
                 });
                 post("/employeeList", ctx ->{
+
                     ctx.render("/public/FrontEnd_SFK/views/employeeList.html");
                 });
                 get("/employeeList", ctx ->{
+                    List<Person> personList;
+                    personList = new PersonServices().findPersonByRole();
+                    model.put("employeeList",personList);
                     ctx.render("/public/FrontEnd_SFK/views/employeeList.html",model);
                 });
                 /*-----------------------------------------------------------------------------*/
