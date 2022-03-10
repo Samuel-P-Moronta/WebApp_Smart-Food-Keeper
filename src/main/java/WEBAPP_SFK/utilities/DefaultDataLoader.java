@@ -68,11 +68,46 @@ public class DefaultDataLoader {
        }
     }
     public void createDefaultData(){
+        //Root user
         createDefaultSuperUser();
-        createDefaultCompany();
+        //Admin
+        createDefaultAdmin();
+        //BranchOffice
         createDefaultBranchOffice();
+        //Employee
+        createDefaultEmployee();
+        //Company
+        createDefaultCompany();
+        //Shelf
         createDefaultShelf();
+        //Container
         createDefaultContainer();
+    }
+
+    private void createDefaultEmployee() {
+        BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(1);
+        User userAux = new User("employee@gmail.com","123", Set.of(RoleApp.ROLE_EMPLOYEE),branchOffice);
+        if(branchOffice !=null){
+            if(ControllerCore.getInstance().findUserByEmail("employee@gmail.com") == null){
+                ControllerCore.getInstance().createUser(userAux);
+            }
+        }
+        String identificationCard = "111-1111111-1";
+        Person personAdmin = new Person(identificationCard,"Yehudy","Rodriguez",new Date(),new Address("San francisco","Calle 20 de Sep #20"),userAux);
+        if(ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard) == null){
+            ControllerCore.getInstance().createPerson(personAdmin);
+        }
+    }
+    private void createDefaultAdmin() {
+        User userAux = new User("admin@gmail.com","123", Set.of(RoleApp.ROLE_ADMIN));
+        if(ControllerCore.getInstance().findUserByEmail("admin@gmail.com") == null){
+            ControllerCore.getInstance().createUser(userAux);
+        }
+        String identificationCard = "000-0000000-0";
+        Person personAdmin = new Person(identificationCard,"Samuel","Moronta",new Date(),new Address("Santiago","Calle 16 de Agosto #10"),userAux);
+        if(ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard) == null){
+            ControllerCore.getInstance().createPerson(personAdmin);
+        }
     }
     public void createDefaultShelf(){
         BranchOffice branchOffice1 = ControllerCore.getInstance().findBranchOfficeById(1);

@@ -8,12 +8,21 @@ function loadTempHumGraph(){
         datasets: [{
             data: [],
             label: "Temperatura (*C)",
+            borderWidth: 2,
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointBorderColor: "#fff",
+            pointBackgroundColor: "#0162ff",
             borderColor: "#3e95cd",
             backgroundColor: 'rgba(33, 76, 229, 0.5)',
             fill: true
         },{
             data: [],
             label: "Humedad (*C)",
+            borderWidth: 2,
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointBorderColor: "#fff",
             backgroundColor: 'rgba(255, 99, 71, 0.5)',
             borderColor: "#f44252",
             fill: true
@@ -42,6 +51,14 @@ function loadTempHumGraph(){
                     labelString: 'Temperature (ªC) Humedad (ªF)'
                 }
             }]
+        },
+        elements: {
+            point: {
+                radius: 1
+            },
+            line: {
+                tension: 0
+            }
         },
     };
     dataPlot = new Chart(document.getElementById("lineChartTempHum"), {

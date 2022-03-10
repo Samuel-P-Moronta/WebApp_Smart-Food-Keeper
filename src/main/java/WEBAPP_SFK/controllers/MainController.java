@@ -2,6 +2,7 @@ package WEBAPP_SFK.controllers;
 
 import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.models.enums.RoleApp;
+import WEBAPP_SFK.services.NotificationServices;
 import WEBAPP_SFK.services.PersonServices;
 import WEBAPP_SFK.services.ShelfServices;
 import WEBAPP_SFK.services.UserServices;
@@ -91,6 +92,9 @@ public class MainController extends BaseController{
                         }
                         if(userAux.hasRole(RoleApp.ROLE_ROOT)){
                             ctx.redirect("/projectAdmin");
+                        }
+                        if(userAux.hasRole(RoleApp.ROLE_EMPLOYEE)){
+                            ctx.redirect("/employeePortal");
                         }
                     }else{
                         ctx.render("/public/FrontEnd_SFK/views/login.html",model);
@@ -185,21 +189,24 @@ public class MainController extends BaseController{
                 get("/branchOffice", ctx ->{
                     ctx.render("/public/FrontEnd_SFK/views/branchOffice.html",model);
                 });
-                /*-----------------------------------------------------------------------------*/
-                /*-----------------------------Container management----------------------------*/
-                post("/containerMgmt", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/containerMgmt.html");
-                });
-                get("/containerMgmt", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/containerMgmt.html",model);
-                });
-                /*---------------------------------------------------------------------------*/
                 /*---------------------Notifications management------------------------------*/
                 post("/notification", ctx ->{
                     ctx.render("/public/FrontEnd_SFK/views/notification.html");
                 });
                 get("/notification", ctx ->{
+                    List<Notification> notificationList;
+                    notificationList = NotificationServices.getInstance().findAll();
+                    model.put("notificationList",notificationList);
                     ctx.render("/public/FrontEnd_SFK/views/notification.html",model);
+                });
+                get("/deleteNotificationById/:id", ctx ->{
+                    Notification notification = NotificationServices.getInstance().find(ctx.pathParam("id",Long.class).get());
+                    NotificationServices.getInstance().delete(notification.getId());
+                    ctx.redirect("/management/notification");
+                });
+                get("/getNotificationByType/:type", ctx ->{
+                    Notification notification = NotificationServices.getInstance().find(ctx.pathParam("type",Long.class).get());
+                    ctx.redirect("/management/shelf");
                 });
                 /*---------------------------------------------------------------------------*/
                 /*--------------------------Trueque management------------------------------*/
@@ -227,9 +234,17 @@ public class MainController extends BaseController{
                 });
                 /*---------------------------------------------------------------------------*/
             });
-
-            //
+            path("/employeePortal",() ->{
+                get("/", ctx ->{
+                    ctx.render("/public/FrontEnd_SFK/views/employeePortal.html",model);
+                });
+                get("/shelfMonitoring", ctx ->{
+                    ctx.render("/public/FrontEnd_SFK/views/shelfMonitoringEmployee.html",model);
+                });
+                get("/containerMonitoring", ctx ->{
+                    ctx.render("/public/FrontEnd_SFK/views/employeePortal.html",model);
+                });
+            });
         });
-
     }
 }

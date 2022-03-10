@@ -38,12 +38,9 @@ function loadContainerList(data){
 function enableButtonShowContainer(){
     var idContainer = document.getElementById('idContainer').value;
     let showGraphContainer = document.getElementById('showGraphContainer');
-    var headerRealtime = document.getElementById("headerRealtime");
 
-    headerRealtime.disabled = true;
     showGraphContainer.disabled = true;
     if (idContainer != -1) {
-        headerRealtime.disabled = false;
         showGraphContainer.disabled = false;
         return;
     }

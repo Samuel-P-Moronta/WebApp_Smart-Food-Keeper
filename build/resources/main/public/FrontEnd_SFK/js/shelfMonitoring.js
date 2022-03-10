@@ -72,12 +72,9 @@ function loadUniqueShelf(data){
 function enableButtonShowShelf(){
     var idShelf = document.getElementById('idShelf').value;
     let showShelfButton = document.getElementById('showShelfButton');
-    var headerRealtime = document.getElementById("headerRealtime");
 
-    headerRealtime.disabled = true;
     showShelfButton.disabled = true;
     if (idShelf != -1) {
-        headerRealtime.disabled = false;
         showShelfButton.disabled = false;
         return;
     }

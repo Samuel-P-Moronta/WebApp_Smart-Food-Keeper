@@ -85,7 +85,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/management/shelf">
+          <a class="nav-link" href="/employeePortal/shelfMoniroting">
             <span class="icon-bg"><i class="mdi mdi-chart-bar menu-icon"></i></span>
             <span class="menu-title">Estante</span>
           </a>
@@ -101,18 +101,12 @@
     <!-- partial -->
     <div class="main-panel">
       <div class="content-wrapper">
-        <div class="d-xl-flex justify-content-between align-items-start" th:replace="public/FrontEnd_SFK/views/adminTemplate.html::adminTittle"></div>
-        <div class="row" th:replace="public/FrontEnd_SFK/views/adminTemplate.html::adminStats"></div>
         <div class="tab-content tab-transparent-content">
           <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
-
-                <!---- CODE HERE CUSTOM TEMPLATE ---->
-
                 <div id="notification" class="tab-pane fade show active pt-3">
                   <h4 class="card-title">Historial de notificaciones/eventos </h4>
-
                   <div class="table-responsive">
                     <table id="example" class="table table-hover table-bordered" style="width:100%">
                       <thead>
@@ -121,7 +115,6 @@
                         <th>Tipo de notificacion</th>
                         <th>Fecha</th>
                         <th>Accion</th>
-
                       </tr>
                       </thead>
                       <tbody>
