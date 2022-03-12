@@ -53,7 +53,7 @@ public class SFKException extends BaseController {
          * Solo aplica cuando venga para vistas html.
          */
         app.error(404,"text/html", ctx -> {
-            ctx.html("<h1>Recurso consultado no existe... Favor verificar...</h1>");
+            ctx.render("/public/FrontEnd_SFK/views/error-404.html");
         });
     }
 }
