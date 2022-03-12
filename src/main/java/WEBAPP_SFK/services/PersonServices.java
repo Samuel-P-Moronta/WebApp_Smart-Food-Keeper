@@ -1,5 +1,6 @@
 package WEBAPP_SFK.services;
 
+import WEBAPP_SFK.models.Company;
 import WEBAPP_SFK.models.Person;
 import WEBAPP_SFK.models.enums.RoleApp;
 import WEBAPP_SFK.services.connect.DataBaseRepository;
@@ -44,4 +45,15 @@ public class PersonServices extends DataBaseRepository<Person> {
         return query.getResultList();
     }
 
+    public Person findPersonByEmail(String email) {
+        EntityManager entityManager = getEntityManager();
+        Query query = entityManager.createQuery("SELECT P FROM Person P WHERE  P.user.email =:email");
+        query.setParameter("email",email);
+        List<Person> personList = query.getResultList();
+        if (personList.size() > 0) {
+            return personList.get(0);
+        }
+        //Return none
+        return null;
+    }
 }

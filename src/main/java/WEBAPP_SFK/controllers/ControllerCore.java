@@ -103,4 +103,7 @@ public class ControllerCore {
     public Person findPersonByIdentificationCard(String identificationCard) {
         return PERSON_SERVICES.findPersonByIdentificationCard(identificationCard);
     }
+    public Person findPersonByEmail(String email) {
+        return PERSON_SERVICES.findPersonByEmail(email);
+    }
 }

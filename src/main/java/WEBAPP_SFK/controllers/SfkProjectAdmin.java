@@ -1,10 +1,7 @@
 package WEBAPP_SFK.controllers;
 
 import WEBAPP_SFK.models.*;
-import WEBAPP_SFK.services.BranchOfficeServices;
-import WEBAPP_SFK.services.CompanyServices;
-import WEBAPP_SFK.services.ContainerServices;
-import WEBAPP_SFK.services.ShelfServices;
+import WEBAPP_SFK.services.*;
 import io.javalin.Javalin;
 
 import java.util.Date;
@@ -28,6 +25,11 @@ public class SfkProjectAdmin extends BaseController{
         //Welcome
         app.routes(() -> {
             path("/projectAdmin", () -> {
+                before("/*",ctx -> {
+                    if(ctx.sessionAttribute("user")==null){
+                        ctx.redirect("/login");
+                    }
+                });
                 post("/", ctx ->{
                     System.out.println("Estoy dentro del enpoint projectAdmin");
                     String idCompany = ctx.formParam("idCompany");
@@ -40,7 +42,7 @@ public class SfkProjectAdmin extends BaseController{
                         Company company = ControllerCore.getInstance().findOrganizationById(Long.parseLong(idCompany));
                         if(company !=null){
                             BranchOffice branchOffice = new BranchOffice(address,company);
-                            if(BranchOfficeServices.getInstance().findBranchOfficeByAddress(city,direction) !=null){
+                            if(BranchOfficeServices.getInstance().findBranchOfficeByAddress(city,direction) == null){
                                 ControllerCore.getInstance().createBranchOffice(branchOffice);
                             }else{
                                 System.out.println("Existe una misma sucursal con esta direccion");
@@ -51,10 +53,20 @@ public class SfkProjectAdmin extends BaseController{
                     model.put("branchOfficeList",BranchOfficeServices.getInstance().findAll());
                     ctx.render("/public/FrontEnd_SFK/views/projectAdminPortal.html",model);
                 });
+                before("/",ctx -> {
+                    if(ctx.sessionAttribute("user")==null){
+                        ctx.redirect("/login");
+                    }
+                });
                 get("/", ctx ->{
                     makeListHeader();
+                    String email = UserServices.getInstance().find(ctx.sessionAttribute("user")).getEmail();
+                    System.out.println(email);
+                    ctx.sessionAttribute("user",email);
+                    model.put("fullNameToShow",email);
                     ctx.render("/public/FrontEnd_SFK/views/projectAdminPortal.html",model);
                 });
+
                 post("/shelfManagement", ctx ->{
                     String branchOfficeShelf = ctx.formParam("branchOffice");
                     System.out.println("Branch office: "+branchOfficeShelf);

@@ -7,6 +7,8 @@ import WEBAPP_SFK.services.PersonServices;
 import WEBAPP_SFK.services.ShelfServices;
 import WEBAPP_SFK.services.UserServices;
 import io.javalin.Javalin;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 
 import javax.management.relation.Role;
 import java.util.*;
@@ -16,17 +18,27 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 public class MainController extends BaseController{
 
     /* Main controller for manage template and request */
-
+    private static String mpCryptoPassword = "BornToFight";
     private Map<String, Object> model = new HashMap<>();
+    StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+
 
     public MainController(Javalin app) {
         super(app);
+        encryptor = new StandardPBEStringEncryptor();
     }
 
     @Override
     public void aplicarRutas() {
         //Welcome
         app.routes(() ->{
+            get("/logout", ctx -> {
+                ctx.clearCookieStore();
+                String id = ctx.req.getSession().getId();
+                ctx.req.getSession().invalidate();
+                ctx.result(String.format("Invalid session: [%s]",id));
+                ctx.redirect("/login");
+            });
             path("/",() ->{
                 /*-------------------------Welcome portal------------------------------------------*/
                 get("/", ctx -> ctx.redirect("/portal"));
@@ -37,15 +49,6 @@ public class MainController extends BaseController{
                 get("/portal", ctx -> {
                     ctx.render("public/FrontEnd_SFK/views/portal.html",model);
                 });
-                /*-------------------------------------------------------------------------------*/
-                /*---------------------Company login----------------------------------------*/
-                post("/company", ctx -> {
-                    ctx.render("public/FrontEnd_SFK/views/login.html",model);
-                });
-                get("/company", ctx -> {
-                    ctx.render("public/FrontEnd_SFK/views/login.html");
-                });
-                /*-------------------------------------------------------------------------------*/
                 /*---------------------Company register or login----------------------------*/
                 /* To register a new company */
                 post("/organizationRegister", ctx ->{
@@ -84,9 +87,22 @@ public class MainController extends BaseController{
                 post("/login",ctx -> {
                     String email = ctx.formParam("email");
                     String password = ctx.formParam("password");
+                    String rememberMe = ctx.formParam("remember");
+
                     User userAux = UserServices.getInstance().loginRequest(email,password);
 
                     if(userAux !=null){
+                        if(rememberMe !=null){
+                            if(rememberMe.equalsIgnoreCase("ON")){
+                                System.out.println("Creando cookie...\n");
+                                encryptor.setPassword(mpCryptoPassword);
+                                encryptor.encrypt(userAux.getPassword());
+                                ctx.cookie("user", userAux.getEmail(),604800);
+                                ctx.cookie("password",encryptor.encrypt(userAux.getPassword()),604800);
+                            }
+                        }else{
+                            System.out.println("Cookie no pudo ser creada...\n");
+                        }
                         if(userAux.hasRole(RoleApp.ROLE_ADMIN)){
                             ctx.redirect("/management/dashboard");
                         }
@@ -96,6 +112,7 @@ public class MainController extends BaseController{
                         if(userAux.hasRole(RoleApp.ROLE_EMPLOYEE)){
                             ctx.redirect("/employeePortal");
                         }
+                        ctx.sessionAttribute("user", email);
                     }else{
                         ctx.render("/public/FrontEnd_SFK/views/login.html",model);
                     }
@@ -108,12 +125,23 @@ public class MainController extends BaseController{
                 });
             });
             path("/management",() ->{
+                before("/*",ctx -> {
+                    if(ctx.sessionAttribute("user")==null){
+                        ctx.redirect("/login");
+                    }
+                });
+
                 /*--------------------------Dashboard--------------------------------------------*/
                 /*Dashboard init page when administrator get started*/
                 post("/dashboard", ctx ->{
                     ctx.render("/public/FrontEnd_SFK/views/dashboard.html");
                 });
                 get("/dashboard", ctx ->{
+                    String email = UserServices.getInstance().find(ctx.sessionAttribute("user")).getEmail();
+                    Person person = ControllerCore.controllerCore.findPersonByEmail(email);
+                    String fullNameToShow = person.getFirstName() + " "+ person.getLastName();
+                    ctx.sessionAttribute("user",email);
+                    model.put("fullNameToShow",fullNameToShow);
                     ctx.render("/public/FrontEnd_SFK/views/dashboard.html",model);
                 });
                 /*-------------------------------------------------------------------------------*/
@@ -166,10 +194,10 @@ public class MainController extends BaseController{
                 });
                 get("/employeeEdit/:id", ctx ->{
                     Person person = ControllerCore.getInstance().findPersonById(ctx.pathParam("id",Long.class).get());
-                    System.out.println("Person id"+ person.getId());
-                    model.put("action_form","/management/employeeEdit/"+person.getId());
-                    model.put("employeeRegister",person);
-                    ctx.render("/public/FrontEnd_SFK/views/employeeRegister.html",model);
+
+                    if(person.getId() !=null){
+                        ctx.redirect("/management/employeeRegister");
+                    }
                 });
                 post("/employeeList", ctx ->{
 
@@ -235,7 +263,17 @@ public class MainController extends BaseController{
                 /*---------------------------------------------------------------------------*/
             });
             path("/employeePortal",() ->{
+                before("/",ctx -> {
+                    if(ctx.sessionAttribute("user")==null){
+                        ctx.redirect("/login");
+                    }
+                });
                 get("/", ctx ->{
+                    String email = UserServices.getInstance().find(ctx.sessionAttribute("user")).getEmail();
+                    Person person = ControllerCore.controllerCore.findPersonByEmail(email);
+                    String fullNameToShow = person.getFirstName() + " "+ person.getLastName();
+                    ctx.sessionAttribute("user",email);
+                    model.put("fullNameToShow",fullNameToShow);
                     ctx.render("/public/FrontEnd_SFK/views/employeePortal.html",model);
                 });
                 get("/shelfMonitoring", ctx ->{

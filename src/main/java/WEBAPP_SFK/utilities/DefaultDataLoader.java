@@ -68,16 +68,16 @@ public class DefaultDataLoader {
        }
     }
     public void createDefaultData(){
-        //Root user
-        createDefaultSuperUser();
         //Admin
         createDefaultAdmin();
-        //BranchOffice
-        createDefaultBranchOffice();
-        //Employee
-        createDefaultEmployee();
         //Company
         createDefaultCompany();
+        //BranchOffice
+        createDefaultBranchOffice();
+        //Root user
+        createDefaultSuperUser();
+        //Employee
+        createDefaultEmployee();
         //Shelf
         createDefaultShelf();
         //Container
