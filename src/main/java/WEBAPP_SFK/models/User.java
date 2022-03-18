@@ -6,6 +6,7 @@ import io.javalin.core.security.Role;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,10 +19,12 @@ public class User implements Serializable {
     // Carga en linea
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<RoleApp> rolesList;
-    @OneToMany(mappedBy = "user")
-    private Collection<Notification> notifications;
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    private Set<Notification> notificationList = new HashSet<>();
     @ManyToOne
     private BranchOffice branchOffice;
+    @ManyToOne
+    private Company company;
 
 
     public User() {
@@ -38,6 +41,22 @@ public class User implements Serializable {
         this.password = password;
         this.rolesList = rolesList;
         this.branchOffice = branchOffice;
+    }
+
+    public User(String email, String password, Set<RoleApp> rolesList,Company company) {
+        this.email = email;
+        this.password = password;
+        this.rolesList = rolesList;
+        this.company = company;
+    }
+
+    public User(String email, String password, Set<RoleApp> rolesList, Set<Notification> notificationList, BranchOffice branchOffice, Company company) {
+        this.email = email;
+        this.password = password;
+        this.rolesList = rolesList;
+        this.notificationList = notificationList;
+        this.branchOffice = branchOffice;
+        this.company = company;
     }
 
     public User(String email, String password) {
@@ -69,20 +88,20 @@ public class User implements Serializable {
         this.rolesList = rolesList;
     }
 
-    public Collection<Notification> getNotifications() {
-        return notifications;
-    }
-
-    public void setNotifications(Collection<Notification> notifications) {
-        this.notifications = notifications;
-    }
-
     public BranchOffice getBranchOffice() {
         return branchOffice;
     }
 
     public void setBranchOffice(BranchOffice branchOffice) {
         this.branchOffice = branchOffice;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public boolean hasRole(Role role){
@@ -94,4 +113,11 @@ public class User implements Serializable {
         return false;
     }
 
+    public Set<Notification> getNotificationList() {
+        return notificationList;
+    }
+
+    public void setNotificationList(Set<Notification> notificationList) {
+        this.notificationList = notificationList;
+    }
 }

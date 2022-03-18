@@ -44,19 +44,15 @@
                                                 <th>Fecha de evento</th>
                                                 <th>Sucursal</th>
                                                 <th>Accion</th>
-
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <!--public Notification(String title, String description, Date sendDate, User user, BranchOffice branchOffice, int type) {-->
 
                                             <tr th:each="notification: ${notificationList}">
                                                 <td class="text-left" th:text="${notification.title}">Evento</td>
                                                 <td class="text-left" th:text="${notification.description}">Mensaje</td>
                                                 <td class="text-left" th:text="${notification.sendDate}">Fecha de evento</td>
                                                 <td class="text-left" th:text="${notification.branchOffice.address.city} + ' '+ ${notification.branchOffice.address.direction}">Sucursal</td>
-
-                                                <td class="text-left">Sucursal</td>
                                                 <td class="text-center">
                                                     <a th:href="'/management/getNotificationByType/'+${notification.type}"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">VER</button></a>
                                                     <a><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">LEIDO</button></a>

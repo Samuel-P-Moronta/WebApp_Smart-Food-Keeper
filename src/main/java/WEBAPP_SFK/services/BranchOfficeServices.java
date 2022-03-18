@@ -48,4 +48,16 @@ public class BranchOfficeServices extends DataBaseRepository<BranchOffice> {
         }
         return null;
     }
+    public BranchOffice findBranchOfficeByUserEmployee(String email) {
+        EntityManager em = getEntityManager();
+        String sql = "SELECT B from BranchOffice B INNER JOIN User U ON B.id = U.branchOffice.id WHERE U.email = :email";
+        Query query = em.createQuery(sql, BranchOffice.class);
+        query.setParameter("email", email);
+        List<BranchOffice> branchOfficeList = query.getResultList();
+        if (branchOfficeList.size() > 0) {
+            return branchOfficeList.get(0);
+        }
+        return null;
+    }
+    //SELECT * FROM BRANCHOFFICE INNER JOIN USER ON USER.BRANCHOFFICE_ID = BRANCHOFFICE.ID WHERE USER.EMAIL = 'employee@gmail.com'
 }

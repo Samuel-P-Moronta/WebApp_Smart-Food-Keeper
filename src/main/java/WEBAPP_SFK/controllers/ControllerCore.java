@@ -33,6 +33,7 @@ public class ControllerCore {
     public List<ShelfData> listShelfData(){
         return SHELF_DATA_SERVICES.findAll();
     }
+    /*
     public List<ShelfData> getShelfDataByShelf(String deviceName){
         List<ShelfData> sh1 = new ArrayList<ShelfData>();
         for(ShelfData s: listShelfData()){
@@ -42,6 +43,8 @@ public class ControllerCore {
         }
         return sh1;
     }
+
+     */
     //----------------------------------SHELF-------------------------------------------------------//
     public boolean addShelf(Shelf sh){return SHELF_SERVICES.create(sh);}
     public boolean updateShelf(Shelf shelf){return SHELF_SERVICES.update(shelf);}

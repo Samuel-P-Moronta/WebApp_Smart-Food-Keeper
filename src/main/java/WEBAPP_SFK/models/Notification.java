@@ -1,6 +1,7 @@
 package WEBAPP_SFK.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 
@@ -11,7 +12,7 @@ import java.util.Collection;
 import java.util.Date;
 
 @Entity
-public class Notification implements Serializable {
+public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,18 +26,22 @@ public class Notification implements Serializable {
     private User user;
     @ManyToOne(fetch = FetchType.EAGER)
     private BranchOffice branchOffice;
+    @JsonManagedReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Company company;
     private int type;
 
 
     public Notification() {
     }
 
-    public Notification(String title, String description, Date sendDate, User user, BranchOffice branchOffice, int type) {
+    public Notification(String title, String description, Date sendDate, User user, BranchOffice branchOffice, Company company, int type) {
         this.title = title;
         this.description = description;
         this.sendDate = sendDate;
         this.user = user;
         this.branchOffice = branchOffice;
+        this.company = company;
         this.type = type;
     }
 
@@ -104,4 +109,11 @@ public class Notification implements Serializable {
         this.branchOffice = branchOffice;
     }
 
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 }

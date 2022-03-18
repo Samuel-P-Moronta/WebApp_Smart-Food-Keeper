@@ -59,6 +59,7 @@ function loadShelfList(data){
         shelfHeader.innerHTML = data[i].deviceId;
         //idShelf.options[j].text ="SH-"+data[i].deviceId + " " + "Sucursal: "+data[i].branchOffice.address.direction;
     }
+
 }
 function loadUniqueShelf(data){
     var idShelf = document.getElementById("idShelf");

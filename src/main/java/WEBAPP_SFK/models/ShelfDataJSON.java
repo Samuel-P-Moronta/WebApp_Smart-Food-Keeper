@@ -19,7 +19,7 @@ public class ShelfDataJSON {
     public ShelfDataJSON() {
     }
 
-    public ShelfDataJSON(Float temperature, Float humidity, int fruitCant, String fruitType, int cantOverripe, int cantRipe, int cantUnripe, Date currentSampleDate, String deviceId) {
+    public ShelfDataJSON(Float temperature, Float humidity, int fruitCant, String fruitType, int cantOverripe, int cantRipe, int cantUnripe, String deviceId) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.fruitCant = fruitCant;
@@ -27,7 +27,6 @@ public class ShelfDataJSON {
         this.cantOverripe = cantOverripe;
         this.cantRipe = cantRipe;
         this.cantUnripe = cantUnripe;
-        this.currentSampleDate = currentSampleDate;
         this.deviceId = deviceId;
     }
 

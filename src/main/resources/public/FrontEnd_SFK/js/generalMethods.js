@@ -41,6 +41,7 @@ function enableShelfSelect(){
         idShelf.disabled = false;
         findShelfByBranchOffice(idBranchOffice);
     }
+
 }
 function enableContainerSelect(){
     console.log("Estoy en la funcion enable container select")

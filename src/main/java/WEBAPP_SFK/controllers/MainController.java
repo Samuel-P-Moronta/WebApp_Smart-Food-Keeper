@@ -2,15 +2,11 @@ package WEBAPP_SFK.controllers;
 
 import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.models.enums.RoleApp;
-import WEBAPP_SFK.services.NotificationServices;
-import WEBAPP_SFK.services.PersonServices;
-import WEBAPP_SFK.services.ShelfServices;
-import WEBAPP_SFK.services.UserServices;
+import WEBAPP_SFK.services.*;
 import io.javalin.Javalin;
+import org.dom4j.swing.BranchTreeNode;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
-import org.jasypt.util.password.StrongPasswordEncryptor;
 
-import javax.management.relation.Role;
 import java.util.*;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
@@ -36,6 +32,7 @@ public class MainController extends BaseController{
                 ctx.clearCookieStore();
                 String id = ctx.req.getSession().getId();
                 ctx.req.getSession().invalidate();
+                ctx.sessionAttribute("user", null);
                 ctx.result(String.format("Invalid session: [%s]",id));
                 ctx.redirect("/login");
             });
@@ -80,6 +77,10 @@ public class MainController extends BaseController{
                             }else{
                                 model.put("IdentificationCardExist","Esta cedula ya se encuerntra registrada");
                             }
+                        }
+                        if(ControllerCore.getInstance().findOrganizationByName(companyName) !=null){
+                            userAux.setCompany(ControllerCore.getInstance().findOrganizationByName(companyName));
+                            ControllerCore.getInstance().updateUser(userAux);
                         }
                     }
                     ctx.render("/public/FrontEnd_SFK/views/login.html",model);
@@ -166,10 +167,11 @@ public class MainController extends BaseController{
                     System.out.println(branchOffice);
 
                     BranchOffice branchOffice1 = ControllerCore.getInstance().findBranchOfficeById(Long.parseLong(branchOffice));
-
+                    Company company = ControllerCore.getInstance().findOrganizationByBranchOffice(branchOffice1.getId());
                     if(!email.equals("") && !password.equals("")){
                         if(branchOffice1 !=null){
                             User userAux = new User(email,password,Set.of(RoleApp.ROLE_EMPLOYEE),branchOffice1);
+                            userAux.setCompany(company);
                             System.out.println(email + " " + password);
                             User userId = ControllerCore.getInstance().findUserByEmail(email);
                             if(userId == null) {
@@ -222,9 +224,15 @@ public class MainController extends BaseController{
                     ctx.render("/public/FrontEnd_SFK/views/notification.html");
                 });
                 get("/notification", ctx ->{
-                    List<Notification> notificationList;
-                    notificationList = NotificationServices.getInstance().findAll();
-                    model.put("notificationList",notificationList);
+                    User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
+
+                    //Whose's my employees
+                    //First find company by branchOffice
+                    Company company = user.getCompany();
+                    //I know the company branchoffice belongs to
+                    //Find user by company
+                    model.put("notificationList",company.getNotificationList());
+
                     ctx.render("/public/FrontEnd_SFK/views/notification.html",model);
                 });
                 get("/deleteNotificationById/:id", ctx ->{
@@ -263,24 +271,41 @@ public class MainController extends BaseController{
                 /*---------------------------------------------------------------------------*/
             });
             path("/employeePortal",() ->{
-                before("/",ctx -> {
+                before("/*",ctx -> {
                     if(ctx.sessionAttribute("user")==null){
                         ctx.redirect("/login");
                     }
                 });
                 get("/", ctx ->{
-                    String email = UserServices.getInstance().find(ctx.sessionAttribute("user")).getEmail();
-                    Person person = ControllerCore.controllerCore.findPersonByEmail(email);
+                    User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
+                    Person person = ControllerCore.controllerCore.findPersonByEmail(user.getEmail());
                     String fullNameToShow = person.getFirstName() + " "+ person.getLastName();
-                    ctx.sessionAttribute("user",email);
+                    ctx.sessionAttribute("user",user.getEmail());
                     model.put("fullNameToShow",fullNameToShow);
+
+                    Company company = user.getCompany();
+                    model.put("notificationListEmployee",company.getNotificationList());
                     ctx.render("/public/FrontEnd_SFK/views/employeePortal.html",model);
                 });
-                get("/shelfMonitoring", ctx ->{
+                get("/shelfMonitoringEmployee", ctx ->{
+                    User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
+
+                    String email = user.getEmail();
+                    System.out.println("Email: "+email);
+                    if(user.hasRole(RoleApp.ROLE_EMPLOYEE)){
+                        BranchOffice branchOffice = BranchOfficeServices.getInstance().findBranchOfficeByUserEmployee(email);
+                        if(branchOffice !=null){
+                            System.out.println("Info branchOffice"+ branchOffice.getCompany().getName());
+                            String nameBranchOffice = branchOffice.getAddress().getCity() + " "+ "(" + branchOffice.getAddress().getDirection()+")";
+                            List<Shelf> shelfList = ShelfServices.getInstance().findShelfByBranchOffice(branchOffice.getId());
+                            model.put("branchOfficeSelect",nameBranchOffice);
+                            model.put("shelfSelect",shelfList);
+                        }
+                    }
                     ctx.render("/public/FrontEnd_SFK/views/shelfMonitoringEmployee.html",model);
                 });
-                get("/containerMonitoring", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/employeePortal.html",model);
+                get("/containerMonitoringEmployee", ctx ->{
+                    ctx.render("/public/FrontEnd_SFK/views/containerMonitoringEmployee.html",model);
                 });
             });
         });

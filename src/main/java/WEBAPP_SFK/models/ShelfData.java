@@ -19,13 +19,30 @@ public class ShelfData implements Serializable {
     private int cantRipe;
     private int cantUnripe;
     private String currentSampleDate;
-    private String deviceId;
+    @OneToOne
+    private Shelf shelf;
+
+    //private String deviceId; //shelf
 
 
     public ShelfData(){
 
     }
 
+    public ShelfData(Float temperature, Float humidity, int fruitCant, String fruitType, int cantOverripe, int cantRipe, int cantUnripe, Shelf shelf) {
+        this.measureId = measureId;
+        this.temperature = temperature;
+        this.humidity = humidity;
+        this.fruitCant = fruitCant;
+        this.fruitType = fruitType;
+        this.cantOverripe = cantOverripe;
+        this.cantRipe = cantRipe;
+        this.cantUnripe = cantUnripe;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.currentSampleDate = sdf.format(new Date());
+        this.shelf = shelf;
+    }
+    /*
     public ShelfData(Float temperature, Float humidity, int fruitCant, String fruitType, int cantOverripe, int cantRipe, int cantUnripe, String deviceId) {
         this.temperature = temperature;
         this.humidity = humidity;
@@ -38,6 +55,8 @@ public class ShelfData implements Serializable {
         this.currentSampleDate = sdf.format(new Date());
         this.deviceId = deviceId;
     }
+
+     */
 
     public int getMeasureId() {
         return measureId;
@@ -110,12 +129,22 @@ public class ShelfData implements Serializable {
     public void setCurrentSampleDate(String currentSampleDate) {
         this.currentSampleDate = currentSampleDate;
     }
-
+    /*
     public String getDeviceId() {
         return deviceId;
     }
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
+    }
+
+     */
+
+    public Shelf getShelf() {
+        return shelf;
+    }
+
+    public void setShelf(Shelf shelf) {
+        this.shelf = shelf;
     }
 }

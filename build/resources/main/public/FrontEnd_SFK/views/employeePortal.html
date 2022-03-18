@@ -72,19 +72,19 @@
       <ul class="nav">
         <li class="nav-item nav-category">Monitoreo inteligente</li>
         <li class="nav-item">
-          <a class="nav-link" href="/management/notification">
+          <a class="nav-link" href="/employeePortal">
             <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
             <span class="menu-title">Notificaciones</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/employeePortal/shelfMoniroting">
+          <a class="nav-link" href="/employeePortal/shelfMonitoringEmployee">
             <span class="icon-bg"><i class="mdi mdi-chart-bar menu-icon"></i></span>
             <span class="menu-title">Estante</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/management/containerMonitoring">
+          <a class="nav-link" href="/employeePortal/containerMonitoringEmployee">
             <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
             <span class="menu-title">Contenedor</span>
           </a>
@@ -98,65 +98,38 @@
           <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
+
                 <div id="notification" class="tab-pane fade show active pt-3">
-                  <h4 class="card-title">Historial de notificaciones/eventos </h4>
+                  <h4 class="card-title">Listado de notificaciones</h4>
+
                   <div class="table-responsive">
                     <table id="example" class="table table-hover table-bordered" style="width:100%">
                       <thead>
                       <tr>
                         <th>Evento</th>
-                        <th>Tipo de notificacion</th>
-                        <th>Fecha</th>
+                        <th>Mensaje</th>
+                        <th>Fecha de evento</th>
                         <th>Accion</th>
                       </tr>
                       </thead>
                       <tbody>
-                      <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td><label class="badge badge-success">Activo</label></td>
 
-                      </tr>
-                      <tr>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td><label class="badge badge-success">Activo</label></td>
-
-                      </tr>
-                      <tr>
-                        <td>Ashton Cox</td>
-                        <td>Junior Technical Author</td>
-                        <td><label class="badge badge-success">Activo</label></td>
-
-                      </tr>
-                      <tr>
-                        <td>Cedric Kelly</td>
-                        <td>Senior Javascript Developer</td>
-                        <td><label class="badge badge-danger">Inactivo</label></td>
-
-                      </tr>
-                      <tr>
-                        <td>Airi Satou</td>
-                        <td>Accountant</td>
-                        <td><label class="badge badge-success">Activo</label></td>
-
-                      </tr>
-                      <tr>
-                        <td>Fiona Green</td>
-                        <td>Chief Operating Officer (COO)</td>
-                        <td><label class="badge badge-danger">Inactivo</label></td>
-                      </tr>
-                      <tr>
-                        <td>Shou Itou</td>
-                        <td>Regional Marketing</td>
-                        <td><label class="badge badge-danger">Inactivo</label></td>
+                      <tr th:each="notification: ${notificationListEmployee}">
+                        <td class="text-left" th:text="${notification.title}">Evento</td>
+                        <td class="text-left" th:text="${notification.description}">Mensaje</td>
+                        <td class="text-left" th:text="${notification.sendDate}">Fecha de evento</td>
+                        <td class="text-center">
+                          <a th:href="'/management/getNotificationByType/'+${notification.type}"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">VER</button></a>
+                          <a><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">LEIDO</button></a>
+                          <a th:href="'/management/deleteNotificationById/'+${notification.id}" ><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">REMOVER</button></a>
+                        </td>
                       </tr>
                       </tbody>
                       <tfoot>
                       <tr>
-                        <th>Sucursal</th>
-                        <th>Tipo de notificacion</th>
                         <th>Evento</th>
+                        <th>Mensaje</th>
+                        <th>Fecha de evento</th>
                         <th>Accion</th>
                       </tr>
                       </tfoot>

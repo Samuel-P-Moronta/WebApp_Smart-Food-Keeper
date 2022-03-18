@@ -35,5 +35,22 @@ public class NotificationServices extends DataBaseRepository<Notification> {
         return null;
     }
 
-
+    public List<Notification> findNotificationByUserEmail(String email) {
+        EntityManager em = getEntityManager();
+        String sql = "SELECT N from Notification N WHERE user.email =:email";
+        Query query = em.createQuery(sql, Notification.class);
+        query.setParameter("email",email);
+        return query.getResultList();
+    }
+    public List<Notification> findNotificationEmail(String email) {
+        EntityManager em = getEntityManager();
+        String sql = "SELECT * FROM Notification N " +
+                "WHERE N.id IN (SELECT N.id FROM NOTIFICATION  " +
+                "INNER JOIN BranchOffice B ON N.branchOffice_id = B.id " +
+                "INNER JOIN Company C ON B.company_id = C.id " +
+                "INNER JOIN User U on C.id = U.company_id WHERE U.email = :email)";
+        Query query = em.createNativeQuery(sql, Notification.class);
+        query.setParameter("email",email);
+        return query.getResultList();
+    }
 }

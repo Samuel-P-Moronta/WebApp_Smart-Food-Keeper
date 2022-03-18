@@ -37,6 +37,28 @@ public class DefaultDataLoader {
         ControllerCore.getInstance().createOrganization(company1);
         ControllerCore.getInstance().createOrganization(company2);
         ControllerCore.getInstance().createOrganization(company3);
+        /*
+        Set<BranchOffice> branchOfficeList1;
+        branchOfficeList1 = company1.getBranchOfficeList();
+        Set<BranchOffice> branchOfficeList2;
+        branchOfficeList2 = company1.getBranchOfficeList();
+        Set<BranchOffice> branchOfficeList3;
+        branchOfficeList3 = company1.getBranchOfficeList();
+
+        Company aux1 = ControllerCore.getInstance().findOrganizationById(company1.getId());
+        Company aux2 = ControllerCore.getInstance().findOrganizationById(company2.getId());
+        Company aux3 = ControllerCore.getInstance().findOrganizationById(company3.getId());
+
+        aux1.setBranchOfficeList(branchOfficeList1);
+        aux2.setBranchOfficeList(branchOfficeList2);
+        aux3.setBranchOfficeList(branchOfficeList3);
+
+        CompanyServices.getInstance().update(aux1);
+        CompanyServices.getInstance().update(aux2);
+        CompanyServices.getInstance().update(aux3);
+
+         */
+
     }
     public void createDefaultBranchOffice(){
         Address address = new Address("Navarrete","Calle Barrio Duarte" );
@@ -68,10 +90,10 @@ public class DefaultDataLoader {
        }
     }
     public void createDefaultData(){
-        //Admin
-        createDefaultAdmin();
         //Company
         createDefaultCompany();
+        //Admin
+        createDefaultAdmin();
         //BranchOffice
         createDefaultBranchOffice();
         //Root user
@@ -85,10 +107,12 @@ public class DefaultDataLoader {
     }
 
     private void createDefaultEmployee() {
-        BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(1);
+        BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(2);
+        Company company = ControllerCore.getInstance().findOrganizationByBranchOffice(branchOffice.getId());
         User userAux = new User("employee@gmail.com","123", Set.of(RoleApp.ROLE_EMPLOYEE),branchOffice);
         if(branchOffice !=null){
             if(ControllerCore.getInstance().findUserByEmail("employee@gmail.com") == null){
+                userAux.setCompany(company);
                 ControllerCore.getInstance().createUser(userAux);
             }
         }
@@ -99,21 +123,22 @@ public class DefaultDataLoader {
         }
     }
     private void createDefaultAdmin() {
-        User userAux = new User("admin@gmail.com","123", Set.of(RoleApp.ROLE_ADMIN));
-        if(ControllerCore.getInstance().findUserByEmail("admin@gmail.com") == null){
+        ControllerCore controllerCore1 = new ControllerCore();
+        User userAux = new User("admin@gmail.com","123", Set.of(RoleApp.ROLE_ADMIN),controllerCore1.findOrganizationByName("El Bravo"));
+        if(controllerCore1.findUserByEmail("admin@gmail.com") == null){
             ControllerCore.getInstance().createUser(userAux);
         }
         String identificationCard = "000-0000000-0";
         Person personAdmin = new Person(identificationCard,"Samuel","Moronta",new Date(),new Address("Santiago","Calle 16 de Agosto #10"),userAux);
-        if(ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard) == null){
-            ControllerCore.getInstance().createPerson(personAdmin);
+        if(controllerCore1.findPersonByIdentificationCard(identificationCard) == null){
+            controllerCore1.createPerson(personAdmin);
         }
     }
     public void createDefaultShelf(){
         BranchOffice branchOffice1 = ControllerCore.getInstance().findBranchOfficeById(1);
         BranchOffice branchOffice2 = ControllerCore.getInstance().findBranchOfficeById(2);
         BranchOffice branchOffice3 = ControllerCore.getInstance().findBranchOfficeById(3);
-        BranchOffice branchOffice4 = ControllerCore.getInstance().findBranchOfficeById(4);
+        BranchOffice branchOffice4 = ControllerCore.getInstance().findBranchOfficeById(2);
 
         if(ControllerCore.getInstance().findShelfByDeviceId("1") == null){
             Shelf shelfAux1 = new Shelf(branchOffice1);

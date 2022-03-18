@@ -1,6 +1,7 @@
 package WEBAPP_SFK.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,6 +21,9 @@ public class Company implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "company",fetch = FetchType.EAGER)
     private Set<BranchOffice> branchOfficeList = new HashSet<>();
+    @OneToMany(mappedBy = "company",fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<Notification> notificationList = new HashSet<>();
 
     public Company(){
 
@@ -29,6 +33,13 @@ public class Company implements Serializable {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.registerDate = sdf.format(new Date());
         this.name = name;
+    }
+
+    public Company(String name, String registerDate, Set<BranchOffice> branchOfficeList, Set<Notification> notificationList) {
+        this.name = name;
+        this.registerDate = registerDate;
+        this.branchOfficeList = branchOfficeList;
+        this.notificationList = notificationList;
     }
 
     public Long getId() {
@@ -61,5 +72,13 @@ public class Company implements Serializable {
 
     public void setBranchOfficeList(Set<BranchOffice> branchOfficeList) {
         this.branchOfficeList = branchOfficeList;
+    }
+
+    public Set<Notification> getNotificationList() {
+        return notificationList;
+    }
+
+    public void setNotificationList(Set<Notification> notificationList) {
+        this.notificationList = notificationList;
     }
 }

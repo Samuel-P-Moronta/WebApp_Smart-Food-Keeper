@@ -22,9 +22,8 @@ public class Person implements Serializable {
     @OneToOne
     private User user;
 
-
-
     public Person() {
+
     }
 
     public Person(String identificationCard, String firstName, String lastName, Date registerDate, Address address, User user) {

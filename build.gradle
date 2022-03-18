@@ -52,6 +52,17 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
     //Email validator
     implementation group: 'commons-validator', name: 'commons-validator', version: '1.4.0'
+    //Email
+    implementation group: 'javax.mail', name: 'javax.mail-api', version: '1.6.2'
+    implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
+    implementation "org.simplejavamail:simple-java-mail:6.0.5"
+    //qr
+    implementation group: 'com.google.zxing', name: 'zxing-parent', version: '3.4.1', ext: 'pom'
+    implementation group: 'com.google.zxing', name: 'core', version: '3.4.1'
+
+
+
+
 
 
 }

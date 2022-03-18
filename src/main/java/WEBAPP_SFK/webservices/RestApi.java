@@ -3,6 +3,7 @@ package WEBAPP_SFK.webservices;
 import WEBAPP_SFK.controllers.BaseController;
 import WEBAPP_SFK.controllers.ControllerCore;
 import WEBAPP_SFK.models.*;
+import WEBAPP_SFK.models.enums.RoleApp;
 import WEBAPP_SFK.services.*;
 import WEBAPP_SFK.utilities.JSONParser;
 import com.google.gson.JsonObject;
@@ -15,6 +16,8 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class RestApi extends BaseController {
     private Map<String, Object> errors = new HashMap<>();
+    private Map<String, Object> model = new HashMap<>();
+
 
     public RestApi(Javalin app) {
         super(app);
@@ -39,16 +42,35 @@ public class RestApi extends BaseController {
                     ctx.json(new CompanyServices().findAll());
                 });
                 get("/branchOfficeList", ctx -> {
-                    ctx.json(new BranchOfficeServices().findAll());
+                    User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
+                    Company company = user.getCompany();
+
+                    Set<BranchOffice> branchOfficeList;
+                    if(user !=null){
+                        if(company !=null){
+                            branchOfficeList = user.getCompany().getBranchOfficeList();
+                            ctx.json(branchOfficeList);
+                        }
+                    }
+                });
+                post("/branchOfficeEmployee", ctx -> {
+                    User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
+                    String email = user.getEmail();
+                    if(user.hasRole(RoleApp.ROLE_EMPLOYEE)){
+                        BranchOffice branchOffice = BranchOfficeServices.getInstance().findBranchOfficeByUserEmployee(email);
+                        ctx.json(branchOffice);
+
+                    }
                 });
                 get("/findShelfByBranchOffice/:idBranchOffice", ctx -> {
-                    long idBranchOffice = Long.parseLong(ctx.pathParam("idBranchOffice",String.class).get());
-                    BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(idBranchOffice);
-                    long idBranchOfficeAux = branchOffice.getId();
-
-                    List<Shelf> shelfList = ShelfServices.getInstance().findShelfByBranchOffice(idBranchOfficeAux);
-                    shelfList.stream().forEach(shelf -> shelf.getDeviceId());
-                    ctx.json(shelfList);
+                    String idBranchOffice = ctx.pathParam("idBranchOffice",String.class).get();
+                    if(idBranchOffice !=null){
+                        long idBranchOfficeAux = Long.parseLong(idBranchOffice);
+                        BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(idBranchOfficeAux);
+                        List<Shelf> shelfList = ShelfServices.getInstance().findShelfByBranchOffice(branchOffice.getId());
+                        shelfList.stream().forEach(shelf -> shelf.getDeviceId());
+                        ctx.json(shelfList);
+                    }
                 });
                 get("/findContainerByBranchOffice/:idBranchOffice", ctx -> {
                     long idBranchOffice = Long.parseLong(ctx.pathParam("idBranchOffice",String.class).get());

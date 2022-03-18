@@ -1,6 +1,7 @@
 package WEBAPP_SFK.services;
 
 import WEBAPP_SFK.models.Company;
+import WEBAPP_SFK.models.User;
 import WEBAPP_SFK.services.connect.DataBaseRepository;
 
 import javax.persistence.EntityManager;
@@ -42,6 +43,17 @@ public class CompanyServices extends DataBaseRepository<Company> {
         sql += "SELECT O from Company O WHERE O.name = :name";
         Query query = em.createQuery(sql, Company.class);
         query.setParameter("name", name);
+        List<Company> companyList = query.getResultList();
+        if (companyList.size() > 0) {
+            return companyList.get(0);
+        }
+        return null;
+    }
+    public Company findCompanyByOwnerEmail(String email){
+
+        EntityManager em = getEntityManager();
+        Query query = em.createQuery("SELECT C FROM Company C INNER JOIN User U on U.email = :email");
+        query.setParameter("email",email);
         List<Company> companyList = query.getResultList();
         if (companyList.size() > 0) {
             return companyList.get(0);
