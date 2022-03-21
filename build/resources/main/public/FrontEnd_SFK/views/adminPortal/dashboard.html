@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="public/FrontEnd_SFK/views/template.html :: head"></head>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row" th:replace="public/FrontEnd_SFK/views/template.html :: header">
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar" th:replace="public/FrontEnd_SFK/views/template.html::sidebar">
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="d-xl-flex justify-content-between align-items-start">
+              <h2 class="text-dark font-weight-bold mb-2">DASHBOARD</h2>
+            </div>
+
+
+            <!-- CODE HERE VIEWS OF PAGE -->
+            <div class="tab-content tab-transparent-content">
+              <div class="tab-pane fade show active" id="business-1" role="tabpanel" aria-labelledby="business-tab">
+                <div class="row">
+                  <div class="col-lg-4 mb-4" style="height: 8rem;">
+                    <div class="card border-left-success shadow h-100">
+                      <div class="card-body">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">SUCURSALES</div>
+                        <h2 class="mb-4 text-dark font-weight-bold" th:text="${allBranchOffice}"></h2>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 mb-4" style="height: 8rem;">
+                    <div class="card border-left-success shadow h-100">
+                      <div class="card-body">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">ESTANTES</div>
+                        <h2 class="mb-4 text-dark font-weight-bold" th:text="${allShelf}"></h2>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 mb-4" style="height: 8rem;">
+                    <div class="card border-left-success shadow h-100">
+                      <div class="card-body">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">CONTENEDORES</div>
+                        <h2 class="mb-4 text-dark font-weight-bold" th:text="${allShelf}"></h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label for="branchOffice">Seleccionar sucursal: </label>
+                    <select disabled class="form-control" id="branchOffice" name="branchOffice" style="line-height: 2.0;" onchange="enableAddButton()">
+                      <option value="-1" selected>Seleccionar sucursal</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="idCompany">Seleccionar empresa: </label>
+                      <input class="form-control shadow font-weight-bold" type="date" id="date-input"/>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-6 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">Cantidad de frutas</h4>
+                        <canvas id="barChart" style="height:230px"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">Cantidad de frutas totales por categoria de madurez</h4>
+                        <canvas id="doughnutChart" style="height:250px"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-sm-flex justify-content-between align-items-center transaparent-tab-border {">
+                  <!-- Credit card form tabs -->
+                  <ul role="tablist" class="nav nav-tabs tab-transparent">
+                    <li class="nav-item"> <a data-toggle="pill" href="#temperture" class="nav-link active "> <i class="fas fa-credit-card mr-2"></i>Temperatura</a> </li>
+                    <li class="nav-item"> <a data-toggle="pill" href="#humidity"     class="nav-link"> <i class="fab fa-paypal mr-2"></i>Humedad</a> </li>
+                    <li class="nav-item"> <a data-toggle="pill" href="#container"     class="nav-link"> <i class="fab fa-paypal mr-2"></i>Seguimiento de desechos</a> </li>
+
+                  </ul>
+                </div>
+                <div class="tab-content tab-transparent-content">
+                  <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="tab-content tab-transparent-content">
+                          <div id="temperture" class="tab-pane fade show active pt-3">
+                            <h4 class="card-title">Temperatura</h4>
+                            <canvas id="areaChart" style="height:50px"></canvas>
+                          </div>
+                          <div id="humidity" class="tab-pane fade">
+                            <h4 class="card-title">Humedad</h4>
+                            <canvas id="humidityChart" style="height:50px"></canvas>
+                          </div>
+                          <div id="container" class="tab-pane fade">
+                            <h4 class="card-title">Seguimiento de desechos</h4>
+                            <canvas id="containerChart" style="height:50px"></canvas>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div th:replace="public/FrontEnd_SFK/views/template.html::javascript"></div>
+  </body>
+</html>
