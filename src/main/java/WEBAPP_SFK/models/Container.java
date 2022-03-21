@@ -1,5 +1,6 @@
 package WEBAPP_SFK.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -14,7 +15,8 @@ public class Container implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String containerId;
     private String registerDate;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonBackReference
     private BranchOffice branchOffice;
 
     public Container(BranchOffice branchOffice) {

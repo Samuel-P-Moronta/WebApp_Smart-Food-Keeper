@@ -53,7 +53,7 @@ public class SFKException extends BaseController {
          * Solo aplica cuando venga para vistas html.
          */
         app.error(404,"text/html", ctx -> {
-            ctx.render("/public/FrontEnd_SFK/views/error-404.html");
+            ctx.render("/public/FrontEnd_SFK/views/httpsStatusCodes/error-404.html");
         });
     }
 }

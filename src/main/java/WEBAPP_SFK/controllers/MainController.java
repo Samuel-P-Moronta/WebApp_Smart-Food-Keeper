@@ -4,7 +4,6 @@ import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.models.enums.RoleApp;
 import WEBAPP_SFK.services.*;
 import io.javalin.Javalin;
-import org.dom4j.swing.BranchTreeNode;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 
 import java.util.*;
@@ -41,10 +40,10 @@ public class MainController extends BaseController{
                 get("/", ctx -> ctx.redirect("/portal"));
                 /* To get back on portal page (landingPage) */
                 post("/portal", ctx -> {
-                    ctx.redirect("public/FrontEnd_SFK/views/portal.html");
+                    ctx.redirect("public/FrontEnd_SFK/views/welcomePortal/portal.html");
                 });
                 get("/portal", ctx -> {
-                    ctx.render("public/FrontEnd_SFK/views/portal.html",model);
+                    ctx.render("public/FrontEnd_SFK/views/welcomePortal/portal.html",model);
                 });
                 /*---------------------Company register or login----------------------------*/
                 /* To register a new company */
@@ -83,7 +82,7 @@ public class MainController extends BaseController{
                             ControllerCore.getInstance().updateUser(userAux);
                         }
                     }
-                    ctx.render("/public/FrontEnd_SFK/views/login.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/welcomePortal/login.html",model);
                 });
                 post("/login",ctx -> {
                     String email = ctx.formParam("email");
@@ -115,14 +114,14 @@ public class MainController extends BaseController{
                         }
                         ctx.sessionAttribute("user", email);
                     }else{
-                        ctx.render("/public/FrontEnd_SFK/views/login.html",model);
+                        ctx.render("/public/FrontEnd_SFK/views/welcomePortal/login.html",model);
                     }
                 });
                 get("/login",ctx -> {
-                    ctx.render("public/FrontEnd_SFK/views/login.html");
+                    ctx.render("public/FrontEnd_SFK/views/welcomePortal/login.html");
                 });
                 get("/organizationRegister", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/companyRegister.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/welcomePortal/companyRegister.html",model);
                 });
             });
             path("/management",() ->{
@@ -135,7 +134,7 @@ public class MainController extends BaseController{
                 /*--------------------------Dashboard--------------------------------------------*/
                 /*Dashboard init page when administrator get started*/
                 post("/dashboard", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/dashboard.html");
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/dashboard.html");
                 });
                 get("/dashboard", ctx ->{
                     String email = UserServices.getInstance().find(ctx.sessionAttribute("user")).getEmail();
@@ -143,7 +142,7 @@ public class MainController extends BaseController{
                     String fullNameToShow = person.getFirstName() + " "+ person.getLastName();
                     ctx.sessionAttribute("user",email);
                     model.put("fullNameToShow",fullNameToShow);
-                    ctx.render("/public/FrontEnd_SFK/views/dashboard.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/dashboard.html",model);
                 });
                 /*-------------------------------------------------------------------------------*/
                 /*-------------------- Employee management---------------------------------------*/
@@ -189,10 +188,10 @@ public class MainController extends BaseController{
                             }
                         }
                     }
-                    ctx.render("/public/FrontEnd_SFK/views/employeeRegister.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/employeeRegister.html",model);
                 });
                 get("/employeeRegister", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/employeeRegister.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/employeeRegister.html",model);
                 });
                 get("/employeeEdit/:id", ctx ->{
                     Person person = ControllerCore.getInstance().findPersonById(ctx.pathParam("id",Long.class).get());
@@ -203,13 +202,13 @@ public class MainController extends BaseController{
                 });
                 post("/employeeList", ctx ->{
 
-                    ctx.render("/public/FrontEnd_SFK/views/employeeList.html");
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/employeeList.html");
                 });
                 get("/employeeList", ctx ->{
                     List<Person> personList;
                     personList = new PersonServices().findPersonByRole();
                     model.put("employeeList",personList);
-                    ctx.render("/public/FrontEnd_SFK/views/employeeList.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/employeeList.html",model);
                 });
                 /*-----------------------------------------------------------------------------*/
                 /*---------------------Branch office management--------------------------------*/
@@ -221,7 +220,7 @@ public class MainController extends BaseController{
                 });
                 /*---------------------Notifications management------------------------------*/
                 post("/notification", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/notification.html");
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/notification.html");
                 });
                 get("/notification", ctx ->{
                     User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
@@ -233,7 +232,7 @@ public class MainController extends BaseController{
                     //Find user by company
                     model.put("notificationList",company.getNotificationList());
 
-                    ctx.render("/public/FrontEnd_SFK/views/notification.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/notification.html",model);
                 });
                 get("/deleteNotificationById/:id", ctx ->{
                     Notification notification = NotificationServices.getInstance().find(ctx.pathParam("id",Long.class).get());
@@ -247,26 +246,26 @@ public class MainController extends BaseController{
                 /*---------------------------------------------------------------------------*/
                 /*--------------------------Trueque management------------------------------*/
                 post("/trueque", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/trueque.html");
+                    ctx.render("/public/FrontEnd_SFK/views/welcomePortal/trueque.html");
                 });
                 get("/trueque", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/trueque.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/welcomePortal/trueque.html",model);
                 });
                 /*---------------------------------------------------------------------------*/
                 /*--------------------------Shelf------------------------------*/
                 post("/shelfRegister", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/shelfMonitoring.html");
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/shelfMonitoring.html");
                 });
                 get("/shelf", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/shelfMonitoring.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/shelfMonitoring.html",model);
                 });
                 /*---------------------------------------------------------------------------*/
                 /*--------------------------Container------------------------------*/
                 post("/container", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/containerMonitoring.html");
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/containerMonitoring.html");
                 });
                 get("/container", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/containerMonitoring.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/containerMonitoring.html",model);
                 });
                 /*---------------------------------------------------------------------------*/
             });
@@ -279,13 +278,13 @@ public class MainController extends BaseController{
                 get("/", ctx ->{
                     User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
                     Person person = ControllerCore.controllerCore.findPersonByEmail(user.getEmail());
-                    String fullNameToShow = person.getFirstName() + " "+ person.getLastName();
+                    //String fullNameToShow = person.getFirstName() + " "+ person.getLastName();
                     ctx.sessionAttribute("user",user.getEmail());
-                    model.put("fullNameToShow",fullNameToShow);
+                    //model.put("fullNameToShow",fullNameToShow);
 
                     Company company = user.getCompany();
-                    model.put("notificationListEmployee",company.getNotificationList());
-                    ctx.render("/public/FrontEnd_SFK/views/employeePortal.html",model);
+                    model.put("notificationListEmployee",user.getNotificationList());
+                    ctx.render("/public/FrontEnd_SFK/views/employeePortal/employeePortal.html",model);
                 });
                 get("/shelfMonitoringEmployee", ctx ->{
                     User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
@@ -297,15 +296,16 @@ public class MainController extends BaseController{
                         if(branchOffice !=null){
                             System.out.println("Info branchOffice"+ branchOffice.getCompany().getName());
                             String nameBranchOffice = branchOffice.getAddress().getCity() + " "+ "(" + branchOffice.getAddress().getDirection()+")";
-                            List<Shelf> shelfList = ShelfServices.getInstance().findShelfByBranchOffice(branchOffice.getId());
+                            List<Shelf> shelfList;
+                            shelfList = new ShelfServices().findShelfByBranchOffice(branchOffice.getId());
                             model.put("branchOfficeSelect",nameBranchOffice);
                             model.put("shelfSelect",shelfList);
                         }
                     }
-                    ctx.render("/public/FrontEnd_SFK/views/shelfMonitoringEmployee.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/employeePortal/shelfMonitoringEmployee.html",model);
                 });
                 get("/containerMonitoringEmployee", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/containerMonitoringEmployee.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/employeePortal/containerMonitoringEmployee.html",model);
                 });
             });
         });

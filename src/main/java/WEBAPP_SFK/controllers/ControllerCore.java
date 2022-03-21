@@ -46,14 +46,14 @@ public class ControllerCore {
 
      */
     //----------------------------------SHELF-------------------------------------------------------//
-    public boolean addShelf(Shelf sh){return SHELF_SERVICES.create(sh);}
+    public boolean addShelf(Shelf sh){return SHELF_SERVICES.createShelf(sh);}
     public boolean updateShelf(Shelf shelf){return SHELF_SERVICES.update(shelf);}
     public boolean deleteShelf(Shelf shelf){return SHELF_SERVICES.delete(shelf);}
     public boolean addShelfData(ShelfData sh){return SHELF_DATA_SERVICES.create(sh);}
     public Shelf findShelfByDeviceId(String shelf){return SHELF_SERVICES.find(shelf);}
 
     //----------------------------------CONTAINER--------------------------------------------------//
-    public boolean addContainer(Container container){return CONTAINER_SERVICES.create(container);}
+    public boolean addContainer(Container container){return CONTAINER_SERVICES.createContainer(container);}
     public boolean updateContainer(Container container){return CONTAINER_SERVICES.update(container);}
     public boolean deleteContainer(Container container){return CONTAINER_SERVICES.delete(container);}
     public boolean addContainerData(ContainerData containerData){return CONTAINER_DATA_SERVICES.create(containerData);}

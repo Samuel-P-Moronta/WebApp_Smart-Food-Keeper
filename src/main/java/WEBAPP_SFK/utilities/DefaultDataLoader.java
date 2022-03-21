@@ -158,9 +158,11 @@ public class DefaultDataLoader {
         }
     }
     public void createDefaultContainer(){
-        BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(1);
-        Container container = new Container(branchOffice);
-        ControllerCore.getInstance().addContainer(container);
+        BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(2);
+        if(ControllerCore.getInstance().findContainerById("") == null){
+            Container container = new Container(branchOffice);
+            ControllerCore.getInstance().addContainer(container);
+        }
     }
     public void createDefaultContainerData(){
        // Container containerAux = ControllerCore.getInstance().findContainerById(1);

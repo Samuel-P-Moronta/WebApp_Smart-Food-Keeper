@@ -1,6 +1,7 @@
 package WEBAPP_SFK.models;
 
 import WEBAPP_SFK.models.enums.StatusShelf;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,7 +18,9 @@ public class Shelf implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String deviceId;
     private String registerDate;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    //@JoinColumn(name="id")
+    @JsonBackReference
     private BranchOffice branchOffice;
 
 

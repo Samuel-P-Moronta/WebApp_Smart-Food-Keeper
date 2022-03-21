@@ -73,13 +73,15 @@ public class RestApi extends BaseController {
                     }
                 });
                 get("/findContainerByBranchOffice/:idBranchOffice", ctx -> {
-                    long idBranchOffice = Long.parseLong(ctx.pathParam("idBranchOffice",String.class).get());
-                    BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(idBranchOffice);
-                    long idBranchOfficeAux = branchOffice.getId();
-
-                    List<Container> containerList = ContainerServices.getInstance().findContainerfByBranchOffice(idBranchOfficeAux);
-                    containerList.stream().forEach(shelf -> shelf.getId());
-                    ctx.json(containerList);
+                    String idBranchOffice = ctx.pathParam("idBranchOffice",String.class).get();
+                    if(idBranchOffice!=null){
+                        System.out.println("Branch office: "+ idBranchOffice);
+                        long idBranchOfficeAux = Long.parseLong(idBranchOffice);
+                        BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(idBranchOfficeAux);
+                        List<Container> containerList = ContainerServices.getInstance().findContainerfByBranchOffice(branchOffice.getId());
+                        containerList.stream().forEach(container -> container.getId());
+                        ctx.json(containerList);
+                    }
                 });
                 get("/findShelfByDeviceId/:idShelf", ctx -> {
                     String deviceId = ctx.pathParam("idShelf");

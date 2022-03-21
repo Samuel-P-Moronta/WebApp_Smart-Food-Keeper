@@ -1,6 +1,7 @@
 package WEBAPP_SFK.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 
@@ -12,8 +13,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class BranchOffice implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class BranchOffice {
+    //private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,15 +24,14 @@ public class BranchOffice implements Serializable {
     private String registerDate;
     @ManyToOne
     private Company company;
-
-    /*
     @OneToMany(mappedBy = "branchOffice",fetch = FetchType.EAGER)
+    @Column(nullable = true)
+    @JsonManagedReference
     private Set<Shelf> shelfList = new HashSet<>();
-
     @OneToMany(mappedBy = "branchOffice",fetch = FetchType.EAGER)
+    @Column(nullable = true)
+    @JsonManagedReference
     private Set<Container> containerList = new HashSet<>();
-
-     */
 
     public BranchOffice(){
 
@@ -75,24 +75,17 @@ public class BranchOffice implements Serializable {
     public void setCompany(Company company) {
         this.company = company;
     }
-    /*
+
     public Set<Shelf> getShelfList() {
         return shelfList;
     }
-
     public void setShelfList(Set<Shelf> shelfList) {
         this.shelfList = shelfList;
     }
-
-
-
     public Set<Container> getContainerList() {
         return containerList;
     }
-
     public void setContainerList(Set<Container> containerList) {
         this.containerList = containerList;
     }
-
-     */
 }

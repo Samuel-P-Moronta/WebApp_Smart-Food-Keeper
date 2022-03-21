@@ -4,7 +4,6 @@ import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.services.*;
 import io.javalin.Javalin;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,7 +50,7 @@ public class SfkProjectAdmin extends BaseController{
                     }
                     makeListHeader();
                     model.put("branchOfficeList",BranchOfficeServices.getInstance().findAll());
-                    ctx.render("/public/FrontEnd_SFK/views/projectAdminPortal.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/rootPortal/projectAdminPortal.html",model);
                 });
                 before("/",ctx -> {
                     if(ctx.sessionAttribute("user")==null){
@@ -64,7 +63,7 @@ public class SfkProjectAdmin extends BaseController{
                     System.out.println(email);
                     ctx.sessionAttribute("user",email);
                     model.put("fullNameToShow",email);
-                    ctx.render("/public/FrontEnd_SFK/views/projectAdminPortal.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/rootPortal/projectAdminPortal.html",model);
                 });
 
                 post("/shelfManagement", ctx ->{
@@ -80,13 +79,13 @@ public class SfkProjectAdmin extends BaseController{
                     }
                     makeListHeader();
                     model.put("shelfList",ShelfServices.getInstance().findAll());
-                    ctx.render("/public/FrontEnd_SFK/views/shelfManagement.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/rootPortal/shelfManagement.html",model);
 
                 });
                 get("/shelfManagement", ctx ->{
                     makeListHeader();
                     model.put("shelfList",ShelfServices.getInstance().findAll());
-                    ctx.render("/public/FrontEnd_SFK/views/shelfManagement.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/rootPortal/shelfManagement.html",model);
                 });
                 post("/containerManagement", ctx ->{
                     String branchOfficeContainer = ctx.formParam("branchOffice");
@@ -102,13 +101,13 @@ public class SfkProjectAdmin extends BaseController{
                     System.out.println("Estoy en container list");
                     makeListHeader();
                     model.put("containerList",ContainerServices.getInstance().findAll());
-                    ctx.render("/public/FrontEnd_SFK/views/containerManagement.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/rootPortal/containerManagement.html",model);
                 });
                 get("/containerManagement", ctx ->{
                     System.out.println("Estoy en container list");
                     makeListHeader();
                     model.put("containerList",ContainerServices.getInstance().findAll());
-                    ctx.render("/public/FrontEnd_SFK/views/containerManagement.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/rootPortal/containerManagement.html",model);
                 });
                 post("/editContainer", ctx ->{
                     System.out.println("Estoy en edit container");
@@ -126,11 +125,11 @@ public class SfkProjectAdmin extends BaseController{
                     }
 
                     model.put("containerList",ContainerServices.getInstance().findAll());
-                    ctx.render("/public/FrontEnd_SFK/views/containerManagement.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/rootPortal/containerManagement.html",model);
                 });
                 get("/editContainer",ctx -> {
                     model.put("containerList",ContainerServices.getInstance().findAll());
-                    ctx.render("/public/FrontEnd_SFK/views/containerManagement.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/rootPortal/containerManagement.html",model);
                 });
             });
 

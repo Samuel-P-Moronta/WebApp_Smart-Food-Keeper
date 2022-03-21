@@ -47,9 +47,7 @@ function enableContainerSelect(){
     console.log("Estoy en la funcion enable container select")
     var idBranchOffice = document.getElementById('idBranchOffice').value;
     var idContainer = document.getElementById("idContainer");
-    var headerRealtime = document.getElementById("headerRealtime");
 
-    headerRealtime.disabled = true;
     idContainer.disabled = true;
     if(idContainer != -1){
         idContainer.disabled = false;

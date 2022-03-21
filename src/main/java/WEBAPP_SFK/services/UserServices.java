@@ -37,7 +37,7 @@ public class UserServices extends DataBaseRepository<User> {
         return null;
     }
 
-    public User findUserByShelf(String id) {
+    public List<User> findUserByShelf(String id) {
 
         EntityManager em = getEntityManager();
         Query query = em.createQuery("SELECT U FROM User U " +
@@ -46,11 +46,7 @@ public class UserServices extends DataBaseRepository<User> {
                 "INNER JOIN ShelfData SD ON SH.deviceId = SD.shelf.deviceId " +
                 "WHERE SD.shelf.deviceId = :id");
         query.setParameter("id",id);
-        List<User> userList = query.getResultList();
-        if (userList.size() > 0) {
-            return userList.get(0);
-        }
-        return null;
+        return query.getResultList();
         //SELECT * FROM USER INNER JOIN SHELF ON USER.BRANCHOFFICE_ID WHERE SHELF.DEVICEID = 4
         //SELECT * FROM USER U INNER JOIN BRANCHOFFICE B ON U.BRANCHOFFICE_ID = B.ID INNER JOIN SHELF SH ON SH.DEVICEID = 5
         //SELECT  * FROM USER INNER JOIN BRANCHOFFICE ON USER.BRANCHOFFICE_ID = BRANCHOFFICE.ID INNER JOIN SHELF ON SHELF.DEVICEID INNER JOIN SHELF_DATA ON SHELF_DATA.DEVICEID

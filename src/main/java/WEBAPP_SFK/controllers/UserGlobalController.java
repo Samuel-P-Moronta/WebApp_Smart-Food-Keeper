@@ -58,7 +58,7 @@ public class UserGlobalController extends BaseController{
                             }
                         }
                     }
-                    ctx.render("/public/FrontEnd_SFK/views/login.html",model);
+                    ctx.render("/public/FrontEnd_SFK/views/welcomePortal/login.html",model);
 
                 });
             });

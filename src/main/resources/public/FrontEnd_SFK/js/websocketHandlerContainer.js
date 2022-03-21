@@ -20,19 +20,15 @@ function showWebsocketDataContainer(evt)
     var t = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
     var idContainer = document.getElementById('idContainer').value;
-    var headerRealtime = document.getElementById("headerRealtime");
-    var showWeight =  document.getElementById("weight").innerHTML = weight + " " +"Kg";
 
     var measure_date = new Date();
     var date = measure_date.getFullYear()+'-'+(measure_date.getMonth()+1)+'-'+measure_date.getDate();
     var time = measure_date.getHours() + ":" + measure_date.getMinutes() + ":" + measure_date.getSeconds();
-    document.getElementById('measure_container_date_date').innerHTML = date+" "+time;
+    document.getElementById('measure_container_date').innerHTML = date+" "+time;
 
     if (idContainer != -1) {
         if($('#idContainer option:selected').text() == data['containerId']){
-            headerRealtime.style.display = "block";
-            showWeight.style.display = "block";
-            addDataContainer(t,weight);
+            document.getElementById("weight").innerHTML = weight + " " +"Kg";
         }
     }
 }
