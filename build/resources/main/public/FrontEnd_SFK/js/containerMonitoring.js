@@ -20,9 +20,6 @@ function findContainerByBranchOffice(idBranchOffice){
 }
 function loadContainerList(data){
     var idContainer = document.getElementById("idContainer");
-    var containerHeader = document.getElementById("containerHeader");
-    var branchOfficeHeader = document.getElementById("branchOfficeHeader");
-
 
     idContainer.length = data.length + 1;
     console.log("ID",data['deviceId']);
@@ -30,9 +27,6 @@ function loadContainerList(data){
     for(let i in data){
         j = parseInt(i) + 1;
         idContainer.options[j].text = data[i].containerId;
-        branchOfficeHeader.innerHTML = data[i].branchOffice.address.direction;
-        containerHeader.innerHTML = data[i].containerId;
-        //idShelf.options[j].text ="SH-"+data[i].deviceId + " " + "Sucursal: "+data[i].branchOffice.address.direction;
     }
 }
 function enableButtonShowContainer(){
