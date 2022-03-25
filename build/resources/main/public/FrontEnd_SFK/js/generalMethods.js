@@ -33,12 +33,14 @@ function loadBranchOfficeList(data){
 function enableShelfSelect(){
     var idBranchOffice = document.getElementById('idBranchOffice').value;
     var idShelf = document.getElementById("idShelf");
-    var headerRealtime = document.getElementById("headerRealtime");
+    var time = document.getElementById("measure_shelf_date");
 
-    headerRealtime.disabled = true;
+    time.disabled = true;
     idShelf.disabled = true;
+    console.log("ID SELECTED: ",idShelf.value)
     if(idShelf != -1){
         idShelf.disabled = false;
+        time.disabled = false;
         findShelfByBranchOffice(idBranchOffice);
     }
 
