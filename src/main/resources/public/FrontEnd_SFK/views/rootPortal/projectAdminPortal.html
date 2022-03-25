@@ -133,7 +133,6 @@
                             <th>Ciudad</th>
                             <th>Direccion</th>
                             <th>Fecha de registro</th>
-                            <th>Accion</th>
                           </tr>
                           </thead>
                           <tbody>
@@ -142,10 +141,6 @@
                             <td class="text-left" th:text="${branchOffice.address.city}">Empresa</td>
                             <td class="text-left" th:text="${branchOffice.address.city}">Sucursal</td>
                             <td class="text-left" th:text="${branchOffice.registerDate}">Fecha de registro</td>
-                            <td class="text-center">
-                              <a><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalEdit">Delete</button></a>
-                              <a><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Delete</button></a>
-                            </td>
                           </tr>
                           </tbody>
                           <tfoot>
@@ -154,7 +149,6 @@
                             <th>Ciudad</th>
                             <th>Direccion</th>
                             <th>Fecha de registro</th>
-                            <th>Accion</th>
                           </tr>
                           </tfoot>
                         </table>

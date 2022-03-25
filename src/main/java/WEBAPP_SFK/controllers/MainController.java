@@ -287,6 +287,9 @@ public class MainController extends BaseController{
                     Notification notification = NotificationServices.getInstance().find(ctx.pathParam("type",Long.class).get());
                     ctx.redirect("/management/shelf");
                 });
+                get("/notificationByType-employee/:type", ctx ->{
+                    ctx.redirect("/employeePortal/shelfMonitoringEmployee");
+                });
                 /*---------------------------------------------------------------------------*/
                 /*--------------------------Trueque management------------------------------*/
                 post("/trueque", ctx ->{
