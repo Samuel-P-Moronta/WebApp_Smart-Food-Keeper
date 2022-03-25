@@ -38,7 +38,7 @@ public class SfkProjectAdmin extends BaseController{
 
                     if(idCompany !=null && city!=null && direction !=null){
                         Address address = new Address(city,direction);
-                        Company company = ControllerCore.getInstance().findOrganizationById(Long.parseLong(idCompany));
+                        Company company = ControllerCore.getInstance().findCompanyById(Long.parseLong(idCompany));
                         if(company !=null){
                             BranchOffice branchOffice = new BranchOffice(address,company);
                             if(BranchOfficeServices.getInstance().findBranchOfficeByAddress(city,direction) == null){

@@ -22,8 +22,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import static WEBAPP_SFK.utilities.CustomEmailSender.htmlMessage;
 
 public class WebSocketController extends BaseController {
-    public static List<Session> USERS_CONNECTED_C = new ArrayList<>();
-    public static List<Session> USERS_CONNECTED_S = new ArrayList<>();
     private static Map<WsContext, String> userUsernameMapShelf = new ConcurrentHashMap<>();
     private static Map<WsContext, String> userUsernameMapContainer = new ConcurrentHashMap<>();
 
@@ -80,7 +78,7 @@ public class WebSocketController extends BaseController {
 
         app.ws("/server/container", ws -> {
             ws.onConnect(ctx -> {
-                String username = "Container"+" "+nextShelfNumber;
+                String username = "Container"+" "+nextContainerfNumber;
                 userUsernameMapContainer.put(ctx,username);
             });
             ws.onMessage(ctx -> {
@@ -136,7 +134,7 @@ public class WebSocketController extends BaseController {
         boolean notificationSuministro = new ControllerCore().findNotificationByTypeAndUser(2,user);
         boolean notificationTemperature = new ControllerCore().findNotificationByTypeAndUser(3,user);
         boolean notificationHumidity = new ControllerCore().findNotificationByTypeAndUser(4,user);
-        boolean notificationHealthy = new ControllerCore().findNotificationByTypeAndUser(5,user);
+
 
         if(user!=null){
             if(sdj.getCantOverripe()> 0){
@@ -152,15 +150,6 @@ public class WebSocketController extends BaseController {
                         e.printStackTrace();
                     }
                 }
-            }else{
-                if(sdj.getCantRipe() > 0 || sdj.getCantUnripe() > 0){
-                    if(notificationHealthy == true){
-                        System.out.println("This notification [HEALTHY] already exist in database");
-                    }else{
-                        Notification notificationType5 = new Notification("Saludable",NotificationStatus.SALUDABLE.getMessage(),new Date(), user, user.getBranchOffice(), user.getCompany(), 5);
-                        ControllerCore.getInstance().createNotification(notificationType5);
-                    }
-                }
             }
             if(sdj.getFruitCant() <= 1){
                 if(notificationSuministro == true){
@@ -168,6 +157,12 @@ public class WebSocketController extends BaseController {
                 }else{
                     Notification notificationType2 = new Notification("Suministro", NotificationStatus.SUMINISTRO.getMessage(), new Date(), user,user.getBranchOffice(), user.getCompany(), 2);
                     ControllerCore.getInstance().createNotification(notificationType2);
+                    try{
+                        new CustomEmailSender().message(user.getEmail(),NotificationStatus.SUMINISTRO.getMessage(),htmlMessage());
+                    } catch (Exception  e) {
+                        System.out.println("NO SE PUDO ENVIAR EL MENSAJE...");
+                        e.printStackTrace();
+                    }
                 }
             }
             if(sdj.getTemperature() > 30){

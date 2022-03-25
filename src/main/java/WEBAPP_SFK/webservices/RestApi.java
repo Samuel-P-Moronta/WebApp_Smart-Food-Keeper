@@ -5,10 +5,7 @@ import WEBAPP_SFK.controllers.ControllerCore;
 import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.models.enums.RoleApp;
 import WEBAPP_SFK.services.*;
-import WEBAPP_SFK.utilities.JSONParser;
-import com.google.gson.JsonObject;
 import io.javalin.Javalin;
-import io.javalin.http.Context;
 
 import java.util.*;
 
@@ -35,7 +32,7 @@ public class RestApi extends BaseController {
                 get("/findBranchOfficeByCompany/:idCompany", ctx -> {
                     long idCompany = Long.parseLong(ctx.pathParam("idCompany",String.class).get());
                     System.out.println("Company: "+ idCompany);
-                    Company company = ControllerCore.getInstance().findOrganizationById(idCompany);
+                    Company company = ControllerCore.getInstance().findCompanyById(idCompany);
                     ctx.json(company.getBranchOfficeList());
                 });
                 get("/companyList", ctx -> {

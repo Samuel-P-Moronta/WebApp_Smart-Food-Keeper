@@ -34,9 +34,9 @@ public class DefaultDataLoader {
         Company company2 = new Company("El Bravo");
         Company company3 = new Company("Caco de botella");
 
-        ControllerCore.getInstance().createOrganization(company1);
-        ControllerCore.getInstance().createOrganization(company2);
-        ControllerCore.getInstance().createOrganization(company3);
+        ControllerCore.getInstance().createCompany(company1);
+        ControllerCore.getInstance().createCompany(company2);
+        ControllerCore.getInstance().createCompany(company3);
         /*
         Set<BranchOffice> branchOfficeList1;
         branchOfficeList1 = company1.getBranchOfficeList();
@@ -70,11 +70,11 @@ public class DefaultDataLoader {
 
         ControllerCore controllerCore1 = new ControllerCore();
 
-        BranchOffice branchOffice1 = new BranchOffice(address, controllerCore1.findOrganizationByName("El nacional"));
-        BranchOffice branchOffice2 = new BranchOffice(address1, controllerCore1.findOrganizationByName("El Bravo"));
-        BranchOffice branchOffice3 = new BranchOffice(address2, controllerCore1.findOrganizationByName("Caco de botella"));
-        BranchOffice branchOffice4 = new BranchOffice(address3, controllerCore1.findOrganizationByName("El nacional"));
-        BranchOffice branchOffice5 = new BranchOffice(address4,controllerCore1.findOrganizationByName("El nacional"));
+        BranchOffice branchOffice1 = new BranchOffice(address, controllerCore1.findCompanyByName("El nacional"));
+        BranchOffice branchOffice2 = new BranchOffice(address1, controllerCore1.findCompanyByName("El Bravo"));
+        BranchOffice branchOffice3 = new BranchOffice(address2, controllerCore1.findCompanyByName("Caco de botella"));
+        BranchOffice branchOffice4 = new BranchOffice(address3, controllerCore1.findCompanyByName("El nacional"));
+        BranchOffice branchOffice5 = new BranchOffice(address4,controllerCore1.findCompanyByName("El nacional"));
 
 
         ControllerCore.getInstance().createBranchOffice(branchOffice1);
@@ -108,7 +108,7 @@ public class DefaultDataLoader {
 
     private void createDefaultEmployee() {
         BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(2);
-        Company company = ControllerCore.getInstance().findOrganizationByBranchOffice(branchOffice.getId());
+        Company company = ControllerCore.getInstance().findCompanyByBranchOffice(branchOffice.getId());
         User userAux = new User("employee@gmail.com","123", Set.of(RoleApp.ROLE_EMPLOYEE),branchOffice);
         if(branchOffice !=null){
             if(ControllerCore.getInstance().findUserByEmail("employee@gmail.com") == null){
@@ -124,7 +124,7 @@ public class DefaultDataLoader {
     }
     private void createDefaultAdmin() {
         ControllerCore controllerCore1 = new ControllerCore();
-        User userAux = new User("admin@gmail.com","123", Set.of(RoleApp.ROLE_ADMIN),controllerCore1.findOrganizationByName("El Bravo"));
+        User userAux = new User("admin@gmail.com","123", Set.of(RoleApp.ROLE_ADMIN),controllerCore1.findCompanyByName("El Bravo"));
         if(controllerCore1.findUserByEmail("admin@gmail.com") == null){
             ControllerCore.getInstance().createUser(userAux);
         }

@@ -72,13 +72,13 @@ public class MainController extends BaseController{
                             Company company = new Company(companyName);
                             if(ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard) == null){
                                 ControllerCore.getInstance().createPerson(personAux);
-                                ControllerCore.getInstance().createOrganization(company);
+                                ControllerCore.getInstance().createCompany(company);
                             }else{
                                 model.put("IdentificationCardExist","Esta cedula ya se encuerntra registrada");
                             }
                         }
-                        if(ControllerCore.getInstance().findOrganizationByName(companyName) !=null){
-                            userAux.setCompany(ControllerCore.getInstance().findOrganizationByName(companyName));
+                        if(ControllerCore.getInstance().findCompanyByName(companyName) !=null){
+                            userAux.setCompany(ControllerCore.getInstance().findCompanyByName(companyName));
                             ControllerCore.getInstance().updateUser(userAux);
                         }
                     }
@@ -146,7 +146,13 @@ public class MainController extends BaseController{
                 });
                 /*-------------------------------------------------------------------------------*/
                 /*-------------------- Employee management---------------------------------------*/
-                post("/employeeRegister",ctx->{
+                get("/employee", ctx ->{
+                    List<Person> personList;
+                    personList = new PersonServices().findPersonByRole();
+                    model.put("employeeList",personList);
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/employeeList.html",model);
+                });
+                post("/employee-create",ctx->{
 
                     String identificationCard = ctx.formParam("identificationCard");
                     System.out.println(identificationCard);
@@ -166,7 +172,7 @@ public class MainController extends BaseController{
                     System.out.println(branchOffice);
 
                     BranchOffice branchOffice1 = ControllerCore.getInstance().findBranchOfficeById(Long.parseLong(branchOffice));
-                    Company company = ControllerCore.getInstance().findOrganizationByBranchOffice(branchOffice1.getId());
+                    Company company = ControllerCore.getInstance().findCompanyByBranchOffice(branchOffice1.getId());
                     if(!email.equals("") && !password.equals("")){
                         if(branchOffice1 !=null){
                             User userAux = new User(email,password,Set.of(RoleApp.ROLE_EMPLOYEE),branchOffice1);
@@ -188,27 +194,65 @@ public class MainController extends BaseController{
                             }
                         }
                     }
+                    ctx.redirect("/management/employee");
+                    //ctx.render("/public/FrontEnd_SFK/views/adminPortal/employeeList.html",model);
+                });
+                get("/createEmployee", ctx ->{
+                    Map<String, Object> model = new HashMap<>();
+                    model.put("action", "Registrar empleado");
+                    model.put("action_form", "/management/employee-create");
                     ctx.render("/public/FrontEnd_SFK/views/adminPortal/employeeRegister.html",model);
                 });
-                get("/employeeRegister", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/employeeRegister.html",model);
-                });
-                get("/employeeEdit/:id", ctx ->{
-                    Person person = ControllerCore.getInstance().findPersonById(ctx.pathParam("id",Long.class).get());
+                post("/employee-edit/:id", ctx ->{
 
-                    if(person.getId() !=null){
-                        ctx.redirect("/management/employeeRegister");
+                    Person person = ControllerCore.getInstance().findPersonById(ctx.pathParam("id",Long.class).get());
+                    User user = person.getUser();
+                    String identificationCard = ctx.formParam("identificationCard");
+                    String firstName = ctx.formParam("firstName");
+                    String lastName = ctx.formParam("lastName");
+                    String emailAux = ctx.formParam("email");
+                    String city = ctx.formParam("city");
+                    String direction = ctx.formParam("direction");
+                    String password = ctx.formParam("password");
+                    String branchOffice = ctx.formParam("idBranchOffice");
+                    BranchOffice branchOffice1 = ControllerCore.getInstance().findBranchOfficeById(Long.parseLong(branchOffice));
+                    Company company = ControllerCore.getInstance().findCompanyByBranchOffice(branchOffice1.getId());
+                    if(user!=null){
+                        if(user.hasRole(RoleApp.ROLE_EMPLOYEE)){
+                            if(branchOffice1!=null){
+                                User aux = new User(emailAux,password, Collections.singleton(RoleApp.ROLE_EMPLOYEE));
+                                aux.setCompany(company);
+                                aux.setBranchOffice(branchOffice1);
+                                ControllerCore.getInstance().updateUser(aux);
+                                if(person!=null){
+                                    person.setIdentificationCard(identificationCard);
+                                    person.setAddress(new Address(city,direction));
+                                    person.setFirstName(firstName);
+                                    person.setLastName(lastName);
+                                    ControllerCore.getInstance().updatePerson(person);
+                                }else{
+                                    ctx.redirect("/management/employee");
+                                }
+                            }
+                        }
                     }
+                    ctx.redirect("/management/employee");
+                    //ctx.render("/public/FrontEnd_SFK/views/adminPortal/employeeList.html",model);
                 });
+                get("/employee-edit/:id", ctx ->{
+                    Person person = ControllerCore.getInstance().findPersonById(ctx.pathParam("id",Long.class).get());
+                    model.put("action", "Editar empleado");
+                    if(person.getId() == null){
+                        ctx.redirect("/management/employee");
+                    }
+                    model.put("action_form", "/management/employee-edit/"+person.getId());
+                    model.put("person",person);
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/employeeRegister.html",model);
+                });
+
                 post("/employeeList", ctx ->{
 
                     ctx.render("/public/FrontEnd_SFK/views/adminPortal/employeeList.html");
-                });
-                get("/employeeList", ctx ->{
-                    List<Person> personList;
-                    personList = new PersonServices().findPersonByRole();
-                    model.put("employeeList",personList);
-                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/employeeList.html",model);
                 });
                 /*-----------------------------------------------------------------------------*/
                 /*---------------------Branch office management--------------------------------*/

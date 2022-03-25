@@ -52,7 +52,7 @@ public class UserGlobalController extends BaseController{
                             Company company = new Company(companyName);
                             if(ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard) == null){
                                 ControllerCore.getInstance().createPerson(personAux);
-                                ControllerCore.getInstance().createOrganization(company);
+                                ControllerCore.getInstance().createCompany(company);
                             }else{
                                 model.put("IdentificationCardExist","Esta cedula ya se encuerntra registrada");
                             }
