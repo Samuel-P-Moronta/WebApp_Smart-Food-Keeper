@@ -9,7 +9,6 @@ function findShelfByBranchOffice(idBranchOffice){
     Http.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             serverResponse = JSON.parse(Http.responseText);
-            console.log("ID FROM API: ", serverResponse['deviceId']);
             console.log("Respuesta servidor: ",serverResponse);
             if (serverResponse != null) {
                 if (serverResponse.length > 0) {
@@ -45,21 +44,19 @@ function findShelfByDeviceId(deviceId){
 }
 function loadShelfList(data){
     var idShelf = document.getElementById("idShelf");
-    var shelfHeader = document.getElementById("shelfHeader");
     var branchOfficeHeader = document.getElementById("branchOfficeHeader");
 
 
     idShelf.length = data.length + 1;
-    console.log("ID",data['deviceId']);
+    console.log("ID SELECTED",data['deviceId']);
     let j = 0;
     for(let i in data){
         j = parseInt(i) + 1;
         idShelf.options[j].text = data[i].deviceId;
-        branchOfficeHeader.innerHTML = data[i].branchOffice.address.direction;
-        shelfHeader.innerHTML = data[i].deviceId;
-        //idShelf.options[j].text ="SH-"+data[i].deviceId + " " + "Sucursal: "+data[i].branchOffice.address.direction;
+        //branchOfficeHeader.innerHTML = data[i].branchOffice.address.direction;
+        //shelfHeader.innerHTML = data[i].deviceId;
+        //idShelf.options[j].text =data[i].deviceId + " " + "Sucursal: "+data[i].branchOffice.address.direction;
     }
-
 }
 function loadUniqueShelf(data){
     var idShelf = document.getElementById("idShelf");

@@ -65,7 +65,7 @@ public class RestApi extends BaseController {
                         long idBranchOfficeAux = Long.parseLong(idBranchOffice);
                         BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(idBranchOfficeAux);
                         List<Shelf> shelfList = ShelfServices.getInstance().findShelfByBranchOffice(branchOffice.getId());
-                        shelfList.stream().forEach(shelf -> shelf.getDeviceId());
+                        //shelfList.stream().forEach(shelf -> shelfList);
                         ctx.json(shelfList);
                     }
                 });

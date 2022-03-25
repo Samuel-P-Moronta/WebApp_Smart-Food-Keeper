@@ -1,5 +1,6 @@
 package WEBAPP_SFK.services;
 
+import WEBAPP_SFK.models.Notification;
 import WEBAPP_SFK.models.Shelf;
 import WEBAPP_SFK.services.connect.DataBaseRepository;
 import WEBAPP_SFK.utilities.Logger;
@@ -39,7 +40,7 @@ public class ShelfServices extends DataBaseRepository<Shelf> {
     }
     public List<Shelf> findShelfByBranchOffice(long idBranchOffice) {
         EntityManager entityManager = getEntityManager();
-        Query query = entityManager.createQuery("SELECT S FROM Shelf S WHERE S.branchOffice.id = :idBranchOffice");
+        Query query = entityManager.createNativeQuery("SELECT * FROM Shelf WHERE BRANCHOFFICE_ID = :idBranchOffice",Shelf.class);
         query.setParameter("idBranchOffice",idBranchOffice);
         return query.getResultList();
     }
