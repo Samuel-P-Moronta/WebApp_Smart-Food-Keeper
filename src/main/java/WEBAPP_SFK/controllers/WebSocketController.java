@@ -2,20 +2,17 @@ package WEBAPP_SFK.controllers;
 
 import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.models.enums.NotificationStatus;
-import WEBAPP_SFK.services.ContainerServices;
-import WEBAPP_SFK.services.ShelfDataServices;
-import WEBAPP_SFK.services.ShelfServices;
+import WEBAPP_SFK.services.ContainerDataServices;
 import WEBAPP_SFK.services.UserServices;
+import WEBAPP_SFK.services.WasteDataServices;
 import WEBAPP_SFK.utilities.CustomEmailSender;
-import WEBAPP_SFK.utilities.Logger;
 import com.google.gson.Gson;
 import io.javalin.Javalin;
 import io.javalin.websocket.WsContext;
-import org.eclipse.jetty.websocket.api.Session;
-import org.json.JSONObject;
 
-import javax.naming.ldap.Control;
-import java.io.IOException;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,6 +21,14 @@ import static WEBAPP_SFK.utilities.CustomEmailSender.htmlMessage;
 public class WebSocketController extends BaseController {
     private static Map<WsContext, String> userUsernameMapShelf = new ConcurrentHashMap<>();
     private static Map<WsContext, String> userUsernameMapContainer = new ConcurrentHashMap<>();
+    private static Map<String, Float> map = new HashMap<>();
+    private static Map<Float, String> newMap = new HashMap<>();
+    private static ArrayList<Float> weights = new ArrayList<Float>();
+
+
+    //private static Map<String, Float> lastEntry = new HashMap<>();
+
+
 
     private static int nextShelfNumber = 1;
     private static int nextContainerfNumber = 1;
@@ -89,6 +94,7 @@ public class WebSocketController extends BaseController {
                 Gson gson = new Gson();
                 ContainerDataJSON cdj = gson.fromJson(ctx.message(), ContainerDataJSON.class);
                 addDataContainerToDb(cdj);
+                addWasteData(cdj);
                 broadcastContainerMessage(cdj);
             });
             ws.onClose(ctx -> {
@@ -116,6 +122,43 @@ public class WebSocketController extends BaseController {
                 ControllerCore.getInstance().addContainerData(containerDataAux);
             }
         }
+    }
+    private void addWasteData(ContainerDataJSON c){
+        Float containerData = ContainerDataServices.getInstance().getLastData();
+        System.out.println("Valor pasado: "+ containerData);
+        System.out.println("Valor actual: "+ c.getWeight());
+
+        WasteData wasteData = new WasteData();
+        float saveValue;
+        float containerDataFlag;
+        if(containerData == null){
+            containerData = 0.0F;
+        }else{
+
+            containerDataFlag = containerData;
+            if((c.getWeight() - containerDataFlag) < 0){
+                saveValue = (c.getWeight() - containerDataFlag) * - 1;
+                System.out.println("Valor a guardar: "+ saveValue);
+                wasteData.setWasteData(saveValue);
+                wasteData.setSendDate(new Date());
+                WasteDataServices.getInstance().create(wasteData);
+            }
+        }
+    }
+
+    public float wasteData(float expectedValue, ArrayList<Float> data){
+        float secondLast = 0.0F;
+        for(int i = 0; i < data.size(); i++){
+            if(data.get(i) == expectedValue){
+                if(i == 0){
+                    continue;
+                }else{
+                    secondLast = data.get(i - 1);
+                }
+                break;
+            }
+        }
+        return secondLast;
     }
     private static void broadcastShelfMessage(ShelfDataJSON s) {
         ShelfDataJSON shelfDataJSON = new ShelfDataJSON(s.getTemperature(),s.getHumidity(), s.getFruitCant(), s.getFruitType(), s.getCantOverripe(), s.getCantRipe(), s.getCantUnripe(),s.getDeviceId());

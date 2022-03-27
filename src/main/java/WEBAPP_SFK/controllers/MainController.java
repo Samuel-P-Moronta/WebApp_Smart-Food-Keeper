@@ -142,6 +142,21 @@ public class MainController extends BaseController{
                     String fullNameToShow = person.getFirstName() + " "+ person.getLastName();
                     ctx.sessionAttribute("user",email);
                     model.put("fullNameToShow",fullNameToShow);
+                    Company company = CompanyServices.getInstance().findCompanyByOwnerEmail(email);
+                    model.put("company",company.getName());
+                    int amountBranchOffice = company.getBranchOfficeList().size();
+                    List<BranchOffice> branchOfficeList;
+                    int totalShelf = 0, flagShelg = 0, flagContainer = 0,totalContainer = 0;
+                    branchOfficeList = new BranchOfficeServices().findAll();
+                    model.put("myBranchOffices",amountBranchOffice);
+                    for(BranchOffice list: branchOfficeList){
+                        totalShelf+=list.getShelfList().size();
+                        totalContainer+=list.getContainerList().size();
+                    }
+                    flagShelg = totalShelf;
+                    flagContainer = totalContainer;
+                    model.put("myShelves",flagShelg);
+                    model.put("myContainers",flagContainer);
                     ctx.render("/public/FrontEnd_SFK/views/adminPortal/dashboard.html",model);
                 });
                 /*-------------------------------------------------------------------------------*/

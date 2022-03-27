@@ -31,7 +31,7 @@ public class RestApi extends BaseController {
                 });
                 get("/findBranchOfficeByCompany/:idCompany", ctx -> {
                     long idCompany = Long.parseLong(ctx.pathParam("idCompany",String.class).get());
-                    System.out.println("Company: "+ idCompany);
+                    System.out.println("Company ID: "+ idCompany);
                     Company company = ControllerCore.getInstance().findCompanyById(idCompany);
                     ctx.json(company.getBranchOfficeList());
                 });
@@ -40,7 +40,9 @@ public class RestApi extends BaseController {
                 });
                 get("/branchOfficeList", ctx -> {
                     User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
+                    System.out.println("USER logged: " +user.getEmail());
                     Company company = user.getCompany();
+                    System.out.println("Nombre company: "+company.getName());
 
                     Set<BranchOffice> branchOfficeList;
                     if(user !=null){

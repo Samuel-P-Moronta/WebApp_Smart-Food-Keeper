@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"  xmlns:th>
 <head>
-  <title>Simple landing page</title>
+  <title>SFK Project</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="vendors/owl-carousel/css/owl.carousel.min.css">
-  <link rel="stylesheet" href="vendors/owl-carousel/css/owl.theme.default.css">
-  <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="vendors/aos/css/aos.css">
-  <link rel="stylesheet" href="css/style.min.css">
+  <link rel="stylesheet" href="../../vendors/owl-carousel/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="../../vendors/owl-carousel/css/owl.theme.default.css">
+  <link rel="stylesheet" href="../../vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../vendors/aos/css/aos.css">
+  <link rel="stylesheet" href="../../css/style.min.css">
 </head>
 <body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
 <header id="header-section">
   <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
     <div class="container">
       <div class="navbar-brand-wrapper d-flex w-100">
-        <img src="images/Group2.svg" alt="">
         <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="mdi mdi-menu navbar-toggler-icon"></span>
         </button>
@@ -24,9 +23,6 @@
       <div class="collapse navbar-collapse navbar-menu-wrapper" id="navbarSupportedContent">
         <ul class="navbar-nav align-items-lg-center align-items-start ml-auto">
           <li class="d-flex align-items-center justify-content-between pl-4 pl-lg-0">
-            <div class="navbar-collapse-logo">
-              <img src="images/Group2.svg" alt="">
-            </div>
             <button class="navbar-toggler close-button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="mdi mdi-close navbar-toggler-icon pl-5"></span>
             </button>
@@ -35,16 +31,19 @@
             <a class="nav-link" href="#header-section">Portal <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#features-section">About</a>
+            <a class="nav-link" href="#services-section">Servicios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#feauture-section">Caracteristicas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#developer-section">Desarrolladores</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/login">Supermercados</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#feedback-section">Trueque</a>
-          </li>
-          <li class="nav-item btn-contact-us pl-4 pl-lg-0">
-            <button class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Contact Us</button>
           </li>
         </ul>
       </div>
@@ -53,75 +52,174 @@
 </header>
 <div class="banner" >
   <div class="container">
-    <h1 class="font-weight-semibold">Search engine optimisation &<br>Marketing.</h1>
-    <h6 class="font-weight-normal text-muted pb-3">Simple is a simple template with a creative design that solves all your marketing and SEO queries.</h6>
-    <div>
-      <button class="btn btn-opacity-light mr-1">Get started</button>
-      <button class="btn btn-opacity-success ml-1">Learn more</button>
-    </div>
-    <img src="images/Group171.svg" alt="" class="img-fluid">
+    <h1 class="font-weight-semibold">Smart Food Keeper Project<br>(SFK).</h1>
+    <h6 class="font-weight-normal text-muted pb-3">Una nueva forma de gestionar el desperdicio de frutas en su negocio.</h6>
+    <img src="../../images/Group171.svg" alt="" class="img-fluid">
   </div>
 </div>
 <div class="content-wrapper">
   <div class="container">
-    <section class="features-overview" id="features-section" >
+    <section class="features-overview" id="problematica" >
       <div class="content-header">
-        <h2>How does it works</h2>
-        <h6 class="section-subtitle text-muted">One theme that serves as an easy-to-use operational toolkit<br>that meets customer's needs.</h6>
+        <h2>Problematica planteada</h2>
+        <p class="text-justify" style="font-size: 18px; line-height: 26px">
+          Actualmente la comida está siendo desperdiciada en proporciones inimaginables
+          alrededor de todo el mundo y República Dominicana no es una excepción. Hoy en día
+          el país alcanza los 1.1 millones de kilogramos en comida desperdiciada <mark style="color: #41c363; background: none;">(The Global
+          Food Donation Policy Atlas, 2021).</mark>
+        </p>
+        <p class="text-justify" style="font-size: 18px; line-height: 26px">
+          The Global Food Donation Policy Atlas también
+          presentó un estudio realizado por United States Agency for International
+          Development (USAID) el cual demuestra que muchos de los alimentos que se pierden
+          se debe al incorrecto manejo de temperaturas y condiciones ambientales; concluye que
+          con una infraestructura apropiada estos alimentos podrían ser mejor conservados y,
+          finalmente, donados a aquellos que más los necesitan.
+        </p>
+      </div>
+    </section>
+    <section class="features-overview" id="services-section" >
+
+      <div class="content-header">
+        <h2>Servicios que ofrecemos</h2>
+        <h6 class="section-subtitle text-muted">SFK Project utiliza novedosas tecnologias de reconocimiento de imagenes<br>para realizar predicciones de su estado de madurez</h6>
       </div>
       <div class="d-md-flex justify-content-between">
-        <div class="grid-margin d-flex justify-content-start">
+        <div class="grid-margin d-flex justify-content-md-start">
           <div class="features-width">
-            <img src="images/Group12.svg" alt="" class="img-icons">
-            <h5 class="py-3">Speed<br>Optimisation</h5>
-            <p class="text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
-            <a href="#"><p class="readmore-link">Readmore</p></a>
+            <img src="images/icons8-learning-100.png" alt="" class="img-icons">
+            <h5 class="py-3">Prediccion de estados de madurez</h5>
+            <p class="text-justify">SFK Project ofrece un sistema para notificar sobre el estado de madurez de las frutas, tener seguimiento de los desperdicios, monitoreo del ambiente y el intercambio de las frutas para evitar pérdidas y al mismo tiempo ayudar a los mas necesitados.</p>
           </div>
         </div>
-        <div class="grid-margin d-flex justify-content-center">
+        <div class="grid-margin">
+          <div class="features-width" >
+            <img src="images/icons8-notification-100.png" alt="" class="img-icons">
+            <h5 class="py-4">Alertas</h5>
+            <p class="text-justify">El sistema notifica cuando una fruta llega a un alto porcentaje de madurez, y avisa al personal encargado del manejo de las frutas en el supermercado. </p>
+          </div>
+        </div>
+        <div class="grid-margin d-flex justify-content-md-end">
           <div class="features-width">
-            <img src="images/Group7.svg" alt="" class="img-icons">
-            <h5 class="py-3">SEO and<br>Backlinks</h5>
-            <p class="text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
-            <a href="#"><p class="readmore-link">Readmore</p></a>
+            <img src="images/icons8-empty-trash-100.png" alt="" class="img-icons">
+            <h5 class="py-4">Safacon</h5>
+            <p class="text-justify">El sistema registra los kilogramos de fruta perdidas o desperdiciada, para que él personal del supermercado tenga una estimación más precisa de cuantas frutas comprar y reducir los gastos y desperdicios.  </p>
           </div>
         </div>
       </div>
     </section>
-    <section class="contact-details" id="contact-details-section">
-      <div class="row text-center text-md-left">
-        <div class="col-12 col-md-6 col-lg-3 grid-margin">
-          <img src="images/Group2.svg" alt="" class="pb-2">
-          <div class="pt-2">
-            <p class="text-muted m-0">mikayla_beer@feil.name</p>
-            <p class="text-muted m-0">906-179-8309</p>
+    <section class="customer-feedback" id="feauture-section">
+      <div class="row">
+        <div class="col-12 text-center pb-5">
+          <h2>Caracteristicas de SFK Project</h2>
+          <h6 class="section-subtitle text-muted m-0">
+            SFK Project consiste en un sistema de gestión
+            orientado a supermercados mediante la utilización de tecnologías
+            modernas al alcance del público para alertar de forma temprana el
+            estado de maduración de determinadas frutas.
+          </h6>
+        </div>
+        <div class="owl-carousel owl-theme grid-margin">
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <p class="m-0 py-3 text-muted">Generacion de graficos en timpo real, para la inspeccion del estado en que se encuentran las frutas</p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Graficos en tiempo real</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <p class="m-0 py-3 text-muted">Sensores de temperatura y humedad en los estantes <br> <br></p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Temperatura & humedad</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <p class="m-0 py-3 text-muted">Celdas de carga en los safacones para la inspeccion de la cantidad de frutas desperdiciadas</p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Celdas de carga</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <p class="m-0 py-3 text-muted">En el sistema se pueden agregar empleados para la inspeccion de los estantes y safacones</p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Administracion de empleados</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <p class="m-0 py-3 text-muted">Se generan alertar de los estados de madurez<br><br></p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Notificaciones</h6>
+              </div>
+            </div>
+          </div>
+          <div class="card customer-cards">
+            <div class="card-body">
+              <div class="text-center">
+                <p class="m-0 py-3 text-muted">Cuando se generan alertas sobre frutas muy maduras, se notifica por correo electronico</p>
+                <div class="content-divider m-auto"></div>
+                <h6 class="card-title pt-3">Alertas por correo electronicos</h6>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-3 grid-margin">
-          <h5 class="pb-2">Get in Touch</h5>
-          <p class="text-muted">Don’t miss any updates of our new templates and extensions.!</p>
-          <form>
-            <input type="text" class="form-control" id="Email" placeholder="Email id">
-          </form>
-          <div class="pt-3">
-            <button class="btn btn-dark">Subscribe</button>
+      </div>
+    </section>
+    <section class="case-studies" id="developer-section">
+      <div class="row grid-margin">
+        <div class="col-12 text-center pb-5">
+          <h2>Desarrolladores</h2>
+        </div>
+        <div class="col-12 col-md-6 col-lg-6 stretch-card mb-3 mb-lg-0" data-aos="zoom-in" data-aos-delay="400">
+          <div class="card color-cards">
+            <div class="card-body p-0">
+              <div class="bg-violet text-center card-contents">
+                <div class="card-image" style="width: auto;">
+                  <img src="images/SamuelProfile.jpg" class="case-studies-card-img" alt="">
+                </div>
+                <div class="card-desc-box d-flex align-items-center justify-content-around">
+                  <div>
+                    <h6 class="text-white pb-2 px-3">Linkedin</h6>
+                    <button class="btn btn-white" >Ver</button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-details text-center pt-4">
+                <h6 class="m-0 pb-1">Samuel P. Moronta</h6>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-3 grid-margin">
-          <h5 class="pb-2">Our Guidelines</h5>
-          <a href="#"><p class="m-0 pb-2">Terms</p></a>
-          <a href="#" ><p class="m-0 pt-1 pb-2">Privacy policy</p></a>
-          <a href="#"><p class="m-0 pt-1 pb-2">Cookie Policy</p></a>
-          <a href="#"><p class="m-0 pt-1">Discover</p></a>
-        </div>
-        <div class="col-12 col-md-6 col-lg-3 grid-margin">
-          <h5 class="pb-2">Our address</h5>
-          <p class="text-muted">518 Schmeler Neck<br>Bartlett. Illinois</p>
-          <div class="d-flex justify-content-center justify-content-md-start">
-            <a href="#"><span class="mdi mdi-facebook"></span></a>
-            <a href="#"><span class="mdi mdi-twitter"></span></a>
-            <a href="#"><span class="mdi mdi-instagram"></span></a>
-            <a href="#"><span class="mdi mdi-linkedin"></span></a>
+        <div class="col-12 col-md-6 col-lg-6 stretch-card mb-lg-2" data-aos="zoom-in" data-aos-delay="600">
+          <div class="card color-cards">
+            <div class="card-body p-0">
+              <div class="bg-success text-center card-contents">
+                <div class="card-image">
+                  <img src="images/Group115.svg" class="case-studies-card-img" alt="">
+                </div>
+                <div class="card-desc-box d-flex align-items-center justify-content-around">
+                  <div>
+                    <h6 class="text-white pb-2 px-3">Linkedin</h6>
+                    <button class="btn btn-white">Ver</button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-details text-center pt-4">
+                <h6 class="m-0 pb-1">Yehudy Rodriguez</h6>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -140,7 +238,7 @@
                 <input type="text" class="form-control" id="Name" placeholder="Name">
               </div>
               <div class="form-group">
-                <label for="Email">Email</label>
+                <label for="email">Email</label>
                 <input type="email" class="form-control" id="Email-1" placeholder="Email">
               </div>
               <div class="form-group">
@@ -158,10 +256,10 @@
     </div>
   </div>
 </div>
-<script src="vendors/jquery/jquery.min.js"></script>
-<script src="vendors/bootstrap/bootstrap.min.js"></script>
-<script src="vendors/owl-carousel/js/owl.carousel.min.js"></script>
-<script src="vendors/aos/js/aos.js"></script>
-<script src="js/landingpage.js"></script>
+<script src="../../vendors/jquery/jquery.min.js"></script>
+<script src="../../vendors/bootstrap/bootstrap.min.js"></script>
+<script src="../../vendors/owl-carousel/js/owl.carousel.min.js"></script>
+<script src="../../vendors/aos/js/aos.js"></script>
+<script src="../../js/landingpage.js"></script>
 </body>
 </html>

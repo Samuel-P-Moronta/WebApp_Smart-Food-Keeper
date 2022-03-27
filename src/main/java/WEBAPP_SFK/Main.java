@@ -2,6 +2,7 @@ package WEBAPP_SFK;
 
 import WEBAPP_SFK.controllers.*;
 import WEBAPP_SFK.models.*;
+import WEBAPP_SFK.services.ContainerDataServices;
 import WEBAPP_SFK.services.connect.DataBaseServices;
 import WEBAPP_SFK.utilities.DefaultDataLoader;
 import WEBAPP_SFK.webservices.RestApi;
@@ -12,9 +13,7 @@ import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
 
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     private static String connectionMode = "";
@@ -59,7 +58,27 @@ public class Main {
         DefaultDataLoader.getInstance().createDefaultData();
        //DefaultDataLoader.getInstance().createDefaultContainer();
 
-
+        ArrayList<Float> list = new ArrayList<Float>();
+        list.add(1.0F);
+        list.add(3.2F);
+        list.add(5.2F);
+        list.add(0.0F);
+        list.add(2.0F);
+        list.add(4.2F);
+        float restar = 0.0F;
+        float expectedValue = 0.0F;
+        float secontLast = -1;
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i) == expectedValue){
+                if(i == 0){
+                    System.out.println("Initial position");
+                }else{
+                    secontLast = list.get(i - 1);
+                    System.out.println("ULTIMO VAL0R ANTES DE LLEGAR A 0: "+secontLast);
+                }
+                break;
+            }
+        }
         app.start(7000);
     }
     public static String getModoConexion() {
