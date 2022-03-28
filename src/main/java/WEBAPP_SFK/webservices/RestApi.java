@@ -7,6 +7,8 @@ import WEBAPP_SFK.models.enums.RoleApp;
 import WEBAPP_SFK.services.*;
 import io.javalin.Javalin;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
@@ -96,6 +98,19 @@ public class RestApi extends BaseController {
                     List<Container> containerList;
                     containerList = new ContainerServices().findAll();
                     ctx.json(containerList);
+                });
+                get("/getStatsByBranchOffice/:id/:date-input", ctx -> {
+                    String date = ctx.pathParam("date-input", String.class).get();
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Date dateAux = dateFormat.parse(date);
+
+                    String idBranchOffice = ctx.pathParam("id",String.class).get();
+                    if(idBranchOffice !=null) {
+                        System.out.println("ID RECIBIDO: "+idBranchOffice);
+                        long idBranchOfficeAux = Long.parseLong(idBranchOffice);
+                        Stats stats = WasteDataServices.getInstance().wasteFruitsWeight(dateAux,idBranchOfficeAux);
+                        ctx.json(stats);
+                    }
                 });
             });
         });

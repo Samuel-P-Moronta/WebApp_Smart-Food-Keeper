@@ -1,12 +1,14 @@
 package WEBAPP_SFK.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class WasteData{
+public class WasteData implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,11 +16,14 @@ public class WasteData{
     private float wasteData;
     @CreationTimestamp
     private Date sendDate;
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name="containerId", nullable=false)
+    private Container container;
 
     public WasteData() {
 
     }
-
     public WasteData(float wasteData, Date sendDate) {
         this.wasteData = wasteData;
         this.sendDate = sendDate;
@@ -46,5 +51,13 @@ public class WasteData{
 
     public void setSendDate(Date sendDate) {
         this.sendDate = sendDate;
+    }
+
+    public Container getContainer() {
+        return container;
+    }
+
+    public void setContainer(Container container) {
+        this.container = container;
     }
 }

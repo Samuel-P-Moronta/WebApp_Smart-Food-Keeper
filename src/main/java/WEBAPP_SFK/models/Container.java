@@ -2,12 +2,14 @@ package WEBAPP_SFK.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Container implements Serializable {
@@ -18,6 +20,9 @@ public class Container implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonBackReference
     private BranchOffice branchOffice;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "container",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private Set<WasteData> wasteDataList;
 
     public Container(BranchOffice branchOffice) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -60,4 +65,11 @@ public class Container implements Serializable {
     public Container() {
     }
 
+    public Set<WasteData> getWasteDataList() {
+        return wasteDataList;
+    }
+
+    public void setWasteDataList(Set<WasteData> wasteDataList) {
+        this.wasteDataList = wasteDataList;
+    }
 }

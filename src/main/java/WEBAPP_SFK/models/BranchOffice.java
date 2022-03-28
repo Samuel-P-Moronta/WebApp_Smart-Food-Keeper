@@ -36,7 +36,6 @@ public class BranchOffice {
     public BranchOffice(){
 
     }
-
     public BranchOffice(Address address, Company company) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.registerDate = sdf.format(new Date());

@@ -3,6 +3,7 @@ package WEBAPP_SFK;
 import WEBAPP_SFK.controllers.*;
 import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.services.ContainerDataServices;
+import WEBAPP_SFK.services.WasteDataServices;
 import WEBAPP_SFK.services.connect.DataBaseServices;
 import WEBAPP_SFK.utilities.DefaultDataLoader;
 import WEBAPP_SFK.webservices.RestApi;
@@ -13,6 +14,7 @@ import io.javalin.plugin.rendering.JavalinRenderer;
 import io.javalin.plugin.rendering.template.JavalinThymeleaf;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.*;
 
 public class Main {
@@ -22,7 +24,7 @@ public class Main {
 
 
 
-    public static void main(String[] args) throws SQLException, InterruptedException {
+    public static void main(String[] args) throws SQLException, InterruptedException, ParseException {
         String msg = "Smart Food Keeper - Final Project";
 
         System.out.println(msg);
@@ -57,7 +59,7 @@ public class Main {
         //DefaultDataLoader.getInstance().createDefaultShelf();
         DefaultDataLoader.getInstance().createDefaultData();
        //DefaultDataLoader.getInstance().createDefaultContainer();
-
+        /*
         ArrayList<Float> list = new ArrayList<Float>();
         list.add(1.0F);
         list.add(3.2F);
@@ -79,6 +81,9 @@ public class Main {
                 break;
             }
         }
+
+         */
+        //System.out.println("PRUEBA waste: "+WasteDataServices.getInstance().wasteFruitsWeight(new Date(),2));
         app.start(7000);
     }
     public static String getModoConexion() {

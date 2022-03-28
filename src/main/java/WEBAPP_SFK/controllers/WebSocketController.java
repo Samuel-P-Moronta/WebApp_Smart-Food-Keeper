@@ -3,6 +3,7 @@ package WEBAPP_SFK.controllers;
 import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.models.enums.NotificationStatus;
 import WEBAPP_SFK.services.ContainerDataServices;
+import WEBAPP_SFK.services.ContainerServices;
 import WEBAPP_SFK.services.UserServices;
 import WEBAPP_SFK.services.WasteDataServices;
 import WEBAPP_SFK.utilities.CustomEmailSender;
@@ -125,6 +126,7 @@ public class WebSocketController extends BaseController {
     }
     private void addWasteData(ContainerDataJSON c){
         Float containerData = ContainerDataServices.getInstance().getLastData();
+        Container container = ContainerServices.getInstance().find(c.getContainerId());
         System.out.println("Valor pasado: "+ containerData);
         System.out.println("Valor actual: "+ c.getWeight());
 
@@ -139,9 +141,12 @@ public class WebSocketController extends BaseController {
             if((c.getWeight() - containerDataFlag) < 0){
                 saveValue = (c.getWeight() - containerDataFlag) * - 1;
                 System.out.println("Valor a guardar: "+ saveValue);
-                wasteData.setWasteData(saveValue);
-                wasteData.setSendDate(new Date());
-                WasteDataServices.getInstance().create(wasteData);
+                if(container !=null){
+                    wasteData.setWasteData(saveValue);
+                    wasteData.setSendDate(new Date());
+                    wasteData.setContainer(container);
+                    WasteDataServices.getInstance().create(wasteData);
+                }
             }
         }
     }
