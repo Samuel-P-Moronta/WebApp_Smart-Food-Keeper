@@ -25,10 +25,9 @@ public class CompanyServices extends DataBaseRepository<Company> {
     public Company findOrganizationByBranchOffice(Long idBranchOffice) {
         EntityManager em = getEntityManager();
         String sql = "";
-        sql += " SELECT E from Company E INNER JOIN BranchOffice S on E.id = S.id";
-        sql += " WHERE S.id=:branchOffice";
-        Query query = em.createQuery(sql, Company.class);
-        query.setParameter("branchOffice", idBranchOffice);
+        sql += " SELECT DISTINCT * FROM COMPANY INNER JOIN BRANCHOFFICE ON COMPANY.ID = BRANCHOFFICE.COMPANY_ID WHERE BRANCHOFFICE.ID = :idBranchOffice";
+        Query query = em.createNativeQuery(sql, Company.class);
+        query.setParameter("idBranchOffice", idBranchOffice);
         List<Company> companyList = query.getResultList();
         if (companyList.size() > 0) {
             return companyList.get(0);

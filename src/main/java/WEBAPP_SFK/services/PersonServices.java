@@ -2,6 +2,7 @@ package WEBAPP_SFK.services;
 
 import WEBAPP_SFK.models.Company;
 import WEBAPP_SFK.models.Person;
+import WEBAPP_SFK.models.User;
 import WEBAPP_SFK.models.enums.RoleApp;
 import WEBAPP_SFK.services.connect.DataBaseRepository;
 
@@ -55,5 +56,15 @@ public class PersonServices extends DataBaseRepository<Person> {
         }
         //Return none
         return null;
+    }
+    public List<Person> findCompanyEmployees(long idCompany) {
+        EntityManager em = getEntityManager();
+        Query query = em.createQuery("SELECT P FROM Person P " +
+                "INNER JOIN User U on P.user.email = U.email " +
+                "INNER JOIN Company C ON U.company.id = C.id " +
+                "WHERE U.branchOffice.id " +
+                "IS NOT NULL and C.id = :idCompany");
+        query.setParameter("idCompany",idCompany);
+        return query.getResultList();
     }
 }

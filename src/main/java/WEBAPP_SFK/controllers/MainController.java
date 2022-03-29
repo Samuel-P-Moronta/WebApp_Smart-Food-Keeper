@@ -164,8 +164,9 @@ public class MainController extends BaseController{
                 /*-------------------------------------------------------------------------------*/
                 /*-------------------- Employee management---------------------------------------*/
                 get("/employee", ctx ->{
+                    User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
                     List<Person> personList;
-                    personList = new PersonServices().findPersonByRole();
+                    personList = new PersonServices().findCompanyEmployees(user.getCompany().getId());
                     model.put("employeeList",personList);
                     ctx.render("/public/FrontEnd_SFK/views/adminPortal/employeeList.html",model);
                 });

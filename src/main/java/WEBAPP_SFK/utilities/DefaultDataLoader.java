@@ -78,15 +78,28 @@ public class DefaultDataLoader {
         Company company = ControllerCore.getInstance().findCompanyByBranchOffice(branchOffice.getId());
         User userAux = new User("employee@gmail.com","123", Set.of(RoleApp.ROLE_EMPLOYEE),branchOffice);
         if(branchOffice !=null){
-            if(ControllerCore.getInstance().findUserByEmail("employee@gmail.com") == null){
-                userAux.setCompany(company);
-                ControllerCore.getInstance().createUser(userAux);
+            if(company!=null){
+                System.out.println("My company [EMPLOYEE]: "+company.getName());
+                if(ControllerCore.getInstance().findUserByEmail("employee@gmail.com") == null){
+                    userAux.setCompany(company);
+                    ControllerCore.getInstance().createUser(userAux);
+                    System.out.println("User create successfully: "+userAux.getEmail());
+                }else{
+                    System.out.println("This user already exist");
+                }
+            }else{
+                System.out.println("Company not found");
             }
+        }else{
+            System.out.println("Branch office not found");
         }
         String identificationCard = "111-1111111-1";
-        Person personAdmin = new Person(identificationCard,"Yehudy","Rodriguez",new Date(),new Address("San francisco","Calle 20 de Sep #20"),userAux);
+        Person personEmployee = new Person(identificationCard,"Yehudy","Rodriguez",new Date(),new Address("San francisco","Calle 20 de Sep #20"),userAux);
         if(ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard) == null){
-            ControllerCore.getInstance().createPerson(personAdmin);
+            ControllerCore.getInstance().createPerson(personEmployee);
+            System.out.println("Person create successfully: "+personEmployee.getFirstName());
+        }else{
+            System.out.println("This person already exist");
         }
     }
     private void createDefaultAdmin() {
