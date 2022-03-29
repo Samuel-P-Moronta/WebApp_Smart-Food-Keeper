@@ -137,17 +137,19 @@ public class MainController extends BaseController{
                     ctx.render("/public/FrontEnd_SFK/views/adminPortal/dashboard.html");
                 });
                 get("/dashboard", ctx ->{
+                    User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
                     String email = UserServices.getInstance().find(ctx.sessionAttribute("user")).getEmail();
                     Person person = ControllerCore.controllerCore.findPersonByEmail(email);
                     String fullNameToShow = person.getFirstName() + " "+ person.getLastName();
                     ctx.sessionAttribute("user",email);
                     model.put("fullNameToShow",fullNameToShow);
-                    Company company = CompanyServices.getInstance().findCompanyByOwnerEmail(email);
+                    Company company = user.getCompany();
                     model.put("company",company.getName());
+                    System.out.println("NOMBRE COMPANY EN DASHBOARD: "+company.getName());
                     int amountBranchOffice = company.getBranchOfficeList().size();
-                    List<BranchOffice> branchOfficeList;
+                    Set<BranchOffice> branchOfficeList;
                     int totalShelf = 0, flagShelg = 0, flagContainer = 0,totalContainer = 0;
-                    branchOfficeList = new BranchOfficeServices().findAll();
+                    branchOfficeList = company.getBranchOfficeList();
                     model.put("myBranchOffices",amountBranchOffice);
                     for(BranchOffice list: branchOfficeList){
                         totalShelf+=list.getShelfList().size();
