@@ -227,7 +227,7 @@ public class WebSocketController extends BaseController {
                     }
                 }
             }
-            if(sdj.getHumidity() < 75){
+            if(sdj.getHumidity() > 90){
                 if(notificationHumidity == true){
                     System.out.println("This notification [HUMIDITY] already exist in database");
                 }else{

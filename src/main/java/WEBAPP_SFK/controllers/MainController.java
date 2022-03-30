@@ -57,33 +57,55 @@ public class MainController extends BaseController{
                     String email = ctx.formParam("email");
                     String password = ctx.formParam("password");
 
-                    if(!email.equals("") && !password.equals("")){
-                        User userAux = new User(email,password,Set.of(RoleApp.ROLE_ADMIN));
-                        System.out.println(email + " " + password);
-                        User userId = ControllerCore.getInstance().findUserByEmail(email);
+                    String companyNameAux = companyName.toUpperCase();
 
-                        if(userId == null) {
-                            ControllerCore.getInstance().createUser(userAux);
-                        }else{
-                            model.put("ErrorAuth","Este correo electronico ya esta registrado en nuestro sistema");
+                    User user = ControllerCore.getInstance().findUserByEmail(email);
+                    Company company = ControllerCore.getInstance().findCompanyByName(companyNameAux);
+                    Person person = ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard);
+
+                    if(!(identificationCard.equals("") && firstName.equals("") && lastName.equals("") && companyName.equals("") && city.equals("") && direction.equals("") && email.equals("") && password.equals(""))){
+                        if(company == null){
+                            company = new Company(companyNameAux);
+                            ControllerCore.getInstance().createCompany(company);
                         }
-                        if(!identificationCard.equals("") && !firstName.equals("") && !lastName.equals("") && !city.equals("") && !direction.equals("")){
-                            Person personAux = new Person(identificationCard,firstName,lastName, new Date(),new Address(city,direction),ControllerCore.getInstance().findUserByEmail(email));
-                            Company company = new Company(companyName);
-                            if(ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard) == null){
-                                ControllerCore.getInstance().createPerson(personAux);
-                                ControllerCore.getInstance().createCompany(company);
-                            }else{
-                                model.put("IdentificationCardExist","Esta cedula ya se encuerntra registrada");
+                        if(user == null){
+                            Company companyAux = ControllerCore.getInstance().findCompanyByName(companyNameAux);
+                            user = new User();
+                            user.setEmail(email);
+                            user.setPassword(password);
+                            user.setRolesList(Set.of(RoleApp.ROLE_ADMIN));
+                            if(companyAux!=null){
+                                user.setCompany(companyAux);
+                                ControllerCore.getInstance().createUser(user);
+                            }
+                        }else{
+                            if(ControllerCore.getInstance().findUserByEmail(email)!=null){
+                                model.put("emailExist","Este correo electronico ya esta registrado en nuestro sistema");
+                                model.put("errorIdentificationCard","");
                             }
                         }
-                        if(ControllerCore.getInstance().findCompanyByName(companyName) !=null){
-                            userAux.setCompany(ControllerCore.getInstance().findCompanyByName(companyName));
-                            ControllerCore.getInstance().updateUser(userAux);
+                        if(person == null){
+                            person = new Person();
+                            person.setIdentificationCard(identificationCard);
+                            person.setFirstName(firstName);
+                            person.setLastName(lastName);
+                            person.setRegisterDate(new Date());
+                            person.setAddress(new Address(city,direction));
+                            person.setUser(user);
+                            ControllerCore.getInstance().createPerson(person);
+                        }else{
+                            if(ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard)!=null){
+                                model.put("errorIdentificationCard","Esta cedula ya esta registrado en nuestro sistema");
+                                model.put("emailExist","");
+                            }
                         }
                     }
-                    ctx.render("/public/FrontEnd_SFK/views/welcomePortal/login.html",model);
+                    String successMessage = firstName + " " + lastName + " "+ "Se ha registro con exito en nuestro sistema";
+                    model.put("successMessage",successMessage);
+                    ctx.render("/public/FrontEnd_SFK/views/welcomePortal/companyRegister.html",model);
+
                 });
+
                 post("/login",ctx -> {
                     String email = ctx.formParam("email");
                     String password = ctx.formParam("password");
@@ -114,6 +136,7 @@ public class MainController extends BaseController{
                         }
                         ctx.sessionAttribute("user", email);
                     }else{
+                        model.put("ErrorAuth","Credenciales no validas!");
                         ctx.render("/public/FrontEnd_SFK/views/welcomePortal/login.html",model);
                     }
                 });

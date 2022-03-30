@@ -112,6 +112,14 @@ public class RestApi extends BaseController {
                         ctx.json(stats);
                     }
                 });
+                get("/validIdentificationCard/:identificationCard", ctx -> {
+                    String identificationCard = ctx.pathParam("identificationCard", String.class).get();
+                    Person person = ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard);
+                    int foundOk = 200;
+                    if(person !=null){
+                        ctx.json(foundOk);
+                    }
+                });
             });
         });
     }

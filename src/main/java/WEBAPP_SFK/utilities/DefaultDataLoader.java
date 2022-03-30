@@ -11,8 +11,6 @@ import java.util.*;
 public class DefaultDataLoader {
     private static DefaultDataLoader instance;
 
-    private UserServices userCredentialServices;
-    private NotificationServices notificationServices;
 
 
     public DefaultDataLoader() {
@@ -29,77 +27,124 @@ public class DefaultDataLoader {
         }
         return instance;
     }
+    public void createDefaultData(){
+        //Company
+        createDefaultCompany();
+        createDefaultBranchOffice();
+        createDefaultUsers();
+        addCompanyAndBranchOfficeToUsers();
+        createDefaultShelf();
+        createDefaultContainer();
+    }
+
     public void createDefaultCompany(){
         Company company1 = new Company("El nacional");
         ControllerCore.getInstance().createCompany(company1);
     }
     public void createDefaultBranchOffice(){
-        Address address = new Address("Navarrete","Calle Barrio Duarte" );
-        Address address3 = new Address("Santo Domingo Oeste", "Timotes");
-        Address address4 = new Address("Boca Chica", "Calle 24");
-
-
         ControllerCore controllerCore1 = new ControllerCore();
-
-        BranchOffice branchOffice1 = new BranchOffice(address, controllerCore1.findCompanyByName("El nacional"));
-        BranchOffice branchOffice2 = new BranchOffice(address3, controllerCore1.findCompanyByName("El nacional"));
-        BranchOffice branchOffice3 = new BranchOffice(address4,controllerCore1.findCompanyByName("El nacional"));
-
-
+        BranchOffice branchOffice1 = new BranchOffice(
+                new Address("Navarrete","Calle Barrio Duarte" ),
+                controllerCore1.findCompanyByName("El nacional")
+        );
+        BranchOffice branchOffice2 = new BranchOffice(
+                new Address("Santo Domingo Oeste", "Timotes"),
+                controllerCore1.findCompanyByName("El nacional")
+        );
+        BranchOffice branchOffice3 = new BranchOffice(
+                new Address("Boca Chica", "Calle 24"),
+                controllerCore1.findCompanyByName("El nacional")
+        );
         ControllerCore.getInstance().createBranchOffice(branchOffice1);
         ControllerCore.getInstance().createBranchOffice(branchOffice2);
         ControllerCore.getInstance().createBranchOffice(branchOffice3);
     }
-    public void createDefaultSuperUser(){
-        User userAux = new User("root@gmail.com","123", Set.of(RoleApp.ROLE_ROOT));
-        if(ControllerCore.getInstance().findUserByEmail("root@gmail.com") == null){
-            ControllerCore.getInstance().createUser(userAux);
-       }
-    }
-    public void createDefaultData(){
-        //Company
-        createDefaultCompany();
-        //Admin
-        createDefaultAdmin();
-        //BranchOffice
-        createDefaultBranchOffice();
-        //Root user
-        createDefaultSuperUser();
-        //Employee
-        createDefaultEmployee();
-        //Shelf
-        createDefaultShelf();
-        //Container
-        createDefaultContainer();
-    }
-
-    private void createDefaultEmployee() {
-        BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(2);
-        Company company = ControllerCore.getInstance().findCompanyByBranchOffice(branchOffice.getId());
-        User userAux = new User("employee@gmail.com","123", Set.of(RoleApp.ROLE_EMPLOYEE),branchOffice);
-        if(branchOffice !=null){
-            if(company!=null){
-                System.out.println("My company [EMPLOYEE]: "+company.getName());
-                if(ControllerCore.getInstance().findUserByEmail("employee@gmail.com") == null){
-                    userAux.setCompany(company);
-                    ControllerCore.getInstance().createUser(userAux);
-                    System.out.println("User create successfully: "+userAux.getEmail());
-                }else{
-                    System.out.println("This user already exist");
-                }
-            }else{
-                System.out.println("Company not found");
-            }
-        }else{
-            System.out.println("Branch office not found");
+    public void createDefaultUsers(){
+        User userRoot = ControllerCore.getInstance().findUserByEmail("root@gmail.com");
+        if(userRoot == null){
+            userRoot = new User();
+            userRoot.setEmail("root@gmail.com");
+            userRoot.setPassword("123");
+            userRoot.setRolesList(Set.of(RoleApp.ROLE_ROOT));
+            ControllerCore.getInstance().createUser(userRoot);
         }
-        String identificationCard = "111-1111111-1";
-        Person personEmployee = new Person(identificationCard,"Yehudy","Rodriguez",new Date(),new Address("San francisco","Calle 20 de Sep #20"),userAux);
-        if(ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard) == null){
-            ControllerCore.getInstance().createPerson(personEmployee);
-            System.out.println("Person create successfully: "+personEmployee.getFirstName());
-        }else{
-            System.out.println("This person already exist");
+        User userEmployee1 = ControllerCore.getInstance().findUserByEmail("employee1@gmail.com");
+        if(userEmployee1 == null){
+            userEmployee1 = new User();
+            userEmployee1.setEmail("employee1@gmail.com");
+            userEmployee1.setPassword("123");
+            userEmployee1.setRolesList(Set.of(RoleApp.ROLE_EMPLOYEE));
+            ControllerCore.getInstance().createUser(userEmployee1);
+        }
+        User userEmployee2 = ControllerCore.getInstance().findUserByEmail("employee2@gmail.com");
+        if(userEmployee2 == null){
+            userEmployee2 = new User();
+            userEmployee2.setEmail("employee2@gmail.com");
+            userEmployee2.setPassword("123");
+            userEmployee2.setRolesList(Set.of(RoleApp.ROLE_EMPLOYEE));
+            ControllerCore.getInstance().createUser(userEmployee2);
+        }
+        User userAdmin = ControllerCore.getInstance().findUserByEmail("admin@gmail.com");
+        if(userAdmin == null){
+            userAdmin = new User();
+            userAdmin.setEmail("admin@gmail.com");
+            userAdmin.setPassword("123");
+            userAdmin.setRolesList(Set.of(RoleApp.ROLE_ADMIN));
+            ControllerCore.getInstance().createUser(userAdmin);
+        }
+        Person personEmployee1 = new Person(
+                "222-2222222-2",
+                "Pablo","Perez",
+                new Date(),
+                new Address("Santiago", "Calle 30 de Marzo #10"),
+                userEmployee1
+        );
+        Person personEmployee2 = new Person(
+                "333-3333333-3",
+                "Armando","Rodriguez",
+                new Date(),
+                new Address("Santiago", "Calle 27 de Febrero #45"),
+                userEmployee2
+        );
+        Person personAdmin = new Person(
+                "111-1111111-1",
+                "Juan","Arnaldo",
+                new Date(),
+                new Address("Santiago", "Calle Juan Francisco #16"),
+                userAdmin
+        );
+        ControllerCore.getInstance().createPerson(personEmployee1);
+        ControllerCore.getInstance().createPerson(personEmployee2);
+        ControllerCore.getInstance().createPerson(personAdmin);
+    }
+    public void addCompanyAndBranchOfficeToUsers(){
+        Company company = ControllerCore.getInstance().findCompanyByName("El nacional");
+        BranchOffice branchOffice1 = ControllerCore.getInstance().findBranchOfficeById(1);
+        BranchOffice branchOffice2 = ControllerCore.getInstance().findBranchOfficeById(2);
+
+        User userAdmin = ControllerCore.getInstance().findUserByEmail("admin@gmail.com");
+        User userEmployee1 = ControllerCore.getInstance().findUserByEmail("employee1@gmail.com");
+        User userEmployee2 = ControllerCore.getInstance().findUserByEmail("employee2@gmail.com");
+
+        if(company!=null){
+            if(userAdmin!=null){
+                userAdmin.setCompany(company);
+                ControllerCore.getInstance().updateUser(userAdmin);
+            }
+            if(branchOffice1 !=null){
+                if(userEmployee1!=null){
+                    userEmployee1.setCompany(company);
+                    userEmployee1.setBranchOffice(branchOffice1);
+                    ControllerCore.getInstance().updateUser(userEmployee1);
+                }
+            }
+            if(branchOffice2 !=null){
+                if(userEmployee2!=null){
+                    userEmployee2.setCompany(company);
+                    userEmployee2.setBranchOffice(branchOffice2);
+                    ControllerCore.getInstance().updateUser(userEmployee2);
+                }
+            }
         }
     }
     private void createDefaultAdmin() {
@@ -107,11 +152,15 @@ public class DefaultDataLoader {
         User userAux = new User("admin@gmail.com","123", Set.of(RoleApp.ROLE_ADMIN),controllerCore1.findCompanyByName("El nacional"));
         if(controllerCore1.findUserByEmail("admin@gmail.com") == null){
             ControllerCore.getInstance().createUser(userAux);
+        }else{
+            System.out.println("This user already exist");
         }
         String identificationCard = "000-0000000-0";
         Person personAdmin = new Person(identificationCard,"Samuel","Moronta",new Date(),new Address("Santiago","Calle 16 de Agosto #10"),userAux);
         if(controllerCore1.findPersonByIdentificationCard(identificationCard) == null){
             controllerCore1.createPerson(personAdmin);
+        }else{
+            System.out.println("This person already exist");
         }
     }
     public void createDefaultShelf(){

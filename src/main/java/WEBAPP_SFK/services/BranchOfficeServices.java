@@ -21,13 +21,14 @@ public class BranchOfficeServices extends DataBaseRepository<BranchOffice> {
         }
         return instance;
     }
-    public BranchOffice findBranchOfficeDirection(String name) {
+    public BranchOffice findBranchOfficeAddress(Address address) {
         EntityManager em = getEntityManager();
         String sql = "";
-        sql += " SELECT N from BranchOffice N WHERE N.address.direction = :name";
+        sql += " SELECT N from BranchOffice N WHERE N.address.direction = :city AND N.address.direction = :direction";
 
         Query query = em.createQuery(sql, BranchOffice.class);
-        query.setParameter("name", name);
+        query.setParameter("city", address.getCity());
+        query.setParameter("direction", address.getDirection());
         List<BranchOffice> branchOfficeList = query.getResultList();
         if (branchOfficeList.size() > 0) {
             return branchOfficeList.get(0);

@@ -91,8 +91,8 @@ public class ControllerCore {
         }
     }
 
-    public BranchOffice findBranchOfficeDirection(String branchOfficeDirection) {
-        return BranchOfficeServices.getInstance().findBranchOfficeDirection(branchOfficeDirection);
+    public BranchOffice findBranchOfficeAddress(Address address) {
+        return BranchOfficeServices.getInstance().findBranchOfficeAddress(address);
     }
 
     public Person findPersonByIdentificationCard(String identificationCard) {

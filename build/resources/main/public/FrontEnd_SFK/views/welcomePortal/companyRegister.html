@@ -31,34 +31,16 @@
                 <div class="card-body">
                   <h4 class="card-title">REGISTRA TU EMPRESA</h4>
                   <form class="forms-sample needs-validation" method="post" action="/organizationRegister" novalidate>
-                    <div th:if="${ErrorAuth}" class="alert alert-warning alert-dismissible fade show" role="alert">
-                      <strong>Error de autenticacion!</strong> Este correo ya esta registrado en nuestro sistema
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div th:if="${IdentificationCardExist}" class="alert alert-danger alert-dismissible fade show" role="alert">
-                      <strong>Cedula!</strong> Esta cedula ya esta registrada en nuestro sistema
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div th:if="${Success}" class="alert alert-success alert-dismissible fade show" role="alert">
-                      <strong>Success!</strong> Su empresa se ha registrado correctamente en nuestro sistema
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
                     <div class="form-group">
                       <h5 class="pb-2">Datos personales</h5>
                       <hr>
                       <label for="identificationCard" class="form-label">Cedula</label>
                       <input type="text" class="form-control" id="identificationCard" name="identificationCard" placeholder="Inserta la cedula" is-invalid required data-mask="999-9999999-9" autocomplete="off" maxlength="13">
-                      <div class="invalid-feedback">
-                        Por favor, digite su cedula!.
-                      </div>
                       <div class="invalid-feedback" id="identificationCardInvalid">
                         Cedula invalida!.
+                      </div>
+                      <div class="form-group">
+                        <p  th:text="${errorIdentificationCard}" style="color:#ff0000"></p>
                       </div>
                     </div>
                     <div class="form-group">
@@ -109,6 +91,9 @@
                         <div class="invalid-feedback">
                           Por favor, digite su correo electronico!
                         </div>
+                        <div class="form-group">
+                          <p  th:text="${emailExist}" style="color:#ff0000"></p>
+                        </div>
                       </div>
                       <div class="form-group col-md-6">
                         <label for="password" class="form-label">Clave</label>
@@ -126,7 +111,6 @@
                       <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn mr-auto">CREAR CUENTA</button>
                       <a class="btn btn-block btn-danger btn-lg font-weight-normal auth-form-btn mr-1" href="/portal">IR AL PORTAL</a>
                     </div>
-
                   </form>
                 </div>
               </div>
@@ -149,6 +133,8 @@
     <script src="../../assets/js/hoverable-collapse.js"></script>
     <script src="../../assets/js/misc.js"></script>
     <script src="../../js/validator.js"></script>
+    <script src="../../js/validateFromApi.js"></script>
+
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js'></script>
 
   </body>
