@@ -1,6 +1,7 @@
 package WEBAPP_SFK.controllers;
 
 import WEBAPP_SFK.models.*;
+import WEBAPP_SFK.models.ExpressSalesInventory;
 import WEBAPP_SFK.models.enums.RoleApp;
 import WEBAPP_SFK.services.*;
 import io.javalin.Javalin;
@@ -78,32 +79,45 @@ public class MainController extends BaseController{
                                 user.setCompany(companyAux);
                                 ControllerCore.getInstance().createUser(user);
                             }
-                        }else{
-                            if(ControllerCore.getInstance().findUserByEmail(email)!=null){
-                                model.put("emailExist","Este correo electronico ya esta registrado en nuestro sistema");
+                            if(person == null){
+                                person = new Person();
+                                person.setIdentificationCard(identificationCard);
+                                person.setFirstName(firstName);
+                                person.setLastName(lastName);
+                                person.setRegisterDate(new Date());
+                                person.setAddress(new Address(city,direction));
+                                person.setUser(user);
+                                ControllerCore.getInstance().createPerson(person);
+                                System.out.println("Account was created successfully");
+                                String successMessage = firstName + " " + lastName + " "+ "Se ha registro con exito en nuestro sistema";
+                                model.put("successMessage",successMessage);
+                                model.put("emailExist","");
                                 model.put("errorIdentificationCard","");
+
+                            }else{
+                                if(ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard)!=null){
+                                    model.put("errorIdentificationCard","Esta cedula ya esta registrado en nuestro sistema");
+                                    model.put("emailExist","");
+                                    model.put("successMessage","");
+                                }
                             }
                         }
-                        if(person == null){
-                            person = new Person();
-                            person.setIdentificationCard(identificationCard);
-                            person.setFirstName(firstName);
-                            person.setLastName(lastName);
-                            person.setRegisterDate(new Date());
-                            person.setAddress(new Address(city,direction));
-                            person.setUser(user);
-                            ControllerCore.getInstance().createPerson(person);
-                        }else{
-                            if(ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard)!=null){
-                                model.put("errorIdentificationCard","Esta cedula ya esta registrado en nuestro sistema");
-                                model.put("emailExist","");
-                            }
+                        else if (user!=null){
+                            System.out.println("This user already exist");
+                            model.put("emailExist","Este correo electronico ya esta registrado en nuestro sistema");
+                            model.put("errorIdentificationCard","");
+                            model.put("successMessage","");
                         }
                     }
-                    String successMessage = firstName + " " + lastName + " "+ "Se ha registro con exito en nuestro sistema";
-                    model.put("successMessage",successMessage);
                     ctx.render("/public/FrontEnd_SFK/views/welcomePortal/companyRegister.html",model);
 
+
+                });
+                get("/organizationRegister", ctx ->{
+                    model.put("errorIdentificationCard","");
+                    model.put("emailExist","");
+                    model.put("successMessage","");
+                    ctx.render("/public/FrontEnd_SFK/views/welcomePortal/companyRegister.html",model);
                 });
 
                 post("/login",ctx -> {
@@ -142,9 +156,6 @@ public class MainController extends BaseController{
                 });
                 get("/login",ctx -> {
                     ctx.render("public/FrontEnd_SFK/views/welcomePortal/login.html");
-                });
-                get("/organizationRegister", ctx ->{
-                    ctx.render("/public/FrontEnd_SFK/views/welcomePortal/companyRegister.html",model);
                 });
             });
             path("/management",() ->{
@@ -388,12 +399,66 @@ public class MainController extends BaseController{
                             shelfList = new ShelfServices().findShelfByBranchOffice(branchOffice.getId());
                             model.put("branchOfficeSelect",nameBranchOffice);
                             model.put("shelfSelect",shelfList);
+                            /*
+                            model.put("lastFruitType",lastFruitTypeInDb);
+                            model.put("lastCantFruit",lastCantFruit);
+
+                             */
                         }
                     }
                     ctx.render("/public/FrontEnd_SFK/views/employeePortal/shelfMonitoringEmployee.html",model);
                 });
                 get("/containerMonitoringEmployee", ctx ->{
                     ctx.render("/public/FrontEnd_SFK/views/employeePortal/containerMonitoringEmployee.html",model);
+                });
+                get("/sales-express", ctx ->{
+                    User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
+                    if(user!=null){
+                        String email = user.getEmail();
+                        BranchOffice branchOffice = BranchOfficeServices.getInstance().findBranchOfficeByUserEmployee(email);
+                        if(branchOffice!=null){
+                            String myBranchOffice = branchOffice.getAddress().getCity()+" "+"("+branchOffice.getAddress().getDirection()+")";
+                            List<Shelf> shelfList;
+                            shelfList = new ShelfServices().findShelfByBranchOffice(branchOffice.getId());
+                            model.put("branchOfficeEmployee",myBranchOffice);
+                            model.put("shelfSelect",shelfList);
+                        }
+                    }
+                    ctx.render("/public/FrontEnd_SFK/views/employeePortal/salesExpress.html",model);
+                });
+                post("/sales-express", ctx ->{
+                    User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
+                    if(user !=null){
+                        if(user.hasRole(RoleApp.ROLE_EMPLOYEE)){
+                            String email = user.getEmail();
+                            BranchOffice branchOffice = BranchOfficeServices.getInstance().findBranchOfficeByUserEmployee(email);
+                            if(branchOffice!=null){
+                                ExpressSalesInventory eSalesInventory = new ExpressSalesInventory();
+                                int currentQuantity = Integer.parseInt(ctx.formParam("quantity"));
+                                String idShelfSelect = ctx.formParam("shelfSelect");
+                                Shelf shelf = ControllerCore.getInstance().findShelfByDeviceId(idShelfSelect);
+                                if(shelf!=null){
+                                    Boolean isExpress = Boolean.valueOf(ctx.formParam("isExpress"));
+                                    if(isExpress == true){
+                                        //express sales
+                                        eSalesInventory.setExpress(true);
+                                        eSalesInventory.setQuantity(currentQuantity);
+                                        eSalesInventory.setUser(user);
+                                        eSalesInventory.setBranchOffice(branchOffice);
+                                        eSalesInventory.setShelf(shelf);
+                                        ExpressSalesInventoryServices.getInstance().create(eSalesInventory);
+
+                                        //make broadcast to all client subscribe
+
+                                    }else{
+                                        //Quantity waste
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    ctx.render("/public/FrontEnd_SFK/views/employeePortal/salesExpress.html",model);
                 });
             });
         });

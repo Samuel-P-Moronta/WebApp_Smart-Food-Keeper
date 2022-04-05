@@ -1,7 +1,9 @@
 package WEBAPP_SFK.models;
 
+import WEBAPP_SFK.models.enums.RoleApp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.javalin.core.security.Role;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 
@@ -13,7 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class BranchOffice {
+public class BranchOffice implements Serializable {
     //private static final long serialVersionUID = 1L;
 
     @Id
@@ -87,4 +89,6 @@ public class BranchOffice {
     public void setContainerList(Set<Container> containerList) {
         this.containerList = containerList;
     }
+
+
 }

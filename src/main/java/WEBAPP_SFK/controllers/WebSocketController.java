@@ -114,6 +114,7 @@ public class WebSocketController extends BaseController {
                 ControllerCore.getInstance().addShelfData(shelfDataAux);
             }
         }
+
     }
     private void addDataContainerToDb(ContainerDataJSON c){
         Container containerAux = ControllerCore.getInstance().findContainerById(c.getContainerId());

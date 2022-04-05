@@ -47,14 +47,15 @@ public class WasteDataServices extends DataBaseRepository<WasteData> {
         String branchOfficeWasteGenerated = "";
         DateFormat hourFormat = new SimpleDateFormat("HH");
         List<WasteData> stats = findAllWasteDataByBranchOffice(date,idBranchOffice);
-        int i = 0;
-        for(WasteData w: stats){
+        int i;
+        for (int j = 0; j < stats.size(); j++) {
+            WasteData w = stats.get(j);
             i = Integer.parseInt(hourFormat.format(w.getSendDate()));
-            wasteWeight[i]+=w.getWasteData();
-            totalWasteWeight+=w.getWasteData();
+            wasteWeight[i] += w.getWasteData();
+            totalWasteWeight += w.getWasteData();
             String city = w.getContainer().getBranchOffice().getAddress().getCity();
             String direction = w.getContainer().getBranchOffice().getAddress().getDirection();
-            branchOfficeWasteGenerated = city + " " +"("+ direction +")";
+            branchOfficeWasteGenerated = city + " " + "(" + direction + ")";
         }
         Map<String, Object> wasteWeightMap = new HashMap();
         wasteWeightMap.put("total",totalWasteWeight);

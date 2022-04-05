@@ -16,7 +16,7 @@
         <class>WEBAPP_SFK.models.Container</class>
         <class>WEBAPP_SFK.models.ContainerData</class>
         <class>WEBAPP_SFK.models.WasteData</class>
-
+        <class>WEBAPP_SFK.models.ExpressSalesInventory</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/webapp_sfk" />

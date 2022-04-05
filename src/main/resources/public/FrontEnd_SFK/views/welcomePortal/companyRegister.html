@@ -32,6 +32,9 @@
                   <h4 class="card-title">REGISTRA TU EMPRESA</h4>
                   <form class="forms-sample needs-validation" method="post" action="/organizationRegister" novalidate>
                     <div class="form-group">
+                      <p  th:text="${successMessage}" style="color:#0062ff"></p>
+                    </div>
+                    <div class="form-group">
                       <h5 class="pb-2">Datos personales</h5>
                       <hr>
                       <label for="identificationCard" class="form-label">Cedula</label>

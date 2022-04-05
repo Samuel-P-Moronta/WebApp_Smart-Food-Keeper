@@ -51,7 +51,7 @@ public class ControllerCore {
 
     //----------------------------------ORGANIZATION-----------------------------------------------//
     public boolean createCompany(Company company){
-        return CompanyServices.getInstance().update(company);
+        return CompanyServices.getInstance().create(company);
     }
     public Company findCompanyById(long id){return CompanyServices.getInstance().find(id);}
     public Company findCompanyByName(String name){return CompanyServices.getInstance().findOrganizationByName(name);}

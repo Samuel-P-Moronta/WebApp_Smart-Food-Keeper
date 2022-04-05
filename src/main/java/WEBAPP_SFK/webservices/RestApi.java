@@ -120,6 +120,16 @@ public class RestApi extends BaseController {
                         ctx.json(foundOk);
                     }
                 });
+                get("/express-sales/", ctx -> {
+                    User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
+                    if(user.hasRole(RoleApp.ROLE_EMPLOYEE)){
+                        String email = user.getEmail();
+                        BranchOffice branchOffice = BranchOfficeServices.getInstance().findBranchOfficeByUserEmployee(email);
+                        if(branchOffice!=null){
+
+                        }
+                    }
+                });
             });
         });
     }

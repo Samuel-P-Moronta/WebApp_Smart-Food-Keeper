@@ -105,6 +105,9 @@
                     <div id="branchOfficeMgmt" class="tab-pane fade show active pt-3">
                       <h4 class="card-title text-uppercase">NUEVA SUCURSAL</h4>
                       <form method="post" action="/projectAdmin">
+                        <div class="form-group">
+                          <p  th:text="${branchOfficeExist}" style="color:#ff0000"></p>
+                        </div>
                         <div class="form-group col-md-12">
                           <label for="idCompany">Seleccionar empresa donde pertenece la sucursal: </label>
                           <select class="form-control" id="idCompany" style="line-height: 2.0;" name="idCompany" onchange="enableBranchOfficeSelect()">

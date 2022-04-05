@@ -40,11 +40,8 @@ public class SfkProjectAdmin extends BaseController{
                         Address address = new Address(city,direction);
                         Company company = ControllerCore.getInstance().findCompanyById(Long.parseLong(idCompany));
                         if(company !=null){
-                            BranchOffice branchOffice = new BranchOffice(address,company);
-                            if(BranchOfficeServices.getInstance().findBranchOfficeByAddress(city,direction) == null){
-                                ControllerCore.getInstance().createBranchOffice(branchOffice);
-                            }else{
-                                System.out.println("Existe una misma sucursal con esta direccion");
+                            if(BranchOfficeServices.getInstance().createBranchOffice(address,company)==null){
+                                model.put("branchOfficeExist","Existe una misma sucursal con con la misma empresa y direccion");
                             }
                         }
                     }

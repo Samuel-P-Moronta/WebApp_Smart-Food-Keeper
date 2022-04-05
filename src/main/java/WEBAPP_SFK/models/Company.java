@@ -1,5 +1,6 @@
 package WEBAPP_SFK.models;
 
+import WEBAPP_SFK.models.enums.RoleApp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -80,5 +81,14 @@ public class Company implements Serializable {
 
     public void setNotificationList(Set<Notification> notificationList) {
         this.notificationList = notificationList;
+    }
+
+    public boolean hasThisBranchOffice(BranchOffice branchOffice){
+        for(BranchOffice aux: branchOfficeList){
+            if(aux.equals(branchOffice)){
+                return true;
+            }
+        }
+        return false;
     }
 }

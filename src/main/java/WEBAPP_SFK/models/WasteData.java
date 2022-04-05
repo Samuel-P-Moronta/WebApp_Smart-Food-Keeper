@@ -14,7 +14,7 @@ public class WasteData implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private float wasteData;
-    @CreationTimestamp
+    //@CreationTimestamp
     private Date sendDate;
     @ManyToOne
     @JsonBackReference
@@ -27,6 +27,12 @@ public class WasteData implements Serializable {
     public WasteData(float wasteData, Date sendDate) {
         this.wasteData = wasteData;
         this.sendDate = sendDate;
+    }
+
+    public WasteData(float wasteData, Date sendDate, Container container) {
+        this.wasteData = wasteData;
+        this.sendDate = sendDate;
+        this.container = container;
     }
 
     public Long getId() {

@@ -19,7 +19,6 @@ public class Shelf implements Serializable {
     private String deviceId;
     private String registerDate;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    //@JoinColumn(name="id")
     @JsonBackReference
     private BranchOffice branchOffice;
 

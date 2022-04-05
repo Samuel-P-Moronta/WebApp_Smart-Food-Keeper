@@ -5,6 +5,7 @@ import WEBAPP_SFK.services.connect.DataBaseRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.Date;
 import java.util.List;
 
 public class BranchOfficeServices extends DataBaseRepository<BranchOffice> {
@@ -60,5 +61,18 @@ public class BranchOfficeServices extends DataBaseRepository<BranchOffice> {
         }
         return null;
     }
-    //SELECT * FROM BRANCHOFFICE INNER JOIN USER ON USER.BRANCHOFFICE_ID = BRANCHOFFICE.ID WHERE USER.EMAIL = 'employee@gmail.com'
+    public BranchOffice createBranchOffice(Address address, Company company){
+        BranchOffice branchOffice1 = findBranchOfficeByAddress(address.getCity(), address.getDirection());
+        Company company1 = CompanyServices.getInstance().find(company.getId());
+        if(company1 !=null && !(company1.hasThisBranchOffice(branchOffice1))){
+            if(branchOffice1 == null){
+                branchOffice1 = new BranchOffice(address,company1);
+                System.out.println("Branch office was created successfully");
+                create(branchOffice1);
+            }else{
+                System.out.println("This branch office wasn't created successfully");
+            }
+        }
+        return branchOffice1;
+    }
 }

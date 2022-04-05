@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="public/FrontEnd_SFK/views/template.html :: head"></head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row"
+         th:replace="public/FrontEnd_SFK/views/template.html :: header">
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar"
+             th:replace="public/FrontEnd_SFK/views/template.html::sidebar">
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="d-sm-flex justify-content-between align-items-center transaparent-tab-border {">
+                    <ul class="nav nav-tabs tab-transparent" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="pill" href="#employeeRegister"
+                               role="tab" aria-selected="true">Venta express (Clasificacion)</a>
+                        </li>
+                    </ul>
+                    <div class="d-md-block d-none">
+                        <a href="#" class="text-light p-1"><i class="mdi mdi-view-dashboard"></i></a>
+                        <a href="#" class="text-light p-1"><i class="mdi mdi-dots-vertical"></i></a>
+                    </div>
+                </div>
+                <div class="tab-content tab-transparent-content">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="tab-content tab-transparent-content">
+                                        <div class="tab-pane fade show active pt-3">
+                                            <form method="post" action="/employeePortal/sales-express">
+                                                <div class="col-md-4">
+                                                    <h4 class="card-title">Fecha</h4>
+                                                    <h3 id="elaborationDate"></h3>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="idCompany">Sucursal: </label>
+                                                        <select class="form-control" id="idCompany"
+                                                                style="line-height: 2.0;" name="idCompany">
+                                                            <option th:text="${branchOfficeEmployee}">Sucursal</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="idShelf">Estante: </label>
+
+                                                        <select class="form-control" id="idShelf" name="idShelf" style="line-height: 2.0">
+                                                            <option value="-1" disabled selected>Seleccionar estante</option>
+                                                            <option selected th:each="shelf,stauts: ${shelfSelect}" th:text="${shelf.deviceId}" th:selected="${stauts.index==0}" ></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary" disabled id="startProcess">INICIAR PROCESO</button>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="fruitType">Tipo de fruta: </label>
+                                                        <select class="form-control" id="fruitType"
+                                                                style="line-height: 2.0;" name="fruitType"
+                                                                onchange="enableBranchOfficeSelect()">
+                                                            <option value="-1" selected></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="fruitQuantity">Cantidad de frutas: </label>
+                                                        <select class="form-control" id="fruitQuantity"
+                                                                name="fruitQuantity" style="line-height: 2.0;">
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-check form-check-flat form-check-primary">
+                                                        <label class="form-check-label">
+                                                            <input type="checkbox" class="form-check-input" id="express" name="express">Express<i class="input-helper"></i>
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-check-flat form-check-primary">
+                                                        <label class="form-check-label">
+                                                            <input type="checkbox" class="form-check-input" id="container" name="container">Contenedor<i class="input-helper"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary" disabled id="addPost">AGREGAR</button>
+                                            </form>
+                                            <hr>
+                                            <h4 class="card-title">PUBLICACION FRUTAS EXPRESS</h4>
+                                            <div class="table-responsive">
+                                                <table id="tableShelfList" name="tableShelfList"
+                                                       class="table table-hover table-bordered" style="width:100%">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Sucursal</th>
+                                                        <th>Estante</th>
+                                                        <th>Cantidad</th>
+                                                        <th>Fecha de publicacion</th>
+                                                        <th>Tipo de proceso</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr th:each="container: ${containerList}">
+                                                        <td class="text-left" th:text="${container.id}">Id</td>
+                                                        <td class="text-left"
+                                                            th:text="${container.branchOffice.company.name}">Empresa
+                                                        </td>
+                                                        <td class="text-left"
+                                                            th:text="${container.branchOffice.address.city}">Sucursal
+                                                        </td>
+                                                        <td class="text-left" th:text="${container.registerDate}">Fecha
+                                                            de registro
+                                                        </td>
+                                                    </tr>
+
+                                                    </tbody>
+                                                    <tfoot>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Sucursal</th>
+                                                        <th>Estante</th>
+                                                        <th>Cantidad</th>
+                                                        <th>Fecha de publicacion</th>
+                                                        <th>Tipo de proceso</th>
+                                                    </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary" disabled id="publishPost">PUBLICAR</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="public/FrontEnd_SFK/views/template.html::javascript"></div>
+</body>
+</html>
