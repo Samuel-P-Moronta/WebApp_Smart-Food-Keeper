@@ -1,7 +1,11 @@
 package WEBAPP_SFK.models;
 
+import WEBAPP_SFK.models.enums.RoleApp;
+import io.javalin.core.security.Role;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 public class FruitProduct implements Serializable {
@@ -12,14 +16,20 @@ public class FruitProduct implements Serializable {
     private String fruitType;
     private float price;
     private float discountPercentage;
+    private Date registerDate;
+    @ManyToOne
+    private Company company;
+
 
     public FruitProduct() {
     }
 
-    public FruitProduct(String fruitType, float price, float discountPercentage) {
+    public FruitProduct(String fruitType, float discountPercentage, Date registerDate, Company company) {
         this.fruitType = fruitType;
         this.price = price;
         this.discountPercentage = discountPercentage;
+        this.registerDate = registerDate;
+        this.company = company;
     }
 
     public Long getId() {
@@ -52,5 +62,21 @@ public class FruitProduct implements Serializable {
 
     public void setDiscountPercentage(float discountPercentage) {
         this.discountPercentage = discountPercentage;
+    }
+
+    public Date getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

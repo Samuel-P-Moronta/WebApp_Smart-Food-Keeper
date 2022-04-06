@@ -16,32 +16,32 @@ public class DefaultDataLoader {
     private static DefaultDataLoader instance;
 
 
-
     public DefaultDataLoader() {
 
     }
 
-    public boolean addUserCredential(User user){
+    public boolean addUserCredential(User user) {
         return UserServices.getInstance().create(user);
     }
 
     public static DefaultDataLoader getInstance() {
-        if(instance==null){
+        if (instance == null) {
             instance = new DefaultDataLoader();
         }
         return instance;
     }
+
     public void createDefaultData() throws ParseException {
         //Company
         createDefaultCompany();
-        try{
+        try {
             createDefaultBranchOffice();
-        }catch (PersistenceException e){
+        } catch (PersistenceException e) {
             e.printStackTrace();
         }
-        try{
+        try {
             createDefaultUsers();
-        }catch (PersistenceException e){
+        } catch (PersistenceException e) {
             e.printStackTrace();
         }
         addCompanyAndBranchOfficeToUsers();
@@ -52,79 +52,82 @@ public class DefaultDataLoader {
         createClient();
     }
 
-    public void createDefaultCompany(){
+    public void createDefaultCompany() {
         String companyName = "El Nacional";
         Company company = ControllerCore.getInstance().findCompanyByName(companyName);
-        if(company == null){
+        if (company == null) {
             company = new Company(companyName);
             ControllerCore.getInstance().createCompany(company);
-        }else{
+        } else {
             System.out.println("Company wasn't created");
         }
     }
-    public void createDefaultBranchOffice(){
+
+    public void createDefaultBranchOffice() {
         ControllerCore controllerCore1 = new ControllerCore();
-        BranchOfficeServices.getInstance().createBranchOffice(new Address("Navarrete","Calle Barrio Duarte" ),controllerCore1.findCompanyByName("El Nacional"));
-        BranchOfficeServices.getInstance().createBranchOffice(new Address("Santo Domingo Oeste","Timotes" ),controllerCore1.findCompanyByName("El Nacional"));
-        BranchOfficeServices.getInstance().createBranchOffice(new Address("Boca Chica","Calle 24" ),controllerCore1.findCompanyByName("El Nacional"));
+        BranchOfficeServices.getInstance().createBranchOffice(new Address("Navarrete", "Calle Barrio Duarte"), controllerCore1.findCompanyByName("El Nacional"));
+        BranchOfficeServices.getInstance().createBranchOffice(new Address("Santo Domingo Oeste", "Timotes"), controllerCore1.findCompanyByName("El Nacional"));
+        BranchOfficeServices.getInstance().createBranchOffice(new Address("Boca Chica", "Calle 24"), controllerCore1.findCompanyByName("El Nacional"));
     }
-    public void createDefaultUsers(){
+
+    public void createDefaultUsers() {
         User userRoot = ControllerCore.getInstance().findUserByEmail("root@gmail.com");
-        if(userRoot == null){
-            userRoot = new User("root@gmail.com","123",Set.of(RoleApp.ROLE_ROOT));
+        if (userRoot == null) {
+            userRoot = new User("root@gmail.com", "123", Set.of(RoleApp.ROLE_ROOT));
             ControllerCore.getInstance().createUser(userRoot);
-        }else{
+        } else {
             ControllerCore.getInstance().updateUser(userRoot);
         }
         User userEmployee1 = ControllerCore.getInstance().findUserByEmail("employee1@gmail.com");
-        if(userEmployee1 == null){
+        if (userEmployee1 == null) {
             userEmployee1 = new User();
             userEmployee1.setEmail("employee1@gmail.com");
             userEmployee1.setPassword("123");
             userEmployee1.setRolesList(Set.of(RoleApp.ROLE_EMPLOYEE));
             ControllerCore.getInstance().createUser(userEmployee1);
-        }else{
+        } else {
             ControllerCore.getInstance().updateUser(userEmployee1);
         }
         User userEmployee2 = ControllerCore.getInstance().findUserByEmail("employee2@gmail.com");
-        if(userEmployee2 == null){
+        if (userEmployee2 == null) {
             userEmployee2 = new User();
             userEmployee2.setEmail("employee2@gmail.com");
             userEmployee2.setPassword("123");
             userEmployee2.setRolesList(Set.of(RoleApp.ROLE_EMPLOYEE));
             ControllerCore.getInstance().createUser(userEmployee2);
-        }else{
+        } else {
             ControllerCore.getInstance().updateUser(userEmployee2);
         }
         User userAdmin = ControllerCore.getInstance().findUserByEmail("admin@gmail.com");
-        if(userAdmin == null){
+        if (userAdmin == null) {
             userAdmin = new User();
             userAdmin.setEmail("admin@gmail.com");
             userAdmin.setPassword("123");
             userAdmin.setRolesList(Set.of(RoleApp.ROLE_ADMIN));
             ControllerCore.getInstance().createUser(userAdmin);
-        }else{
+        } else {
             ControllerCore.getInstance().updateUser(userAdmin);
         }
         Person personEmployee1 = ControllerCore.getInstance().findPersonByIdentificationCard("222-2222222-2");
-        if(personEmployee1 == null){
-            personEmployee1 = new Person("222-2222222-2","Pablo","Perez",new Date(),new Address("Santiago", "Calle 30 de Marzo #10"),userEmployee1);
+        if (personEmployee1 == null) {
+            personEmployee1 = new Person("222-2222222-2", "Pablo", "Perez", new Date(), new Address("Santiago", "Calle 30 de Marzo #10"), userEmployee1);
             ControllerCore.getInstance().createPerson(personEmployee1);
-        }else{
+        } else {
             ControllerCore.getInstance().updatePerson(personEmployee1);
         }
         Person personEmployee2 = ControllerCore.getInstance().findPersonByIdentificationCard("333-3333333-3");
-        if(personEmployee2 == null){
-            personEmployee2 = new Person("333-3333333-3","Armando","Rodriguez",new Date(),new Address("Santiago", "Calle 27 de Febrero #45"),userEmployee2);
+        if (personEmployee2 == null) {
+            personEmployee2 = new Person("333-3333333-3", "Armando", "Rodriguez", new Date(), new Address("Santiago", "Calle 27 de Febrero #45"), userEmployee2);
             ControllerCore.getInstance().createPerson(personEmployee2);
         }
         Person personAdmin = ControllerCore.getInstance().findPersonByIdentificationCard("111-1111111-1");
-        if(personAdmin == null){
-            personAdmin = new Person("111-1111111-1","Juan","Arnaldo",new Date(),new Address("Santiago", "Calle Juan Francisco #16"),userAdmin);
+        if (personAdmin == null) {
+            personAdmin = new Person("111-1111111-1", "Juan", "Arnaldo", new Date(), new Address("Santiago", "Calle Juan Francisco #16"), userAdmin);
             ControllerCore.getInstance().createPerson(personAdmin);
         }
     }
-    public void addCompanyAndBranchOfficeToUsers(){
+
+    public void addCompanyAndBranchOfficeToUsers() {
         Company company = ControllerCore.getInstance().findCompanyByName("El Nacional");
         BranchOffice branchOffice1 = ControllerCore.getInstance().findBranchOfficeById(1);
         BranchOffice branchOffice2 = ControllerCore.getInstance().findBranchOfficeById(2);
@@ -133,20 +136,20 @@ public class DefaultDataLoader {
         User userEmployee1 = ControllerCore.getInstance().findUserByEmail("employee1@gmail.com");
         User userEmployee2 = ControllerCore.getInstance().findUserByEmail("employee2@gmail.com");
 
-        if(company!=null){
-            if(userAdmin!=null){
+        if (company != null) {
+            if (userAdmin != null) {
                 userAdmin.setCompany(company);
                 ControllerCore.getInstance().updateUser(userAdmin);
             }
-            if(branchOffice1 !=null){
-                if(userEmployee1!=null){
+            if (branchOffice1 != null) {
+                if (userEmployee1 != null) {
                     userEmployee1.setCompany(company);
                     userEmployee1.setBranchOffice(branchOffice1);
                     ControllerCore.getInstance().updateUser(userEmployee1);
                 }
             }
-            if(branchOffice2 !=null){
-                if(userEmployee2!=null){
+            if (branchOffice2 != null) {
+                if (userEmployee2 != null) {
                     userEmployee2.setCompany(company);
                     userEmployee2.setBranchOffice(branchOffice2);
                     ControllerCore.getInstance().updateUser(userEmployee2);
@@ -154,6 +157,7 @@ public class DefaultDataLoader {
             }
         }
     }
+
     private void createDefaultWasteData() throws ParseException {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh");
         String dateString1 = "30/03/2022 8";
@@ -167,10 +171,10 @@ public class DefaultDataLoader {
         Date date4 = dateFormat.parse(dateString4);
 
 
-        WasteData wasteData1 = new WasteData(8.3F,date1,ControllerCore.getInstance().findContainerById("1"));
-        WasteData wasteData2 = new WasteData(12.2F,date2,ControllerCore.getInstance().findContainerById("1"));
-        WasteData wasteData3 = new WasteData(5.1F,date3,ControllerCore.getInstance().findContainerById("1"));
-        WasteData wasteData4 = new WasteData(17.9F,date4,ControllerCore.getInstance().findContainerById("1"));
+        WasteData wasteData1 = new WasteData(8.3F, date1, ControllerCore.getInstance().findContainerById("1"));
+        WasteData wasteData2 = new WasteData(12.2F, date2, ControllerCore.getInstance().findContainerById("1"));
+        WasteData wasteData3 = new WasteData(5.1F, date3, ControllerCore.getInstance().findContainerById("1"));
+        WasteData wasteData4 = new WasteData(17.9F, date4, ControllerCore.getInstance().findContainerById("1"));
 
         WasteDataServices.getInstance().create(wasteData1);
         WasteDataServices.getInstance().create(wasteData2);
@@ -178,82 +182,85 @@ public class DefaultDataLoader {
         WasteDataServices.getInstance().create(wasteData4);
 
     }
+
     private void createDefaultAdmin() {
         ControllerCore controllerCore1 = new ControllerCore();
-        User userAux = new User("admin@gmail.com","123", Set.of(RoleApp.ROLE_ADMIN),controllerCore1.findCompanyByName("El nacional"));
-        if(controllerCore1.findUserByEmail("admin@gmail.com") == null){
+        User userAux = new User("admin@gmail.com", "123", Set.of(RoleApp.ROLE_ADMIN), controllerCore1.findCompanyByName("El nacional"));
+        if (controllerCore1.findUserByEmail("admin@gmail.com") == null) {
             ControllerCore.getInstance().createUser(userAux);
-        }else{
+        } else {
             System.out.println("This user already exist");
         }
         String identificationCard = "000-0000000-0";
-        Person personAdmin = new Person(identificationCard,"Samuel","Moronta",new Date(),new Address("Santiago","Calle 16 de Agosto #10"),userAux);
-        if(controllerCore1.findPersonByIdentificationCard(identificationCard) == null){
+        Person personAdmin = new Person(identificationCard, "Samuel", "Moronta", new Date(), new Address("Santiago", "Calle 16 de Agosto #10"), userAux);
+        if (controllerCore1.findPersonByIdentificationCard(identificationCard) == null) {
             controllerCore1.createPerson(personAdmin);
-        }else{
+        } else {
             System.out.println("This person already exist");
         }
     }
-    public void createDefaultShelf(){
+
+    public void createDefaultShelf() {
         BranchOffice branchOffice1 = ControllerCore.getInstance().findBranchOfficeById(1);
         BranchOffice branchOffice2 = ControllerCore.getInstance().findBranchOfficeById(2);
         BranchOffice branchOffice3 = ControllerCore.getInstance().findBranchOfficeById(3);
 
-        if(ControllerCore.getInstance().findShelfByDeviceId("1") == null){
+        if (ControllerCore.getInstance().findShelfByDeviceId("1") == null) {
             Shelf shelfAux1 = new Shelf(branchOffice1);
             ControllerCore.getInstance().addShelf(shelfAux1);
         }
-        if(ControllerCore.getInstance().findShelfByDeviceId("2") == null){
+        if (ControllerCore.getInstance().findShelfByDeviceId("2") == null) {
             Shelf shelfAux2 = new Shelf(branchOffice2);
             ControllerCore.getInstance().addShelf(shelfAux2);
         }
-        if(ControllerCore.getInstance().findShelfByDeviceId("3") == null){
+        if (ControllerCore.getInstance().findShelfByDeviceId("3") == null) {
             Shelf shelfAux3 = new Shelf(branchOffice3);
             ControllerCore.getInstance().addShelf(shelfAux3);
         }
-        if(ControllerCore.getInstance().findShelfByDeviceId("4") == null){
+        if (ControllerCore.getInstance().findShelfByDeviceId("4") == null) {
             Shelf shelfAux4 = new Shelf(branchOffice1);
             ControllerCore.getInstance().addShelf(shelfAux4);
         }
     }
-    public void createDefaultContainer(){
+
+    public void createDefaultContainer() {
         BranchOffice branchOffice = ControllerCore.getInstance().findBranchOfficeById(2);
-        if(ControllerCore.getInstance().findContainerById("") == null){
+        if (ControllerCore.getInstance().findContainerById("") == null) {
             Container container = new Container(branchOffice);
             ControllerCore.getInstance().addContainer(container);
         }
     }
-    public void createDefaultFruitProducts(){
-        FruitProduct fp1 = FruitProductServices.getInstance().findProductByName("Piña");
+
+    public void createDefaultFruitProducts() {
+        List<Company> companyList = CompanyServices.getInstance().findAll();
+
+
+        FruitProduct fp1 = FruitProductServices.getInstance().findProductByName("Pina");
         FruitProduct fp2 = FruitProductServices.getInstance().findProductByName("Lechosa");
-        FruitProduct fp3 = FruitProductServices.getInstance().findProductByName("Mangos");
-        FruitProduct fp4 = FruitProductServices.getInstance().findProductByName("Aguacates");
 
-
-
-        if(fp1 == null && fp2 == null && fp3 == null && fp4 == null){
-            fp1 = new FruitProduct("Piña",70,10);
-            fp2 = new FruitProduct("Lechosa",50,5);
-            fp3 = new FruitProduct("Mangos",20,3);
-            fp4 = new FruitProduct("Aguacates",40,10);
-            FruitProductServices.getInstance().create(fp1);
-            FruitProductServices.getInstance().create(fp2);
-            FruitProductServices.getInstance().create(fp3);
-            FruitProductServices.getInstance().create(fp4);
+        for (Company c : companyList) {
+            if (fp1 == null && fp2 == null) {
+                fp1 = new FruitProduct("Pina",10, new Date(), c);
+                fp2 = new FruitProduct("Lechosa", 5,new Date(), c);
+                FruitProductServices.getInstance().create(fp1);
+                FruitProductServices.getInstance().create(fp2);
+            }
         }
     }
-    public void createClient(){
+
+    public void createClient() {
         Client client = new Client();
         client.setEmail("samuelmoronta2@gmail.com");
         client.setFirstName("Samuel");
         client.setLastName("Moronta");
         ClientServices.getInstance().create(client);
     }
-    public void createDefaultContainerData(){
-       // Container containerAux = ControllerCore.getInstance().findContainerById(1);
-      //  if(containerAux!=null){
-          //  Container container = new Container(new Date());
-           // ControllerCore.getInstance().createContainer(container);
+
+    public void createDefaultContainerData() {
+        // Container containerAux = ControllerCore.getInstance().findContainerById(1);
+        //  if(containerAux!=null){
+        //  Container container = new Container(new Date());
+        // ControllerCore.getInstance().createContainer(container);
             /*
             int index = 0;
             while(index < 2){
@@ -295,7 +302,7 @@ public class DefaultDataLoader {
 
              */
 
-       // }
+        // }
     }
 
 }

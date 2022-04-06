@@ -25,6 +25,9 @@ public class Company implements Serializable {
     @OneToMany(mappedBy = "company",fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Notification> notificationList = new HashSet<>();
+    @OneToMany(mappedBy = "company",fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<FruitProduct> fruitProductList = new HashSet<>();
 
     public Company(){
 
@@ -90,5 +93,13 @@ public class Company implements Serializable {
             }
         }
         return false;
+    }
+
+    public Set<FruitProduct> getFruitProductList() {
+        return fruitProductList;
+    }
+
+    public void setFruitProductList(Set<FruitProduct> fruitProductList) {
+        this.fruitProductList = fruitProductList;
     }
 }

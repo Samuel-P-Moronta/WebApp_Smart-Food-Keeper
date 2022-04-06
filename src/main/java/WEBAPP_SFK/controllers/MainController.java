@@ -239,6 +239,7 @@ public class MainController extends BaseController {
                     model.put("employeeList", personList);
                     ctx.render("/public/FrontEnd_SFK/views/adminPortal/employeeList.html", model);
                 });
+
                 post("/employee-create", ctx -> {
 
                     String identificationCard = ctx.formParam("identificationCard");
@@ -379,10 +380,78 @@ public class MainController extends BaseController {
                 });
                 /*---------------------------------------------------------------------------*/
                 /*--------------------------Trueque management------------------------------*/
-                post("/trueque", ctx -> {
-                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/express.html");
+                post("/discount-create", ctx -> {
+                    //Definir porcentaje de descuento
+                    User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
+                    float discountPercentage = Float.parseFloat(ctx.formParam("discountPercentage"));
+
+                    String tFruit = ctx.formParam("fruitType");
+                    Company company = user.getCompany();
+                    if(user!=null){
+                        FruitProduct fp = new FruitProduct();
+                        fp.setCompany(company);
+                        fp.setFruitType(tFruit);
+                        fp.setDiscountPercentage(discountPercentage);
+                        fp.setRegisterDate(new Date());
+                        FruitProductServices.getInstance().create(fp);
+                    }
+                    ctx.redirect("/management/discount");
                 });
-                get("/trueque", ctx -> {
+                post("/discount-edit/:id", ctx -> {
+                    FruitProduct fruitProduct = FruitProductServices.getInstance().find(ctx.pathParam("id",Long.class).get());
+                    float discountPercentage = Float.parseFloat(ctx.formParam("discountPercentage"));
+                    if(fruitProduct!=null){
+                        fruitProduct.setDiscountPercentage(discountPercentage);
+                        FruitProductServices.getInstance().update(fruitProduct);
+                    }
+                    else{
+                        System.out.println("not found");
+                    }
+                    ctx.redirect("/management/express");
+                });
+                get("/discount-edit/:id", ctx -> {
+                    FruitProduct fruitProduct = FruitProductServices.getInstance().find(ctx.pathParam("id",Long.class).get());
+
+                    model.put("action", "Editar porcentaje de descuento");
+                    if (fruitProduct.getId() == null) {
+                        ctx.redirect("/management/discount");
+                    }
+                    model.put("action_form_discount", "/management/discount-edit/" + fruitProduct.getId());
+                    model.put("fruitProduct", fruitProduct);
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/discountPercentageCreate.html", model);
+                });
+                get("/discount", ctx -> {
+                    User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
+                    List<FruitProduct> fpList = new FruitProductServices().findAll();
+                    Company company = user.getCompany();
+                    if(user !=null){
+                        if(company!=null){
+                            model.put("productListResult",company.getFruitProductList());
+                        }
+                    }
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/express.html", model);
+                });
+                get("/discount-createP", ctx -> {
+                    User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
+                    List<FruitProduct> fpList = new FruitProductServices().findAll();
+                    Company company = user.getCompany();
+                    if(user !=null){
+                        if(company!=null){
+                            model.put("productListResult",company.getFruitProductList());
+                        }
+                    }
+                    model.put("action", "Registrar porciento de descuento");
+                    model.put("action_form_discount", "/management/discount-create");
+                    ctx.render("/public/FrontEnd_SFK/views/adminPortal/discountPercentageCreate.html", model);
+                });
+                get("/express", ctx -> {
+                    User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
+                    Company company = user.getCompany();
+                    if(user !=null){
+                        if(company !=null){
+                            model.put("fruitList",company.getFruitProductList());
+                        }
+                    }
                     ctx.render("/public/FrontEnd_SFK/views/adminPortal/express.html", model);
                 });
                 /*---------------------------------------------------------------------------*/

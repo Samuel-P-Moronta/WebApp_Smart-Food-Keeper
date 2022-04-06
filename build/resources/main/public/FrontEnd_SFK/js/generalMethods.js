@@ -1,7 +1,7 @@
 function loadStats(idBranchOffice){
     let date = document.getElementById("date-input").value;
     let currentStats = "";
-    let statsByHour = "";
+    var statsByHour = "";
     const Http = new XMLHttpRequest();
     let endpoint = "getStatsByBranchOffice"
     const url = location.protocol + "//" + location.hostname + ':' + location.port + '/api/' + endpoint + "/" + idBranchOffice + "/" + date;
