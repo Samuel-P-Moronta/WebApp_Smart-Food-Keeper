@@ -20,7 +20,6 @@
         <class>WEBAPP_SFK.models.FruitProduct</class>
         <class>WEBAPP_SFK.models.Client</class>
 
-
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/webapp_sfk" />
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />

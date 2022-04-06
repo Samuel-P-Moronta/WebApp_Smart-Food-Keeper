@@ -17,7 +17,7 @@
             <div class="d-sm-flex justify-content-between align-items-center transaparent-tab-border {">
               <ul class="nav nav-tabs tab-transparent" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active" id="home-tab" data-toggle="pill"  href="#employeeRegister" role="tab" aria-selected="true">Registro de productos</a>
+                  <a th:text="${action}" class="nav-link active" id="home-tab" data-toggle="pill"  href="#employeeRegister" role="tab" aria-selected="true">Descuento</a>
                 </li>
               </ul>
               <div class="d-md-block d-none">
@@ -29,7 +29,45 @@
               <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <!---- CODE HERE CUSTOM TEMPLATE ---->
+                    <h4 class="card-title">LISTADO DE FRUTAS EN DESCUENTO</h4>
+                    <!--
+                    <div class="row justify-content-md-center align-items-center" style="margin-top: -12; margin-top: 20px; align-content: flex-end margin-bottom: 20px;">
+                      <div class="col-6 col-md-4"></div>
+                      <a href="/management/discount-createP/"><button type="button" class="btn btn-success">NUEVO DESCUENTO</button></a>
+                    </div>
+                    --->
+                    <hr>
+                    <div class="table-responsive">
+                      <table id="tableShelfList" name="tableShelfList" class="table table-hover table-bordered" style="width:100%">
+                        <thead>
+                        <tr>
+                          <th>Tipo de fruta</th>
+                          <th>% De descuento por overripe (unitario)</th>
+                          <th>Fecha de Registro</th>
+                          <th>Accion</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="pL: ${fruitList}">
+                          <td class="text-left" th:text="${pL.fruitType}">Tipo de fruta</td>
+                          <td class="text-left" th:text="${pL.discountPercentage}">% De descuento por overripe (unitario)</td>
+                          <td class="text-left" th:text="${pL.registerDate}">Fecha de registro</td>
+
+                          <td class="text-center">
+                            <a th:href="'/management/discount-edit/'+${pL.id}" name="id"><button type="button" class="btn btn-warning">Editar</button></a>
+                          </td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                          <th>Tipo de fruta</th>
+                          <th>% De descuento por overripe (unitario)</th>
+                          <th>Fecha de Registro</th>
+                          <th>Accion</th>
+                        </tr>
+                        </tfoot>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
