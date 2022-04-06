@@ -48,6 +48,8 @@ public class DefaultDataLoader {
         createDefaultShelf();
         createDefaultContainer();
         createDefaultWasteData();
+        createDefaultFruitProducts();
+        createClient();
     }
 
     public void createDefaultCompany(){
@@ -220,6 +222,32 @@ public class DefaultDataLoader {
             Container container = new Container(branchOffice);
             ControllerCore.getInstance().addContainer(container);
         }
+    }
+    public void createDefaultFruitProducts(){
+        FruitProduct fp1 = FruitProductServices.getInstance().findProductByName("Piña");
+        FruitProduct fp2 = FruitProductServices.getInstance().findProductByName("Lechosa");
+        FruitProduct fp3 = FruitProductServices.getInstance().findProductByName("Mangos");
+        FruitProduct fp4 = FruitProductServices.getInstance().findProductByName("Aguacates");
+
+
+
+        if(fp1 == null && fp2 == null && fp3 == null && fp4 == null){
+            fp1 = new FruitProduct("Piña",70,10);
+            fp2 = new FruitProduct("Lechosa",50,5);
+            fp3 = new FruitProduct("Mangos",20,3);
+            fp4 = new FruitProduct("Aguacates",40,10);
+            FruitProductServices.getInstance().create(fp1);
+            FruitProductServices.getInstance().create(fp2);
+            FruitProductServices.getInstance().create(fp3);
+            FruitProductServices.getInstance().create(fp4);
+        }
+    }
+    public void createClient(){
+        Client client = new Client();
+        client.setEmail("samuelmoronta2@gmail.com");
+        client.setFirstName("Samuel");
+        client.setLastName("Moronta");
+        ClientServices.getInstance().create(client);
     }
     public void createDefaultContainerData(){
        // Container containerAux = ControllerCore.getInstance().findContainerById(1);

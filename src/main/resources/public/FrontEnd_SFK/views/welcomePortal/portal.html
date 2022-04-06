@@ -43,9 +43,7 @@
             <a class="nav-link" href="/login">Supermercados</a>
           </li>
           <li class="nav-item">
-            <div class="pt-3">
-              <button class="btn btn-dark" href="#"data-toggle="modal" data-target="#express">VENTA EXPRESS</button>
-            </div>
+            <a class="nav-link" href="#client-subs">VENTA EXPRESS</a>
           </li>
         </ul>
       </div>
@@ -179,6 +177,35 @@
         </div>
       </div>
     </section>
+    <section class="contact-details" id="client-subs">
+      <div class="row text-center text-md-left">
+        <div class="col-12 col-md-6 col-lg-12 grid-margin">
+          <h5 class="pb-2">Suscripcion gratuita</h5>
+          <p class="text-muted">Suscribete para que te lleguen emails cuando nuestros supermercados dispongan de frutas express</p>
+          <form method="post" action="/portal">
+            <div class="form-group">
+              <label for="firstName">Nombre</label>
+              <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Nombre">
+            </div>
+            <div class="form-group">
+              <label for="lastName">Apellidos</label>
+              <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Apellidos">
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+            </div>
+            <div class="pt-3">
+              <button class="btn btn-dark">Subscribe</button>
+            </div>
+          </form>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3 grid-margin">
+          <h5 class="pb-2">Ubicanos</h5>
+          <p class="text-muted">518 Schmeler Neck<br>Bartlett. Illinois</p>
+        </div>
+      </div>
+    </section>
     <section class="case-studies" id="developer-section">
       <div class="row grid-margin">
         <div class="col-12 text-center pb-5">
@@ -226,44 +253,6 @@
         </div>
       </div>
     </section>
-    <!-- Modal for Contact - us Button -->
-    <div class="modal fade" id="express" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title" id="exampleModalLabel">Formulario de suscripcion</h4>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="firstName">Nombre</label>
-                <input type="text" class="form-control" id="firstName" placeholder="Nombre">
-              </div>
-              <div class="form-group">
-                <label for="lastName">Apellidos</label>
-                <input type="text" class="form-control" id="lastName" placeholder="Apellidos">
-              </div>
-              <div class="form-group">
-                <label for="identificationCard">Cedula</label>
-                <input type="text" class="form-control" id="identificationCard" placeholder="Cedula">
-              </div>
-              <div class="form-group">
-                <label for="phoneNumber">Numero de telefono</label>
-                <input type="number" class="form-control" id="phoneNumber" placeholder="Numero de telefono">
-              </div>
-              <div class="form-group">
-                <label for="Email-1">Email</label>
-                <input type="email" class="form-control" id="Email-1" placeholder="Email">
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success">SUSCRIBIRSE</button>
-            <button type="button" class="btn btn-light" data-dismiss="modal">CANCELAR</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 <script src="../../vendors/jquery/jquery.min.js"></script>

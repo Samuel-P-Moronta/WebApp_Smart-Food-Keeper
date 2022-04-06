@@ -9,22 +9,18 @@ public class Client implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "identificationCard", unique = true, nullable = false)
-    private String identificationCard;
     private String firstName;
     private String lastName;
-    private String phoneNumber;
+    @Column(unique = true)
     private String email;
     private Date subscriptionDate;
 
     public Client() {
 
     }
-    public Client(String identificationCard, String firstName, String lastName, String phoneNumber, String email, Date subscriptionDate) {
-        this.identificationCard = identificationCard;
+    public Client(String firstName, String lastName, String email, Date subscriptionDate) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
         this.email = email;
         this.subscriptionDate = subscriptionDate;
     }
@@ -35,14 +31,6 @@ public class Client implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getIdentificationCard() {
-        return identificationCard;
-    }
-
-    public void setIdentificationCard(String identificationCard) {
-        this.identificationCard = identificationCard;
     }
 
     public String getFirstName() {
@@ -59,14 +47,6 @@ public class Client implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {

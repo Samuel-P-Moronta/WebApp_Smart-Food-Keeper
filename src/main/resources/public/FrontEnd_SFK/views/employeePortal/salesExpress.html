@@ -10,8 +10,36 @@
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
-        <nav class="sidebar sidebar-offcanvas" id="sidebar"
-             th:replace="public/FrontEnd_SFK/views/template.html::sidebar">
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                <li class="nav-item nav-category">Monitoreo inteligente</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/employeePortal">
+                        <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
+                        <span class="menu-title">Notificaciones</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/employeePortal/sales-express">
+                        <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
+                        <span class="menu-title">Venta Express</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/employeePortal/shelfMonitoringEmployee">
+                        <span class="icon-bg"><i class="mdi mdi-chart-bar menu-icon"></i></span>
+                        <span class="menu-title">Estante</span>
+                    </a>
+                </li>
+                <!--
+                <li class="nav-item">
+                    <a class="nav-link" href="/employeePortal/containerMonitoringEmployee">
+                        <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
+                        <span class="menu-title">Contenedor</span>
+                    </a>
+                </li>
+                -->
+            </ul>
         </nav>
         <!-- partial -->
         <div class="main-panel">
@@ -42,50 +70,32 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="form-group col-md-6">
-                                                        <label for="idCompany">Sucursal: </label>
-                                                        <select class="form-control" id="idCompany"
-                                                                style="line-height: 2.0;" name="idCompany">
-                                                            <option th:text="${branchOfficeEmployee}">Sucursal</option>
-                                                        </select>
+                                                        <label for="brachOffice">Sucursal: </label>
+                                                        <input type="text" class="form-control" id="brachOffice" name="brachOffice" th:value="${branchOfficeEmployee}" disabled>
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <label for="idShelf">Estante: </label>
 
-                                                        <select class="form-control" id="idShelf" name="idShelf" style="line-height: 2.0">
+                                                        <select class="form-control" id="shelfSelect" name="shelfSelect" style="line-height: 2.0">
                                                             <option value="-1" disabled selected>Seleccionar estante</option>
                                                             <option selected th:each="shelf,stauts: ${shelfSelect}" th:text="${shelf.deviceId}" th:selected="${stauts.index==0}" ></option>
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <button type="submit" class="btn btn-primary" disabled id="startProcess">INICIAR PROCESO</button>
                                                 <hr>
                                                 <div class="row">
                                                     <div class="form-group col-md-6">
                                                         <label for="fruitType">Tipo de fruta: </label>
-                                                        <select class="form-control" id="fruitType"
-                                                                style="line-height: 2.0;" name="fruitType"
-                                                                onchange="enableBranchOfficeSelect()">
-                                                            <option value="-1" selected></option>
+                                                        <select class="form-control" id="fruitType" style="line-height: 2.0;" name="fruitType" onchange="enableBranchOfficeSelect()">
+                                                            <option selected th:each="product,stauts: ${productList}" th:text="${product.fruitType}" th:selected="${stauts.index==0}" ></option>
                                                         </select>
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <label for="fruitQuantity">Cantidad de frutas: </label>
-                                                        <select class="form-control" id="fruitQuantity"
-                                                                name="fruitQuantity" style="line-height: 2.0;">
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-check form-check-flat form-check-primary">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input" id="express" name="express">Express<i class="input-helper"></i>
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check form-check-flat form-check-primary">
-                                                        <label class="form-check-label">
-                                                            <input type="checkbox" class="form-check-input" id="container" name="container">Contenedor<i class="input-helper"></i>
-                                                        </label>
+                                                        <input type="number" class="form-control" name="fruitQuantity" id="fruitQuantity" placeholder="Seleccionar cantidad de frutas" required>
                                                     </div>
                                                 </div>
-                                                <button type="submit" class="btn btn-primary" disabled id="addPost">AGREGAR</button>
+                                                <button type="submit" class="btn btn-primary" id="addPost">AGREGAR</button>
                                             </form>
                                             <hr>
                                             <h4 class="card-title">PUBLICACION FRUTAS EXPRESS</h4>
@@ -95,43 +105,44 @@
                                                     <thead>
                                                     <tr>
                                                         <th>ID</th>
+                                                        <th>Empresa</th>
                                                         <th>Sucursal</th>
-                                                        <th>Estante</th>
+                                                        <th>Fruta</th>
                                                         <th>Cantidad</th>
-                                                        <th>Fecha de publicacion</th>
-                                                        <th>Tipo de proceso</th>
+                                                        <th>% Descuento (Unitario)</th>
+                                                        <th>Fecha de inspeccion</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr th:each="container: ${containerList}">
-                                                        <td class="text-left" th:text="${container.id}">Id</td>
-                                                        <td class="text-left"
-                                                            th:text="${container.branchOffice.company.name}">Empresa
-                                                        </td>
-                                                        <td class="text-left"
-                                                            th:text="${container.branchOffice.address.city}">Sucursal
-                                                        </td>
-                                                        <td class="text-left" th:text="${container.registerDate}">Fecha
-                                                            de registro
-                                                        </td>
+                                                    <tr th:each="express: ${makingPostList}">
+                                                        <td class="text-left" th:text="${express.id}">Id</td>
+                                                        <td class="text-left" th:text="${express.branchoffice.company.name}">Empresa</td>
+                                                        <td class="text-left" th:text="${express.branchOffice.address.city} +' '+'(' +${express.branchOffice.address.direction}+')' ">Sucursal</td>
+                                                        <td class="text-left" th:text="${express.fruitType}">Fruta</td>
+                                                        <td class="text-left" th:text="${express.quantity}">Cantidad</td>
+                                                        <td class="text-left" th:text="${express.discountPercentage}+'%'">% Descuento (Unitario)</td>
+                                                        <td class="text-left" th:text="${express.inspectionDate}">Fecha de inspeccion</td>
                                                     </tr>
-
                                                     </tbody>
                                                     <tfoot>
                                                     <tr>
                                                         <th>ID</th>
+                                                        <th>Empresa</th>
                                                         <th>Sucursal</th>
-                                                        <th>Estante</th>
+                                                        <th>Fruta</th>
                                                         <th>Cantidad</th>
-                                                        <th>Fecha de publicacion</th>
-                                                        <th>Tipo de proceso</th>
+                                                        <th>% Descuento (Unitario)</th>
+                                                        <th>Fecha de inspeccion</th>
                                                     </tr>
                                                     </tfoot>
                                                 </table>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary" disabled id="publishPost">PUBLICAR</button>
                                     </div>
+                                    <hr>
+                                    <form method="post" action="/employeePortal/publish-express">
+                                        <button type="submit" class="btn btn-primary" id="publishPost">PUBLICAR ALERTAS</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
