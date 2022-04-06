@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="public/FrontEnd_SFK/views/fragments/head.html::head"></head>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row" th:replace="public/FrontEnd_SFK/views/template.html :: header">
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar" th:replace="public/FrontEnd_SFK/views/template.html::sidebar">
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="d-sm-flex justify-content-between align-items-center transaparent-tab-border {">
+              <ul class="nav nav-tabs tab-transparent" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="home-tab" data-toggle="pill"  href="#employeeRegister" role="tab" aria-selected="true">Registro de descuentos</a>
+                </li>
+              </ul>
+              <div class="d-md-block d-none">
+                <a href="#" class="text-light p-1"><i class="mdi mdi-view-dashboard"></i></a>
+                <a href="#" class="text-light p-1"><i class="mdi mdi-dots-vertical"></i></a>
+              </div>
+            </div>
+            <div class="tab-content tab-transparent-content">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Nuevo empleado</h4>
+                    <div class="tab-content tab-transparent-content">
+                      <!-- credit card info-->
+                      <div id="employeeRegister" class="tab-pane fade show active pt-3">
+
+                        <form class="forms-sample needs-validation" method="post"  th:attr="action=${action_form_discount}" novalidate>
+                          <div class="row">
+                            <hr>
+                            <!--
+                            <div class="form-group col-md-6">
+                              <label for="fruitType">Tipo de fruta: </label>
+                              <select class="form-control" id="fruitType" style="line-height: 2.0;" name="fruitType">
+                                <option selected th:each="product,stauts: ${productListResult}" th:text="${product.fruitType}" th:selected="${stauts.index==0}" ></option>
+                              </select>
+                            </div>
+                            -->
+                            <div class="form-group col-md-6">
+                              <label for="discountPercentage">Porciento de descuento</label>
+                              <input min="0" th:value="${fruitProduct} ? ${fruitProduct.discountPercentage} : ''"  type="number" class="form-control" id="discountPercentage" name="discountPercentage" is-invalid required>
+                              <div class="invalid-feedback">
+                                Por favor, digite nombre!.
+                              </div>
+                            </div>
+                            <!--
+                            <div class="form-group">
+                              <label for="idBranchOffice">Seleccionar sucursal al que pertenece: </label>
+                              <select class="form-control" id="idBranchOffice" style="line-height: 2.0;" name="idBranchOffice" onchange="enableShelfSelect()" is-invalid required>
+                                <option th:text="${person} ? ${person.user.branchOffice.address.city} + ' '+'('+${person.user.branchOffice.address.direction}+')' : ''"  selected disabled value="">A que sucursal pertenece?</option>
+                              </select>
+                              <div class="invalid-feedback">
+                                Por favor, seleccione tipo de fruta!.
+                              </div>
+                            </div>
+                            -->
+                          </div>
+                          <div class="card-footer">
+                            <button type="submit" class="btn btn-primary" id="btnSumi" th:text="${person} ? 'Edit' : 'Create'" >Create</button>
+                            <a class="btn btn-danger" href="/management/express">Cancel</a>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div th:replace="public/FrontEnd_SFK/views/template.html::javascript"></div>
+  </body>
+</html>

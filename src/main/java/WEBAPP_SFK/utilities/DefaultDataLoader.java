@@ -78,7 +78,7 @@ public class DefaultDataLoader {
         } else {
             ControllerCore.getInstance().updateUser(userRoot);
         }
-        User userEmployee1 = ControllerCore.getInstance().findUserByEmail("employee1@gmail.com");
+        User userEmployee1 = ControllerCore.getInstance().findUserByEmail("yehudyyr09@gmail.com");
         if (userEmployee1 == null) {
             userEmployee1 = new User();
             userEmployee1.setEmail("employee1@gmail.com");
@@ -110,7 +110,7 @@ public class DefaultDataLoader {
         }
         Person personEmployee1 = ControllerCore.getInstance().findPersonByIdentificationCard("222-2222222-2");
         if (personEmployee1 == null) {
-            personEmployee1 = new Person("222-2222222-2", "Pablo", "Perez", new Date(), new Address("Santiago", "Calle 30 de Marzo #10"), userEmployee1);
+            personEmployee1 = new Person("222-2222222-2", "Yehudy", "De Pena Rodriguez", new Date(), new Address("San Francisco", "Calle 30 de Marzo #10"), userEmployee1);
             ControllerCore.getInstance().createPerson(personEmployee1);
         } else {
             ControllerCore.getInstance().updatePerson(personEmployee1);
