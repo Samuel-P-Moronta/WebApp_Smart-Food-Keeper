@@ -42,8 +42,8 @@ public class WasteDataServices extends DataBaseRepository<WasteData> {
         return query.getResultList();
     }
     public Stats wasteFruitsWeight(Date date, long idBranchOffice) throws ParseException {
-        int[] wasteWeight = new int[24];
-        int totalWasteWeight = 0;
+        float[] wasteWeight = new float[24];
+        float totalWasteWeight = 0.0F;
         String branchOfficeWasteGenerated = "";
         DateFormat hourFormat = new SimpleDateFormat("HH");
         List<WasteData> stats = findAllWasteDataByBranchOffice(date,idBranchOffice);

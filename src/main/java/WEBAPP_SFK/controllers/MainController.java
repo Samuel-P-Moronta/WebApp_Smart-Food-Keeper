@@ -48,7 +48,7 @@ public class MainController extends BaseController {
                     String lastName = ctx.formParam("lastName");
                     String email = ctx.formParam("email");
                     if(!(firstName.equals("") && lastName.equals("") && email.equals(""))){
-                        if(ClientServices.getInstance().findClientByEmail(email) ==null || PersonServices.getInstance().findPersonByEmail(email) ==null){
+                        if(ClientServices.getInstance().findClientByEmail(email) == null && PersonServices.getInstance().findPersonByEmail(email) == null){
                             Client client = new Client();
                             client.setFirstName(firstName);
                             client.setLastName(lastName);

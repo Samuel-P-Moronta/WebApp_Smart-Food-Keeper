@@ -167,10 +167,10 @@ public class DefaultDataLoader {
         Date date4 = dateFormat.parse(dateString4);
 
 
-        WasteData wasteData1 = new WasteData(8,date1,ControllerCore.getInstance().findContainerById("1"));
-        WasteData wasteData2 = new WasteData(12,date2,ControllerCore.getInstance().findContainerById("1"));
-        WasteData wasteData3 = new WasteData(5,date3,ControllerCore.getInstance().findContainerById("1"));
-        WasteData wasteData4 = new WasteData(17,date4,ControllerCore.getInstance().findContainerById("1"));
+        WasteData wasteData1 = new WasteData(8.3F,date1,ControllerCore.getInstance().findContainerById("1"));
+        WasteData wasteData2 = new WasteData(12.2F,date2,ControllerCore.getInstance().findContainerById("1"));
+        WasteData wasteData3 = new WasteData(5.1F,date3,ControllerCore.getInstance().findContainerById("1"));
+        WasteData wasteData4 = new WasteData(17.9F,date4,ControllerCore.getInstance().findContainerById("1"));
 
         WasteDataServices.getInstance().create(wasteData1);
         WasteDataServices.getInstance().create(wasteData2);
