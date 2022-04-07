@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'application'
+    id "com.github.johnrengelman.shadow" version "6.1.0"
+
 
 }
 
@@ -59,14 +61,23 @@ dependencies {
     //qr
     implementation group: 'com.google.zxing', name: 'zxing-parent', version: '3.4.1', ext: 'pom'
     implementation group: 'com.google.zxing', name: 'core', version: '3.4.1'
-
-
-
-
-
-
 }
 
 test {
     useJUnitPlatform()
 }
+//Agregando UTF 8 para las plantillas
+compileJava.options.encoding = 'UTF-8'
+shadowJar{
+    baseName = 'app'
+    classifier = ''
+    archiveVersion = ''
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+task stage {
+    dependsOn shadowJar
+}
+
