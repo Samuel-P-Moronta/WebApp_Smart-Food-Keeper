@@ -356,15 +356,17 @@ public class MainController extends BaseController {
                 });
                 get("/notification", ctx -> {
                     User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
-
-                    //Whose's my employees
-                    //First find company by branchOffice
                     Company company = user.getCompany();
-                    //I know the company branchoffice belongs to
-                    //Find user by company
                     model.put("notificationList", company.getNotificationList());
 
                     ctx.render("/public/FrontEnd_SFK/views/adminPortal/notification.html", model);
+                });
+                get("/notification-employee", ctx -> {
+                    User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
+                    Company company = user.getCompany();
+                    model.put("notificationList", company.getNotificationList());
+
+                    ctx.render("/public/FrontEnd_SFK/views/employeePortal/employeePortal.html", model);
                 });
                 get("/deleteNotificationById/:id", ctx -> {
                     Notification notification = NotificationServices.getInstance().find(ctx.pathParam("id", Long.class).get());
@@ -472,6 +474,11 @@ public class MainController extends BaseController {
                 });
                 /*---------------------------------------------------------------------------*/
             });
+            before("/employeePortal", ctx -> {
+                if (ctx.sessionAttribute("user") == null) {
+                    ctx.redirect("/login");
+                }
+            });
             path("/employeePortal", () -> {
                 before("/*", ctx -> {
                     if (ctx.sessionAttribute("user") == null) {
@@ -488,6 +495,11 @@ public class MainController extends BaseController {
                     Company company = user.getCompany();
                     model.put("notificationListEmployee", user.getNotificationList());
                     ctx.render("/public/FrontEnd_SFK/views/employeePortal/employeePortal.html", model);
+                });
+                get("/delete-notification-employee/:id", ctx -> {
+                    Notification notification = NotificationServices.getInstance().find(ctx.pathParam("id", Long.class).get());
+                    NotificationServices.getInstance().delete(notification.getId());
+                    ctx.redirect("/employeePortal");
                 });
                 get("/shelfMonitoringEmployee", ctx -> {
                     User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
