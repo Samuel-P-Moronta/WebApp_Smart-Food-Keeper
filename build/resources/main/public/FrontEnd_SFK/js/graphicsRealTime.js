@@ -48,7 +48,7 @@ function loadTempHumGraph(){
                 },
                 scaleLabel: {
                     display: true,
-                    labelString: 'Temperature (ªC) Humedad (ªF)'
+                    labelString: 'Temperatura (ªC) & Humedad (ªF)'
                 }
             }]
         },
