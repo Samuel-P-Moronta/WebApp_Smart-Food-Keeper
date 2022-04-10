@@ -6,7 +6,7 @@ function loadTempHumGraph(){
     var lineTempHumGraphData = {
         labels: [],
         datasets: [{
-            data: [20,30],
+            data: [],
             label: "Temperatura (*C)",
             borderWidth: 2,
             pointBorderWidth: 2,
@@ -17,7 +17,7 @@ function loadTempHumGraph(){
             backgroundColor: 'rgba(33, 76, 229, 0.5)',
             fill: false
         },{
-            data: [10,25],
+            data: [],
             label: "Humedad (%)",
             borderWidth: 2,
             pointBorderWidth: 2,

@@ -211,7 +211,7 @@ public class MainController extends BaseController {
                     Person person = ControllerCore.controllerCore.findPersonByEmail(email);
                     String fullNameToShow = person.getFirstName() + " " + person.getLastName();
                     ctx.sessionAttribute("user", email);
-                    model.put("fullNameToShow", fullNameToShow);
+                    model.put("fullNameToShow", fullNameToShow.toUpperCase());
                     Company company = user.getCompany();
                     model.put("company", company.getName());
                     System.out.println("NOMBRE COMPANY EN DASHBOARD: " + company.getName());
@@ -488,10 +488,9 @@ public class MainController extends BaseController {
                 get("/", ctx -> {
                     User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
                     Person person = ControllerCore.controllerCore.findPersonByEmail(user.getEmail());
-                    //String fullNameToShow = person.getFirstName() + " "+ person.getLastName();
+                    String fullNameToShow = person.getFirstName() + " "+ person.getLastName();
                     ctx.sessionAttribute("user", user.getEmail());
-                    //model.put("fullNameToShow",fullNameToShow);
-
+                    model.put("fullNameToShow",fullNameToShow.toUpperCase());
                     Company company = user.getCompany();
                     model.put("notificationListEmployee", user.getNotificationList());
                     ctx.render("/public/FrontEnd_SFK/views/employeePortal/employeePortal.html", model);
