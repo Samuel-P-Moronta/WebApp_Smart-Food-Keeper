@@ -2,7 +2,11 @@ var webSocket2;
 
 function connectWebSocketContainer() {
     console.log("Estoy en websocketContainer");
-    webSocket2 = new WebSocket("ws://" + location.hostname + ":" + location.port + "/server/container");
+    //Para trabajar con https
+    webSocket2 = new WebSocket("wss://" + location.hostname + ":" + location.port + "/server/container");
+    //Para trabajar con http
+    //webSocket2 = new WebSocket("ws://" + location.hostname + ":" + location.port + "/server/container");
+
     webSocket2.onmessage = function(event) {
         showWebsocketDataContainer(event);
     };
