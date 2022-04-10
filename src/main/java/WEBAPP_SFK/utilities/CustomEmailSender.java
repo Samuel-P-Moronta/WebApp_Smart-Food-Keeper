@@ -13,7 +13,9 @@ import java.util.Date;
 public class CustomEmailSender {
     public void message(String email, String subject, String mensaje) throws IOException {
 
+
         Mailer mailer = MailerBuilder
+
                 .withSMTPServer("smtp.gmail.com", 587, "smartfoodkeeperproject@gmail.com", "Pucmm123")
                 .withTransportStrategy(TransportStrategy.SMTP_TLS)
                 .withSessionTimeout(5 * 1000)
@@ -339,7 +341,7 @@ public class CustomEmailSender {
                 "                                        bgcolor=\"#3498db\"\n" +
                 "                                      >\n" +
                 "                                        <a\n" +
-                "                                          href=\"http://10.0.0.210:7000/employeePortal/shelfMonitoringEmployee\"\n" +
+                "                                          href=\"https://sfkproject.tech/employeePortal/shelfMonitoringEmployee\"\n" +
                 "                                          target=\"_blank\"\n" +
                 "                                          style=\"\n" +
                 "                                            border: solid 1px #3498db;\n" +
