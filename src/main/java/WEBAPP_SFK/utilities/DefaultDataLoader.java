@@ -250,10 +250,13 @@ public class DefaultDataLoader {
 
     public void createClient() {
         Client client = new Client();
-        client.setEmail("samuelmoronta2@gmail.com");
-        client.setFirstName("Samuel");
-        client.setLastName("Moronta");
-        ClientServices.getInstance().create(client);
+
+        if(ClientServices.getInstance().findClientByEmail("samuelmoronta2@gmail.com") ==null){
+            client.setEmail("samuelmoronta2@gmail.com");
+            client.setFirstName("Samuel");
+            client.setLastName("Moronta");
+            ClientServices.getInstance().create(client);
+        }
     }
 
     public void createDefaultContainerData() {

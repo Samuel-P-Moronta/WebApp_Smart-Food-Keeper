@@ -1,13 +1,20 @@
 var webSocket;
 
 function connectWebSocketShelf() {
-    webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/server/shelf");
+    console.log("Conectando websocket");
+    //Para trabajar con https
+    webSocket = new WebSocket("wss://" + location.hostname + ":" + location.port + "/server/shelf");
+    //Para trabajar con http
+    //webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/server/shelf");
     webSocket.onmessage = function(event) {
         showWebsocketDataShelf(event);
     };
-    loadTempHumGraph();
+    loadTempHumGraph(); 
+    
 }
 function showWebsocketDataShelf(evt) {
+    console.log("Este es otro Hola para ver klk dice wss")
+
     console.log("Estoy en la funcion para recibir datos del websocket")
     var data = JSON.parse(evt.data);
     console.log("DEVICE ID: ", data['deviceId'])

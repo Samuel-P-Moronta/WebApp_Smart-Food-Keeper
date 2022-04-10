@@ -14,7 +14,6 @@ function loadTempHumGraph(){
             pointBorderColor: "#fff",
             pointBackgroundColor: "#0162ff",
             borderColor: "#3e95cd",
-            backgroundColor: 'rgba(33, 76, 229, 0.5)',
             fill: true
         },{
             data: [],
@@ -23,7 +22,6 @@ function loadTempHumGraph(){
             pointBorderWidth: 2,
             pointRadius: 4,
             pointBorderColor: "#fff",
-            backgroundColor: 'rgba(255, 99, 71, 0.5)',
             borderColor: "#f44252",
             fill: true
         }]
