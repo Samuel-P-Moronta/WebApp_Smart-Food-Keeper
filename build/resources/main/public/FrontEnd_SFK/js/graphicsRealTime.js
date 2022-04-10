@@ -6,7 +6,7 @@ function loadTempHumGraph(){
     var lineTempHumGraphData = {
         labels: [],
         datasets: [{
-            data: [],
+            data: [20,30],
             label: "Temperatura (*C)",
             borderWidth: 2,
             pointBorderWidth: 2,
@@ -14,16 +14,18 @@ function loadTempHumGraph(){
             pointBorderColor: "#fff",
             pointBackgroundColor: "#0162ff",
             borderColor: "#3e95cd",
-            fill: true
+            backgroundColor: 'rgba(33, 76, 229, 0.5)',
+            fill: false
         },{
-            data: [],
+            data: [10,25],
             label: "Humedad (%)",
             borderWidth: 2,
             pointBorderWidth: 2,
             pointRadius: 4,
             pointBorderColor: "#fff",
+            backgroundColor: 'rgba(255, 99, 71, 0.5)',
             borderColor: "#f44252",
-            fill: true
+            fill: false
         }]
     };
     var lineTempHumGraphOptions = {
