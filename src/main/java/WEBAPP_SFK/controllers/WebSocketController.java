@@ -45,7 +45,6 @@ public class WebSocketController extends BaseController {
     }
 
     public void websocket() {
-
         app.ws("/server/shelf", ws -> {
 
             ws.onConnect(ctx -> {
