@@ -4,9 +4,8 @@ import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.models.ExpressSalesInventory;
 import WEBAPP_SFK.models.enums.RoleApp;
 import WEBAPP_SFK.services.*;
-import WEBAPP_SFK.utilities.CustomEmailSender;
+import WEBAPP_SFK.utilities.EmailSender;
 import io.javalin.Javalin;
-import org.eclipse.jetty.io.ssl.ALPNProcessor;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 
 import java.util.*;
@@ -592,7 +591,7 @@ public class MainController extends BaseController {
                     for(ExpressSalesInventory e: esIList){
                         for(Client c: clientList){
                             String customMessage = "Hola " + " " + c.getFirstName()+"."+" "+ "Este correo es para informarte tenemos"+" "+e.getFruitType()+"s"+" "+"con un "+e.getDiscountPercentage()+"%" + " "+ "de descuento."+" "+"En el supermercado:"+" "+e.getBranchOffice().getCompany().getName()+" "+ "y sucursal"+" "+e.getBranchOffice().getAddress().getCity() +" "+"("+e.getBranchOffice().getAddress().getDirection()+")";
-                            new CustomEmailSender().message(c.getEmail(),customSubject,customMessage);
+                            new EmailSender().message(c.getEmail(),customSubject,customMessage);
                         }
                         ExpressSalesInventoryServices.getInstance().delete(e.getId());
                     }

@@ -6,15 +6,11 @@ import WEBAPP_SFK.services.ContainerDataServices;
 import WEBAPP_SFK.services.ContainerServices;
 import WEBAPP_SFK.services.UserServices;
 import WEBAPP_SFK.services.WasteDataServices;
-import WEBAPP_SFK.utilities.CustomEmailSender;
-import WEBAPP_SFK.utilities.PruebaEmail;
+import WEBAPP_SFK.utilities.EmailSender;
 import com.google.gson.Gson;
 import io.javalin.Javalin;
 import io.javalin.websocket.WsContext;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -193,7 +189,7 @@ public class WebSocketController extends BaseController {
                     Notification notificationType1 = new Notification("Madurez", NotificationStatus.MADUREZ.getMessage(), new Date(),user,user.getBranchOffice(), user.getCompany(), 1);
                     ControllerCore.getInstance().createNotification(notificationType1);
                     try{
-                        new PruebaEmail().message(user.getEmail(), NotificationStatus.MADUREZ.getMessage(),htmlMessage());
+                        new EmailSender().message(user.getEmail(), NotificationStatus.MADUREZ.getMessage(),htmlMessage());
                     } catch (Exception  e) {
                         System.out.println("NO SE PUDO ENVIAR EL MENSAJE...");
                         e.printStackTrace();
@@ -207,7 +203,7 @@ public class WebSocketController extends BaseController {
                     Notification notificationType2 = new Notification("Suministro", NotificationStatus.SUMINISTRO.getMessage(), new Date(), user,user.getBranchOffice(), user.getCompany(), 2);
                     ControllerCore.getInstance().createNotification(notificationType2);
                     try{
-                        new PruebaEmail().message(user.getEmail(),NotificationStatus.SUMINISTRO.getMessage(),htmlMessage());
+                        new EmailSender().message(user.getEmail(),NotificationStatus.SUMINISTRO.getMessage(),htmlMessage());
                     } catch (Exception  e) {
                         System.out.println("NO SE PUDO ENVIAR EL MENSAJE...");
                         e.printStackTrace();
@@ -221,7 +217,7 @@ public class WebSocketController extends BaseController {
                     Notification notificationType3 = new Notification("Temperatura",NotificationStatus.TEMPERATURA.getMessage(), new Date(), user,user.getBranchOffice(),user.getCompany(),3);
                     ControllerCore.getInstance().createNotification(notificationType3);
                     try{
-                        new PruebaEmail().message(user.getEmail(),NotificationStatus.TEMPERATURA.getMessage(),htmlMessage());
+                        new EmailSender().message(user.getEmail(),NotificationStatus.TEMPERATURA.getMessage(),htmlMessage());
                     } catch (Exception  e) {
                         System.out.println("NO SE PUDO ENVIAR EL MENSAJE...");
                         e.printStackTrace();
@@ -235,7 +231,7 @@ public class WebSocketController extends BaseController {
                     Notification notificationType4 = new Notification("Humedad",NotificationStatus.HUMEDAD.getMessage(), new Date(), user,user.getBranchOffice(), user.getCompany(), 4);
                     ControllerCore.getInstance().createNotification(notificationType4);
                     try{
-                        new PruebaEmail().message(user.getEmail(),NotificationStatus.HUMEDAD.getMessage(),htmlMessage());
+                        new EmailSender().message(user.getEmail(),NotificationStatus.HUMEDAD.getMessage(),htmlMessage());
                     } catch (Exception  e) {
                         System.out.println("NO SE PUDO ENVIAR EL MENSAJE...");
                         e.printStackTrace();

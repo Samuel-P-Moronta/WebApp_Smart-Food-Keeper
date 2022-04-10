@@ -7,8 +7,8 @@ import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.Properties;
 
-public class PruebaEmail {
-    String host = "20.232.140.149";
+public class EmailSender {
+    String host = "smtp.gmail.com";
     int port = 587;
     String username = "smartfoodkeeperproject@gmail.com";
     String password = "Pucmm123";
@@ -47,8 +47,6 @@ public class PruebaEmail {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-
         return false;
-
     }
 }
