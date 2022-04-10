@@ -1,7 +1,10 @@
 var webSocket;
 
 function connectWebSocketShelf() {
-    webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/server/shelf");
+    //Para trabajar con https
+    webSocket = new WebSocket("wss://" + location.hostname + ":" + location.port + "/server/shelf");
+    //Para trabajar con http
+    //webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/server/shelf");
     webSocket.onmessage = function(event) {
         showWebsocketDataShelf(event);
     };

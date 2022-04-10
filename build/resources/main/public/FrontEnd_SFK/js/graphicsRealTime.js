@@ -18,7 +18,7 @@ function loadTempHumGraph(){
             fill: true
         },{
             data: [],
-            label: "Humedad (*C)",
+            label: "Humedad (%)",
             borderWidth: 2,
             pointBorderWidth: 2,
             pointRadius: 4,
@@ -48,7 +48,7 @@ function loadTempHumGraph(){
                 },
                 scaleLabel: {
                     display: true,
-                    labelString: 'Temperatura (ªC) & Humedad (ªF)'
+                    labelString: 'Temperatura (ªC) & Humedad (%)'
                 }
             }]
         },
