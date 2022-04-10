@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class PruebaEmail {
-    String host = "20.232.140.149";
+    String host = "smtp.gmail.com";
     int port = 587;
     String username = "smartfoodkeeperproject@gmail.com";
     String password = "Pucmm123";
