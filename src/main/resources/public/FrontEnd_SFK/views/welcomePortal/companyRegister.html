@@ -37,10 +37,10 @@
                     <div class="form-group">
                       <h5 class="pb-2">Datos personales</h5>
                       <hr>
-                      <label for="identificationCard" class="form-label">Cedula</label>
-                      <input type="text" class="form-control" id="identificationCard" name="identificationCard" placeholder="Inserta la cedula" is-invalid required data-mask="999-9999999-9" autocomplete="off" maxlength="13">
+                      <label for="identificationCard" class="form-label">C&eacute;dula</label>
+                      <input type="text" class="form-control" id="identificationCard" name="identificationCard" placeholder="Inserta la c&eacute;dula" is-invalid required data-mask="999-9999999-9" autocomplete="off" maxlength="13">
                       <div class="invalid-feedback" id="identificationCardInvalid">
-                        Cedula invalida!.
+                        C&eacute;dula inv&aacute;lida!.
                       </div>
                       <div class="form-group">
                         <p  th:text="${errorIdentificationCard}" style="color:#ff0000"></p>
@@ -69,10 +69,10 @@
                         </div>
                       </div>
                       <div class="form-group col-md-6">
-                        <label for="direction" class="form-label">Direccion</label>
-                        <input type="text" class="form-control" id="direction" name="direction" placeholder="Direccion" required>
+                        <label for="direction" class="form-label">Direcci&oacute;n</label>
+                        <input type="text" class="form-control" id="direction" name="direction" placeholder="Direcci&oacute;n" required>
                         <div class="invalid-feedback">
-                          Por favor, digite su direccion de domicilio!
+                          Por favor, digite su direcci&oacute;n de domicilio!
                         </div>
                       </div>
                     </div>
@@ -85,14 +85,14 @@
                         Por favor, digite el nombre de su empresa!
                       </div>
                     </div>
-                    <h5 class="pb-2">Autenticacion en el sistema</h5>
+                    <h5 class="pb-2">Autenticaci&oacute;n en el sistema</h5>
                     <hr>
                     <div class="row">
                       <div class="form-group col-md-6">
-                        <label for="email" class="form-label">Correo electronico</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Correo electronico" required>
+                        <label for="email" class="form-label">Correo electr&oacute;nico</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Correo electr&oacute;nico" required>
                         <div class="invalid-feedback">
-                          Por favor, digite su correo electronico!
+                          Por favor, digite su correo electr&oacute;nico!
                         </div>
                         <div class="form-group">
                           <p  th:text="${emailExist}" style="color:#ff0000"></p>
@@ -100,9 +100,9 @@
                       </div>
                       <div class="form-group col-md-6">
                         <label for="password" class="form-label">Clave</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Contrase&ntilde;a" required>
                         <div class="invalid-feedback">
-                          Por favor, digite una contrasena!
+                          Por favor, digite una contrase&ntilde;a!
                         </div>
                       </div>
                     </div>
