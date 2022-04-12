@@ -235,7 +235,7 @@ public class DefaultDataLoader {
         List<Company> companyList = CompanyServices.getInstance().findAll();
 
 
-        FruitProduct fp1 = FruitProductServices.getInstance().findProductByName("Pina");
+        FruitProduct fp1 = FruitProductServices.getInstance().findProductByName("Pi\\u00f1a");
         FruitProduct fp2 = FruitProductServices.getInstance().findProductByName("Lechosa");
 
         for (Company c : companyList) {
