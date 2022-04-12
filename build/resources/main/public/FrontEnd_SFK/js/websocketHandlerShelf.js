@@ -34,7 +34,7 @@ function showWebsocketDataShelf(evt) {
 
 
         if(data_json_fruit_type == "pineapple"){
-            data_json_fruit_type = "Pina"
+            data_json_fruit_type = "Pi\u00F1a"
         }else{
             if(data_json_fruit_type == "papaya"){
                 data_json_fruit_type = "Lechosa"
