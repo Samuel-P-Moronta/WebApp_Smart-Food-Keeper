@@ -30,12 +30,15 @@ public class Notification {
     @ManyToOne(fetch = FetchType.EAGER)
     private Company company;
     private int type;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private ShelfData shelfData;
+    private boolean status;
 
 
     public Notification() {
     }
 
-    public Notification(String title, String description, Date sendDate, User user, BranchOffice branchOffice, Company company, int type) {
+    public Notification(String title, String description, Date sendDate, User user, BranchOffice branchOffice, Company company, int type, Boolean status) {
         this.title = title;
         this.description = description;
         this.sendDate = sendDate;
@@ -43,6 +46,19 @@ public class Notification {
         this.branchOffice = branchOffice;
         this.company = company;
         this.type = type;
+        this.status = status;
+    }
+
+    public Notification(String title, String description, Date sendDate, User user, BranchOffice branchOffice, Company company, int type, ShelfData shelfData, Boolean status) {
+        this.title = title;
+        this.description = description;
+        this.sendDate = sendDate;
+        this.user = user;
+        this.branchOffice = branchOffice;
+        this.company = company;
+        this.type = type;
+        this.shelfData = shelfData;
+        this.status = status;
     }
 
     public Long getId() {
@@ -115,5 +131,21 @@ public class Notification {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public ShelfData getShelfData() {
+        return shelfData;
+    }
+
+    public void setShelfData(ShelfData shelfData) {
+        this.shelfData = shelfData;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

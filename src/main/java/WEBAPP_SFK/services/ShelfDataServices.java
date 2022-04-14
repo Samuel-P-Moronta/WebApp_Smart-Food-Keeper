@@ -1,11 +1,13 @@
 package WEBAPP_SFK.services;
 
+import WEBAPP_SFK.models.Shelf;
 import WEBAPP_SFK.models.ShelfData;
 import WEBAPP_SFK.services.connect.DataBaseRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.Date;
+import java.util.List;
 
 public class ShelfDataServices extends DataBaseRepository<ShelfData> {
     private static ShelfDataServices instance;
@@ -79,8 +81,10 @@ public class ShelfDataServices extends DataBaseRepository<ShelfData> {
         }
         return x;
     }
-
-
-
-
+    public List<ShelfData> findAllShelfDataByShelfId(String deviceId) {
+        EntityManager entityManager = getEntityManager();
+        Query query = entityManager.createQuery("SELECT S FROM ShelfData S WHERE S.shelf.deviceId = :deviceId",ShelfData.class);
+        query.setParameter("deviceId",deviceId);
+        return query.getResultList();
+    }
 }

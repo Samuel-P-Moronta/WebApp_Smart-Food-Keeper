@@ -5,6 +5,7 @@ import WEBAPP_SFK.models.ExpressSalesInventory;
 import WEBAPP_SFK.models.enums.RoleApp;
 import WEBAPP_SFK.services.*;
 import WEBAPP_SFK.utilities.EmailSender;
+import WEBAPP_SFK.utilities.NotificacionesAct;
 import io.javalin.Javalin;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 
@@ -46,18 +47,18 @@ public class MainController extends BaseController {
                     String firstName = ctx.formParam("firstName");
                     String lastName = ctx.formParam("lastName");
                     String email = ctx.formParam("email");
-                    if(!(firstName.equals("") && lastName.equals("") && email.equals(""))){
-                        if(ClientServices.getInstance().findClientByEmail(email) == null && PersonServices.getInstance().findPersonByEmail(email) == null){
+                    if (!(firstName.equals("") && lastName.equals("") && email.equals(""))) {
+                        if (ClientServices.getInstance().findClientByEmail(email) == null && PersonServices.getInstance().findPersonByEmail(email) == null) {
                             Client client = new Client();
                             client.setFirstName(firstName);
                             client.setLastName(lastName);
                             client.setEmail(email);
                             client.setSubscriptionDate(new Date());
                             ClientServices.getInstance().create(client);
-                        }else{
+                        } else {
                             System.out.println("found the same email");
                         }
-                    }else{
+                    } else {
                         System.out.println("Empty camps");
                     }
                     ctx.render("public/FrontEnd_SFK/views/welcomePortal/portal.html", model);
@@ -65,12 +66,12 @@ public class MainController extends BaseController {
                 get("/portal", ctx -> {
                     ctx.render("public/FrontEnd_SFK/views/welcomePortal/portal.html", model);
                 });
-                post("/client-subscribe", ctx ->{
+                post("/client-subscribe", ctx -> {
                     String firstName = ctx.formParam("firstName");
                     String lastName = ctx.formParam("lastName");
                     String email = ctx.formParam("email");
-                    if(!(firstName.equals("") && lastName.equals("") && email.equals(""))){
-                        if(ClientServices.getInstance().findClientByEmail(email) !=null && PersonServices.getInstance().findPersonByEmail(email) !=null){
+                    if (!(firstName.equals("") && lastName.equals("") && email.equals(""))) {
+                        if (ClientServices.getInstance().findClientByEmail(email) != null && PersonServices.getInstance().findPersonByEmail(email) != null) {
                             Client client = new Client();
                             client.setFirstName(firstName);
                             client.setLastName(lastName);
@@ -356,6 +357,8 @@ public class MainController extends BaseController {
                 get("/notification", ctx -> {
                     User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
                     Company company = user.getCompany();
+
+
                     model.put("notificationList", company.getNotificationList());
 
                     ctx.render("/public/FrontEnd_SFK/views/adminPortal/notification.html", model);
@@ -388,7 +391,7 @@ public class MainController extends BaseController {
 
                     String tFruit = ctx.formParam("fruitType");
                     Company company = user.getCompany();
-                    if(user!=null){
+                    if (user != null) {
                         FruitProduct fp = new FruitProduct();
                         fp.setCompany(company);
                         fp.setFruitType(tFruit);
@@ -399,19 +402,18 @@ public class MainController extends BaseController {
                     ctx.redirect("/management/discount");
                 });
                 post("/discount-edit/:id", ctx -> {
-                    FruitProduct fruitProduct = FruitProductServices.getInstance().find(ctx.pathParam("id",Long.class).get());
+                    FruitProduct fruitProduct = FruitProductServices.getInstance().find(ctx.pathParam("id", Long.class).get());
                     float discountPercentage = Float.parseFloat(ctx.formParam("discountPercentage"));
-                    if(fruitProduct!=null){
+                    if (fruitProduct != null) {
                         fruitProduct.setDiscountPercentage(discountPercentage);
                         FruitProductServices.getInstance().update(fruitProduct);
-                    }
-                    else{
+                    } else {
                         System.out.println("not found");
                     }
                     ctx.redirect("/management/express");
                 });
                 get("/discount-edit/:id", ctx -> {
-                    FruitProduct fruitProduct = FruitProductServices.getInstance().find(ctx.pathParam("id",Long.class).get());
+                    FruitProduct fruitProduct = FruitProductServices.getInstance().find(ctx.pathParam("id", Long.class).get());
 
                     model.put("action", "Editar porcentaje de descuento");
                     if (fruitProduct.getId() == null) {
@@ -425,9 +427,9 @@ public class MainController extends BaseController {
                     User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
                     List<FruitProduct> fpList = new FruitProductServices().findAll();
                     Company company = user.getCompany();
-                    if(user !=null){
-                        if(company!=null){
-                            model.put("productListResult",company.getFruitProductList());
+                    if (user != null) {
+                        if (company != null) {
+                            model.put("productListResult", company.getFruitProductList());
                         }
                     }
                     ctx.render("/public/FrontEnd_SFK/views/adminPortal/express.html", model);
@@ -436,9 +438,9 @@ public class MainController extends BaseController {
                     User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
                     List<FruitProduct> fpList = new FruitProductServices().findAll();
                     Company company = user.getCompany();
-                    if(user !=null){
-                        if(company!=null){
-                            model.put("productListResult",company.getFruitProductList());
+                    if (user != null) {
+                        if (company != null) {
+                            model.put("productListResult", company.getFruitProductList());
                         }
                     }
                     model.put("action", "Registrar porciento de descuento");
@@ -448,9 +450,9 @@ public class MainController extends BaseController {
                 get("/express", ctx -> {
                     User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
                     Company company = user.getCompany();
-                    if(user !=null){
-                        if(company !=null){
-                            model.put("fruitList",company.getFruitProductList());
+                    if (user != null) {
+                        if (company != null) {
+                            model.put("fruitList", company.getFruitProductList());
                         }
                     }
                     ctx.render("/public/FrontEnd_SFK/views/adminPortal/express.html", model);
@@ -479,6 +481,8 @@ public class MainController extends BaseController {
                 }
             });
             path("/employeePortal", () -> {
+                //filtro_Cors();
+
                 before("/*", ctx -> {
                     if (ctx.sessionAttribute("user") == null) {
                         ctx.redirect("/login");
@@ -487,11 +491,39 @@ public class MainController extends BaseController {
                 get("/", ctx -> {
                     User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
                     Person person = ControllerCore.controllerCore.findPersonByEmail(user.getEmail());
-                    String fullNameToShow = person.getFirstName() + " "+ person.getLastName();
+                    String fullNameToShow = person.getFirstName() + " " + person.getLastName();
                     ctx.sessionAttribute("user", user.getEmail());
-                    model.put("fullNameToShow",fullNameToShow.toUpperCase());
+                    if (user != null) {
+                        String email = user.getEmail();
+                        BranchOffice branchOffice = BranchOfficeServices.getInstance().findBranchOfficeByUserEmployee(email);
+                        if (branchOffice != null) {
+                            String myBranchOffice = branchOffice.getAddress().getCity() + " " + "(" + branchOffice.getAddress().getDirection() + ")";
+                            List<Shelf> shelfList;
+                            shelfList = new ShelfServices().findShelfByBranchOffice(branchOffice.getId());
+                            model.put("branchOfficeEmployee", myBranchOffice);
+                            model.put("shelfSelect", shelfList);
+                            List<ExpressSalesInventory> eSI = new ExpressSalesInventoryServices().findInspectionsByUser(user.getEmail());
+                            model.put("makingPostList", eSI);
+                            List<FruitProduct> fp = new FruitProductServices().findAll();
+                            model.put("productList", fp);
+                            Set<Form> formList;
+                            formList = branchOffice.getFormList();
+                            model.put("formList",formList);
+
+                        }
+                    }
+                    model.put("fullNameToShow", fullNameToShow.toUpperCase());
                     Company company = user.getCompany();
-                    model.put("notificationListEmployee", user.getNotificationList());
+                    List<NotificacionesAct> notificacionesActs = new ArrayList<>();
+                    boolean status = false;
+                    for (Notification notification : user.getNotificationList()) {
+                        status = false;
+                        if (notification.getTitle().equalsIgnoreCase("SUMINISTRO") || notification.getTitle().equalsIgnoreCase("TEMPERATURA") || notification.getTitle().equalsIgnoreCase("HUMEDAD") || notification.isStatus() == true) {
+                            status = true;
+                        }
+                        notificacionesActs.add(new NotificacionesAct(notification, status));
+                    }
+                    model.put("notificationListEmployee", notificacionesActs);
                     ctx.render("/public/FrontEnd_SFK/views/employeePortal/employeePortal.html", model);
                 });
                 get("/delete-notification-employee/:id", ctx -> {
@@ -537,9 +569,9 @@ public class MainController extends BaseController {
                             model.put("branchOfficeEmployee", myBranchOffice);
                             model.put("shelfSelect", shelfList);
                             List<ExpressSalesInventory> eSI = new ExpressSalesInventoryServices().findInspectionsByUser(user.getEmail());
-                            model.put("makingPostList",eSI);
+                            model.put("makingPostList", eSI);
                             List<FruitProduct> fp = new FruitProductServices().findAll();
-                            model.put("productList",fp);
+                            model.put("productList", fp);
                         }
                     }
                     ctx.render("/public/FrontEnd_SFK/views/employeePortal/salesExpress.html", model);
@@ -562,7 +594,7 @@ public class MainController extends BaseController {
                                 System.out.println(idShelfSelect);
                                 Shelf shelf = ControllerCore.getInstance().findShelfByDeviceId(idShelfSelect);
                                 if (shelf != null) {
-                                    if(!(fruitType.equals("") && currentQuantity!=0)){
+                                    if (!(fruitType.equals("") && currentQuantity != 0)) {
                                         FruitProduct fp = FruitProductServices.getInstance().findProductByName(fruitType);
                                         eSalesInventory.setQuantity(currentQuantity);
                                         eSalesInventory.setInspectionDate(new Date());
@@ -574,30 +606,52 @@ public class MainController extends BaseController {
                                         ExpressSalesInventoryServices.getInstance().create(eSalesInventory);
                                         //Broadcast clients notifications
                                     }
-                                }else{
+                                } else {
                                     System.out.println("Shelf not found");
                                 }
                             }
                         }
                         List<ExpressSalesInventory> esI = new ExpressSalesInventoryServices().findInspectionsByUser(user.getEmail());
-                        model.put("makingPostList",esI);
+                        model.put("makingPostList", esI);
                     }
-                    ctx.render("/public/FrontEnd_SFK/views/employeePortal/salesExpress.html", model);
+                    ctx.render("/public/FrontEnd_SFK/views/employeePortal/employeePortal.html", model);
                 });
                 post("/publish-express", ctx -> {
                     List<ExpressSalesInventory> esIList = new ExpressSalesInventoryServices().findAll();
                     List<Client> clientList = new ClientServices().findAll();
                     String customSubject = "Frutas express.";
-                    for(ExpressSalesInventory e: esIList){
-                        for(Client c: clientList){
-                            String customMessage = "Hola " + " " + c.getFirstName()+"."+" "+ "Este correo es para informarte tenemos"+" "+e.getFruitType()+"s"+" "+"con un "+e.getDiscountPercentage()+"%" + " "+ "de descuento."+" "+"En el supermercado:"+" "+e.getBranchOffice().getCompany().getName()+" "+ "y sucursal"+" "+e.getBranchOffice().getAddress().getCity() +" "+"("+e.getBranchOffice().getAddress().getDirection()+")";
-                            new EmailSender().message(c.getEmail(),customSubject,customMessage);
+                    for (ExpressSalesInventory e : esIList) {
+                        for (Client c : clientList) {
+                            String customMessage = "Hola " + " " + c.getFirstName() + "." + " " + "Este correo es para informarte tenemos" + " " + e.getFruitType() + "s" + " " + "con un " + e.getDiscountPercentage() + "%" + " " + "de descuento." + " " + "En el supermercado:" + " " + e.getBranchOffice().getCompany().getName() + " " + "y sucursal" + " " + e.getBranchOffice().getAddress().getCity() + " " + "(" + e.getBranchOffice().getAddress().getDirection() + ")";
+                            new EmailSender().message(c.getEmail(), customSubject, customMessage);
                         }
                         ExpressSalesInventoryServices.getInstance().delete(e.getId());
                     }
                     ctx.redirect("/employeePortal/sales-express");
                 });
             });
+        });
+    }
+
+    private void filtro_Cors() {
+        //  Filtro para validar el CORS.(Intercambio de recursos de origen cruzado).
+        app.before("/*", ctx -> {
+            ctx.header("Access-Control-Allow-Origin", "*");
+        });
+        // Enviando la información a solicitud del CORS.
+        app.options("/*", ctx -> {
+            System.out.println("Accediendo al metodo de options");
+
+            String accessControlRequestHeaders = ctx.header("Access-Control-Request-Headers");
+            if (accessControlRequestHeaders != null) {
+                ctx.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
+            }
+
+            String accessControlRequestMethod = ctx.header("Access-Control-Request-Method");
+            if (accessControlRequestMethod != null) {
+                ctx.header("Access-Control-Allow-Methods", accessControlRequestMethod);
+            }
+            ctx.status(200).result("OK");
         });
     }
 }

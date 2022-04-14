@@ -1,185 +1,371 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>SFK Project</title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
-  <!--
-  <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
-  --->
-  <link rel="stylesheet" href="../../assets/vendors/flag-icon-css/css/flag-icon.min.css">
-  <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <link rel="stylesheet" href="../../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SFK Project</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
+    <!--
+    <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
+    --->
+    <link rel="stylesheet" href="../../assets/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="../../assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="../../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css"/>
 
-  <!--<link rel="stylesheet" href="../vendors/font-awesome/css/font-awesome.min.css" />-->
-  <link rel="stylesheet" href="../../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
-  <link rel="stylesheet" href="../../assets/css/style.css">
-  <link rel="shortcut icon" href="../../assets/images/favicon.png" />
-  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <!--<link rel="stylesheet" href="../vendors/font-awesome/css/font-awesome.min.css" />-->
+    <link rel="stylesheet" href="../../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="shortcut icon" href="../../assets/images/favicon.png"/>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 
-  <script type='text/javascript' src='https://code.jquery.com/jquery-3.5.1.js'></script>
-  <script type='text/javascript' src='https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js'></script>
-  <script type='text/javascript' src='https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js'></script>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css"  type="text/css">
+    <script type='text/javascript' src='https://code.jquery.com/jquery-3.5.1.js'></script>
+    <script type='text/javascript' src='https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js'></script>
+    <script type='text/javascript' src='https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js'></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap4.min.css" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
 </head>
 <body>
 <div class="container-scroller">
-  <!-- partial:partials/_navbar.html -->
-  <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-    </div>
-    <div class="navbar-menu-wrapper d-flex align-items-stretch">
-      <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-        <span class="mdi mdi-menu"></span>
-      </button>
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-stretch">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                <span class="mdi mdi-menu"></span>
+            </button>
 
-      <ul class="navbar-nav navbar-nav-right">
-        <li class="nav-item nav-profile dropdown">
-          <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-            <div class="nav-profile-text">
-              <p class="mb-1 text-black" th:text="${fullNameToShow}"></p>
-            </div>
-          </a>
-          <div class="dropdown-menu navbar-dropdown dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="profileDropdown" data-x-placement="bottom-end">
-            <div class="p-2">
-              <div role="separator" class="dropdown-divider"></div>
-              <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="/logout">
-                <span>Log Out</span>
-                <i class="mdi mdi-logout ms-1"></i>
-              </a>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-        <span class="mdi mdi-menu"></span>
-      </button>
-    </div>
-  </nav>
-  <!-- partial -->
-  <div class="container-fluid page-body-wrapper">
-    <!-- partial:partials/_sidebar.html -->
-    <nav class="sidebar sidebar-offcanvas" id="sidebar">
-      <ul class="nav">
-        <li class="nav-item nav-category">Monitoreo inteligente</li>
-        <li class="nav-item">
-          <a class="nav-link" href="/employeePortal">
-            <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
-            <span class="menu-title">Notificaciones</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/employeePortal/sales-express">
-            <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
-            <span class="menu-title">Venta Express</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/employeePortal/shelfMonitoringEmployee">
-            <span class="icon-bg"><i class="mdi mdi-chart-bar menu-icon"></i></span>
-            <span class="menu-title">Estante</span>
-          </a>
-        </li>
-        <!---
-        <li class="nav-item">
-          <a class="nav-link" href="/employeePortal/containerMonitoringEmployee">
-            <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
-            <span class="menu-title">Contenedor</span>
-          </a>
-        </li>
-        --->
-      </ul>
+            <ul class="navbar-nav navbar-nav-right">
+                <li class="nav-item nav-profile dropdown">
+                    <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <div class="nav-profile-text">
+                            <p class="mb-1 text-black" th:text="${fullNameToShow}"></p>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu navbar-dropdown dropdown-menu-right p-0 border-0 font-size-sm"
+                         aria-labelledby="profileDropdown" data-x-placement="bottom-end">
+                        <div class="p-2">
+                            <div role="separator" class="dropdown-divider"></div>
+                            <a class="dropdown-item py-1 d-flex align-items-center justify-content-between"
+                               href="/logout">
+                                <span>Log Out</span>
+                                <i class="mdi mdi-logout ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                <span class="mdi mdi-menu"></span>
+            </button>
+        </div>
     </nav>
     <!-- partial -->
-    <div class="main-panel">
-      <div class="content-wrapper">
-        <div class="tab-content tab-transparent-content">
-          <div class="col-md-12 grid-margin stretch-card">
-            <div class="card">
-              <div class="card-body">
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                <li class="nav-item nav-category">Monitoreo inteligente</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/employeePortal">
+                        <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
+                        <span class="menu-title">Notificaciones</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/employeePortal/sales-express">
+                        <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
+                        <span class="menu-title">Venta Express</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/employeePortal/shelfMonitoringEmployee">
+                        <span class="icon-bg"><i class="mdi mdi-chart-bar menu-icon"></i></span>
+                        <span class="menu-title">Estante</span>
+                    </a>
+                </li>
+                <!---
+                <li class="nav-item">
+                  <a class="nav-link" href="/employeePortal/containerMonitoringEmployee">
+                    <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
+                    <span class="menu-title">Contenedor</span>
+                  </a>
+                </li>
+                --->
+            </ul>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="tab-content tab-transparent-content">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="notification" class="tab-pane fade show active pt-3">
+                                    <h4 class="card-title">Listado de notificaciones</h4>
+                                    <div class="table-responsive">
+                                        <table id="myTableNotification"
+                                               class="table table-hover table-bordered table-responsive"
+                                               style="width:100%">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Evento</th>
+                                                <th>Mensaje</th>
+                                                <th>Fecha de evento</th>
+                                                <th>Accion</th>
+                                                <th>Estado</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
 
-                <div id="notification" class="tab-pane fade show active pt-3">
-                  <h4 class="card-title">Listado de notificaciones</h4>
+                                            <tr th:each="n: ${notificationListEmployee}">
+                                                <td class="text-center" th:text="${n.notification.id}">ID</td>
+                                                <td class="text-center" th:text="${n.notification.title}">Evento</td>
+                                                <td class="text-left" th:text="${n.notification.description}">Mensaje
+                                                </td>
+                                                <td class="text-center" th:text="${n.notification.sendDate}">Fecha de
+                                                    evento
+                                                </td>
+                                                <td class="text-center"
+                                                    th:text="${n.notification.status} ? 'REVISADO': 'EN REVISION'">Fecha
+                                                    de evento
+                                                </td>
+                                                <td class="text-pinterest">
+                                                    <a th:href="'/management/notificationByType-employee/'+${n.notification.type}">
+                                                        <button type="button" class="btn btn-primary"
+                                                                data-toggle="modal" data-target="#exampleModal">VER
+                                                        </button>
+                                                    </a>
+                                                    <a>
+                                                        <button th:value="${n.notification.id}"
+                                                                th:disabled="${n.activar}" type="button"
+                                                                class="btn btn-success" data-toggle="modal"
+                                                                data-target="#expressModal" onclick="findForms()">
+                                                            INSPECCION
+                                                        </button>
+                                                    </a>
+                                                    <!--
+                                                    <a th:href="'/employeePortal/delete-notification-employee/'+${n.notification.id}" ><button th:hidden="${n.activar}"  type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">ZAFACON</button></a>
+                                                    -->
+                                                    <!--
+                                                    <a th:href="'/employeePortal/delete-notification-employee/'+${notification.id}" ><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">REMOVER</button></a>
+                                                    --->
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Evento</th>
+                                                <th>Mensaje</th>
+                                                <th>Fecha de evento</th>
+                                                <th>Accion</th>
+                                                <th>Estado</th>
 
-                  <div class="table-responsive">
-                    <table id="example" class="table table-hover table-bordered" style="width:100%">
-                      <thead>
-                      <tr>
-                        <th>Evento</th>
-                        <th>Mensaje</th>
-                        <th>Fecha de evento</th>
-                        <th>Accion</th>
-                      </tr>
-                      </thead>
-                      <tbody>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div id="formRegister" class="tab-pane fade show active pt-3">
+                                    <h4 class="card-title">Historial de registros</h4>
+                                    <div class="table-responsive">
+                                        <table id="example" class="table table-hover table-bordered" style="width:100%">
+                                            <thead>
+                                            <tr>
+                                                <th>Estante</th>
+                                                <th>Tipo de fruta</th>
+                                                <th>Cantidad</th>
+                                                <th>Estado</th>
+                                                <th>Fecha de registro</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
 
-                      <tr th:each="notification: ${notificationListEmployee}">
-                        <td class="text-left" th:text="${notification.title}">Evento</td>
-                        <td class="text-left" th:text="${notification.description}">Mensaje</td>
-                        <td class="text-left" th:text="${notification.sendDate}">Fecha de evento</td>
-                        <td class="text-center">
-                          <a th:href="'/management/notificationByType-employee/'+${notification.type}"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">VER</button></a>
-                          <a th:href="'/employeePortal/delete-notification-employee/'+${notification.id}" ><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">REMOVER</button></a>
-                        </td>
-                      </tr>
-                      </tbody>
-                      <tfoot>
-                      <tr>
-                        <th>Evento</th>
-                        <th>Mensaje</th>
-                        <th>Fecha de evento</th>
-                        <th>Accion</th>
-                      </tr>
-                      </tfoot>
-                    </table>
-                  </div>
+                                            <tr th:each="form: ${formList}">
+                                                <td class="text-left" th:text="${form.shelfId}">Estante</td>
+                                                <td class="text-left" th:text="${form.fruitType}">Tipo de fruta
+                                                </td>
+                                                <td class="text-left" th:text="${form.quantity}">Cantidad
+                                                    fruta
+                                                </td>
+                                                <td class="text-left" th:text="${form.inspectionType}">Estado</td>
+                                                <td class="text-left" th:text="${form.registerDate}">Fecha de
+                                                    registro
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th>Estante</th>
+                                                <th>Tipo de fruta</th>
+                                                <th>Cantidad</th>
+                                                <th>Estado</th>
+                                                <th>Fecha de registro</th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+                <div class="modal fade" id="expressModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="exampleModalLabel">INSPECCION DE NOTIFICACION</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div hidden class="form-group col-md-12">
+                                    <label for="idNotificationSelect">Notificacion seleccionada: </label>
+                                    <input type="text" class="form-control" id="idNotificationSelect"
+                                           name="idNotificationSelect" disabled>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="shelfId">Estante donde se gener&oacute; la notificaci&oacute;n: </label>
+                                    <input type="text" class="form-control" id="shelfId" name="shelfId" disabled>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="fruitType">Tipo de fruta notificada: </label>
+                                    <input type="text" class="form-control" id="fruitType" name="fruitType" disabled>
+                                </div>
+                                <div hidden class="form-group col-md-12">
+                                    <label for="discountPercentage">Porcentaje de descuento: </label>
+                                    <input type="number" min="0" class="form-control" name="discountPercentage"
+                                           id="discountPercentage" required disabled>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="overripeCant">Cantidad de frutas detectadas muy maduras: </label>
+                                    <input type="number" min="0" class="form-control" name="overripeCant"
+                                           id="overripeCant" required disabled>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="inspectionType">Seleccionar tipo de inspeccion: </label>
+                                    <select name="inspectionType" id="inspectionType" placeholder="level"
+                                            class="form-control" aria-required="true" required>
+                                        <option id="inspectionTypePrueba" value="" selected>TIPO DE INSPECCION</option>
+                                        <option name="inspectionType" value="EXPRESS">EXPRESS</option>
+                                        <option name="inspectionType" value="ZAFACON">ZAFACON</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="fruitQuantity" id="labelTypeInspeccion">Digitar cantidad de frutas
+                                        : </label>
+                                    <input type="number" min="0" class="form-control" name="fruitQuantity"
+                                           id="fruitQuantity" placeholder="Seleccionar cantidad de frutas" required>
+                                </div>
+                                <!--
+                                <div class="form-group col-md-12">
+                                  <select hidden class="form-control" id="discountPercentage" name="discountPercentage" style="line-height: 2.0;" onchange="enableBranchOfficeSelect()">
+                                    <option selected th:each="product,stauts: ${productList}" th:text="${product.discountPercentage}" th:selected="${stauts.index==0}"></option>
+                                  </select>
+                                </div>
+                                --->
+                                <hr>
+                                <button type="submit" class="btn btn-primary" id="addPost" name="addPost"
+                                        onclick="addForm()">REALIZAR INSPECCION
+                                </button>
+                                <hr>
+                                <h4 class="card-title">LISTADO DE INSPECCION DE NOTIFICACION SELECCIONADA</h4>
+                                <div class="table-responsive">
+                                    <table id="tableShelfList" name="tableShelfList"
+                                           class="table table-hover table-bordered" style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th>ESTANTE</th>
+                                            <!--
+                                            <th>SUCURSAL</th>
+                                            -->
+                                            <th>FRUTA</th>
+                                            <th>CANTIDAD</th>
+                                            <th>ESTADO</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="formList" name="formList">
+                                        <tr th:each="aux: ${b}">
+                                            <td class="text-left" th:text="${aux.shelfId}">ESTANTE</td>
+                                            <!--
+                                            <td class="text-left" th:text="${aux.branchoffice}">Sucursal</td>
+                                            -->
+                                            <td class="text-left" th:text="${aux.fruitType}">FRUTA</td>
+                                            <td class="text-left" th:text="${aux.fruitQuantity}">CANTIDAD</td>
+                                            <td class="text-left" th:text="${aux.inspectionType}">ESTADO</td>
+                                            <!--
+                                            <td class="text-left" th:text="${aux.discountPercentage}+'%'">% Descuento (Unitario)</td>
+                                            --->
+                                        </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th>ESTANTE</th>
+                                            <!--
+                                            <th>SUCURSAL</th>
+                                            -->
+                                            <th>FRUTA</th>
+                                            <th>CANTIDAD</th>
+                                            <th>ESTADO</th>
+                                            <!--
+                                            <th>% DESCUENTO (Unitario)</th>
+                                            --->
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-dismiss="modal">CANCELAR</button>
+                                <button id="enviarForm" type="submit" class="btn btn-primary">AGREGAR FORMULARIO
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <!-- content-wrapper ends -->
-      <!-- partial:partials/_footer.html -->
-      <!-- partial -->
     </div>
-  </div>
-
-
-
 </div>
 <!-- container-scroller -->
 <!-- plugins:js -->
-  <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page -->
-  <script src="../../assets/vendors/chart.js/Chart.min.js"></script>
-  <script src="../../assets/vendors/jquery-circle-progress/js/circle-progress.min.js"></script>
-  <!-- inject:js -->
-  <script src="../../assets/js/off-canvas.js"></script>
-  <script src="../../assets/js/hoverable-collapse.js"></script>
-  <script src="../../assets/js/misc.js"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page -->
-  <script src="../../assets/js/dashboard.js"></script>
-  <script src="../../assets/js/chart.js"></script>
+<script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script src="../../assets/vendors/chart.js/Chart.min.js"></script>
+<script src="../../assets/vendors/jquery-circle-progress/js/circle-progress.min.js"></script>
+<!-- inject:js -->
+<script src="../../assets/js/off-canvas.js"></script>
+<script src="../../assets/js/hoverable-collapse.js"></script>
+<script src="../../assets/js/misc.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page -->
+<script src="../../assets/js/dashboard.js"></script>
+<script src="../../assets/js/chart.js"></script>
+<script type='text/javascript' src="../../js/employeeFormPublish.js"></script>
 
-  <!-- End custom js for this page -->
-  <script type='text/javascript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'></script>
-  <script type="text/javascript">
-    $(function() {
-      $('[data-toggle="tooltip"]').tooltip()
+
+<!-- End custom js for this page -->
+<script type='text/javascript'
+        src='https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js'></script>
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
     });
-  </script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('#example').DataTable();
-    } );
-  </script>
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
 </body>
 </html>

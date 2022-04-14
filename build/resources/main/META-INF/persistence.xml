@@ -19,6 +19,8 @@
         <class>WEBAPP_SFK.models.ExpressSalesInventory</class>
         <class>WEBAPP_SFK.models.FruitProduct</class>
         <class>WEBAPP_SFK.models.Client</class>
+        <class>WEBAPP_SFK.models.Form</class>
+
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/webapp_sfk" />

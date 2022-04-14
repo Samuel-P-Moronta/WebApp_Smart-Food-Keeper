@@ -3,6 +3,7 @@ package WEBAPP_SFK;
 import WEBAPP_SFK.controllers.*;
 import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.services.ContainerDataServices;
+import WEBAPP_SFK.services.NotificationServices;
 import WEBAPP_SFK.services.WasteDataServices;
 import WEBAPP_SFK.services.connect.DataBaseServices;
 import WEBAPP_SFK.utilities.DefaultDataLoader;
@@ -58,7 +59,20 @@ public class Main {
         //DefaultDataLoader.getInstance().createDefaultBranchOffice();
         //DefaultDataLoader.getInstance().createDefaultShelf();
         DefaultDataLoader.getInstance().createDefaultData();
-       //DefaultDataLoader.getInstance().createDefaultContainer();
+        long idNotification = Long.parseLong(String.valueOf(1));
+        long idNotification2 = Long.parseLong(String.valueOf(2));
+        Notification notification = NotificationServices.getInstance().find(idNotification);
+        Notification notification2 = NotificationServices.getInstance().find(idNotification2);
+        System.out.println("Estante: "+notification.getShelfData().getShelf().getDeviceId());
+        System.out.println("Tipo de fruta 1: "+notification.getShelfData().getFruitType());
+        System.out.println("Cantidad de frutas: "+notification.getShelfData().getFruitCant());
+        System.out.println("Cantidad overripe: "+notification.getShelfData().getCantOverripe());
+        System.out.println("Tipo de fruta 2: "+notification2.getShelfData().getFruitType());
+        System.out.println("Cantidad overripe: "+notification2.getShelfData().getCantOverripe());
+        System.out.println("Cantidad de frutas: "+notification2.getShelfData().getFruitCant());
+
+
+        //DefaultDataLoader.getInstance().createDefaultContainer();
         /*
         ArrayList<Float> list = new ArrayList<Float>();
         list.add(1.0F);

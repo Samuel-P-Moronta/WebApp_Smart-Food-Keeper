@@ -61,6 +61,8 @@ dependencies {
     //qr
     implementation group: 'com.google.zxing', name: 'zxing-parent', version: '3.4.1', ext: 'pom'
     implementation group: 'com.google.zxing', name: 'core', version: '3.4.1'
+
+
 }
 
 test {

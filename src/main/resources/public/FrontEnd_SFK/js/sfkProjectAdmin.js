@@ -20,8 +20,9 @@ function findBranchOfficeByCompany(idCompany){
 function findAllCompanies(){
     console.log("Entering all company function")
     let serverResponse = "";
+    let endpoint = "companyList"
     const Http = new XMLHttpRequest();
-    const url =  "http://localhost:7000/api/companyList"
+    const url = location.protocol + "//" + location.hostname + ':' + location.port + '/api/' + endpoint
     Http.open("GET", url);
     Http.send();
     Http.onreadystatechange = function () {

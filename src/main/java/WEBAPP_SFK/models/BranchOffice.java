@@ -34,6 +34,9 @@ public class BranchOffice implements Serializable {
     @Column(nullable = true)
     @JsonManagedReference
     private Set<Container> containerList = new HashSet<>();
+    @OneToMany(mappedBy = "branchOffice",fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private Set<Form> formList = new HashSet<>();
 
     public BranchOffice(){
 
@@ -90,5 +93,11 @@ public class BranchOffice implements Serializable {
         this.containerList = containerList;
     }
 
+    public Set<Form> getFormList() {
+        return formList;
+    }
 
+    public void setFormList(Set<Form> formList) {
+        this.formList = formList;
+    }
 }

@@ -163,8 +163,7 @@ public class CustomEmailSender {
                 "        visibility: hidden;\n" +
                 "        width: 0;\n" +
                 "      \"\n" +
-                "      >This is preheader text. Some clients will show this text as a\n" +
-                "      preview.</span\n" +
+                "      ></span\n" +
                 "    >\n" +
                 "    <table\n" +
                 "      role=\"presentation\"\n" +
@@ -263,7 +262,7 @@ public class CustomEmailSender {
                 "                        \"\n" +
                 "                        valign=\"top\"\n" +
                 "                      >\n" +
-                "                        <p\n" +
+                "                        <p th:text=\"${userClient}\" \n" +
                 "                          style=\"\n" +
                 "                            font-family: sans-serif;\n" +
                 "                            font-size: 14px;\n" +

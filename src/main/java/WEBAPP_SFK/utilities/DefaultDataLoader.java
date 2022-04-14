@@ -3,6 +3,7 @@ package WEBAPP_SFK.utilities;
 
 import WEBAPP_SFK.controllers.ControllerCore;
 import WEBAPP_SFK.models.*;
+import WEBAPP_SFK.models.enums.NotificationStatus;
 import WEBAPP_SFK.models.enums.RoleApp;
 import WEBAPP_SFK.services.*;
 
@@ -50,6 +51,7 @@ public class DefaultDataLoader {
         createDefaultWasteData();
         createDefaultFruitProducts();
         createClient();
+        createDefaultNotification();
     }
 
     public void createDefaultCompany() {
@@ -246,6 +248,23 @@ public class DefaultDataLoader {
                 FruitProductServices.getInstance().create(fp2);
             }
         }
+    }
+    public void createDefaultNotification(){
+        //    public Notification(String title, String description, Date sendDate, User user, BranchOffice branchOffice, Company company, int type) {
+        BranchOffice branchOffice1 = ControllerCore.getInstance().findBranchOfficeById(1);
+        User userEmployee1 = ControllerCore.getInstance().findUserByEmail("employee1@gmail.com");
+        //    public ShelfData(Float temperature, Float humidity, int fruitCant, String fruitType, int cantOverripe, int cantRipe, int cantUnripe, Shelf shelf) {
+        ShelfData s = new ShelfData(30.29F,45.71f,2,"pineapple",1,1,0,ControllerCore.getInstance().findShelfByDeviceId("1"));
+        ShelfData s2 = new ShelfData(20.29F,30.71f,3,"papaya",2,0,1,ControllerCore.getInstance().findShelfByDeviceId("1"));
+        ShelfDataServices.getInstance().create(s);
+        Notification notification = new Notification("MADUREZ",NotificationStatus.MADUREZ.getMessage(), new Date(), userEmployee1,branchOffice1,branchOffice1.getCompany(),0,s,false);
+        Notification notification2 = new Notification("MADUREZ",NotificationStatus.MADUREZ.getMessage(), new Date(), userEmployee1,branchOffice1,branchOffice1.getCompany(),0,s2,false);
+        Notification notification3 = new Notification("TEMPERATURA", NotificationStatus.TEMPERATURA.getMessage(), new Date(), userEmployee1,branchOffice1,branchOffice1.getCompany(),0,false);
+        NotificationServices.getInstance().create(notification);
+        NotificationServices.getInstance().create(notification2);
+        NotificationServices.getInstance().create(notification3);
+
+
     }
 
     public void createClient() {
