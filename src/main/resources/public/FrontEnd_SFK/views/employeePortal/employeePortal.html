@@ -146,12 +146,7 @@
                                                         </button>
                                                     </a>
                                                     <a>
-                                                        <button th:value="${n.notification.id}"
-                                                                th:disabled="${n.activar}" type="button"
-                                                                class="btn btn-success" data-toggle="modal"
-                                                                data-target="#expressModal" onclick="findForms()">
-                                                            INSPECCION
-                                                        </button>
+                                                        <button th:value="${n.notification.id}" th:disabled="${n.activar}" type="button" class="btn btn-success" data-toggle="modal" data-target="#expressModal" onclick="findForms()">INSPECCION</button>
                                                     </a>
                                                     <!--
                                                     <a th:href="'/employeePortal/delete-notification-employee/'+${n.notification.id}" ><button th:hidden="${n.activar}"  type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">ZAFACON</button></a>
@@ -220,8 +215,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal fade" id="expressModal" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="expressModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -274,9 +268,7 @@
                                 </div>
                                 --->
                                 <hr>
-                                <button type="submit" class="btn btn-primary" id="addPost" name="addPost"
-                                        onclick="addForm()">REALIZAR INSPECCION
-                                </button>
+                                <button type="submit" class="btn btn-primary" id="addPost" name="addPost" onclick="addForm()">REALIZAR INSPECCION</button>
                                 <hr>
                                 <h4 class="card-title">LISTADO DE INSPECCION DE NOTIFICACION SELECCIONADA</h4>
                                 <div class="table-responsive">

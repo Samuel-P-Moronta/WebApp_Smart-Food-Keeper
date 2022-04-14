@@ -51,7 +51,7 @@ public class DefaultDataLoader {
         createDefaultWasteData();
         createDefaultFruitProducts();
         createClient();
-        createDefaultNotification();
+        //createDefaultNotification();
     }
 
     public void createDefaultCompany() {
@@ -257,14 +257,17 @@ public class DefaultDataLoader {
         ShelfData s = new ShelfData(30.29F,45.71f,2,"pineapple",1,1,0,ControllerCore.getInstance().findShelfByDeviceId("1"));
         ShelfData s2 = new ShelfData(20.29F,30.71f,3,"papaya",2,0,1,ControllerCore.getInstance().findShelfByDeviceId("1"));
         ShelfDataServices.getInstance().create(s);
-        Notification notification = new Notification("MADUREZ",NotificationStatus.MADUREZ.getMessage(), new Date(), userEmployee1,branchOffice1,branchOffice1.getCompany(),0,s,false);
-        Notification notification2 = new Notification("MADUREZ",NotificationStatus.MADUREZ.getMessage(), new Date(), userEmployee1,branchOffice1,branchOffice1.getCompany(),0,s2,false);
-        Notification notification3 = new Notification("TEMPERATURA", NotificationStatus.TEMPERATURA.getMessage(), new Date(), userEmployee1,branchOffice1,branchOffice1.getCompany(),0,false);
-        NotificationServices.getInstance().create(notification);
-        NotificationServices.getInstance().create(notification2);
+        Notification notification = new Notification("MADUREZ",NotificationStatus.MADUREZ.getMessage(), new Date(), userEmployee1,branchOffice1,branchOffice1.getCompany(),1,s,false);
+        Notification notification3 = new Notification("TEMPERATURA", NotificationStatus.TEMPERATURA.getMessage(), new Date(), userEmployee1,branchOffice1,branchOffice1.getCompany(),3,false);
+        boolean checkOverripe = new ControllerCore().findNotificationByActive(false,1,userEmployee1);
+        //En revision = false
+        //Revisado = true
+        if(checkOverripe == true){
+            System.out.println("[MADUREZ ESTA EN PROCESO DE REVISION]");
+        }else{
+            NotificationServices.getInstance().create(notification);
+        }
         NotificationServices.getInstance().create(notification3);
-
-
     }
 
     public void createClient() {

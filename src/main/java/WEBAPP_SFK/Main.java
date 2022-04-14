@@ -58,7 +58,9 @@ public class Main {
         //DefaultDataLoader.getInstance().createDefaultCompany();
         //DefaultDataLoader.getInstance().createDefaultBranchOffice();
         //DefaultDataLoader.getInstance().createDefaultShelf();
+
         DefaultDataLoader.getInstance().createDefaultData();
+          /*
         long idNotification = Long.parseLong(String.valueOf(1));
         long idNotification2 = Long.parseLong(String.valueOf(2));
         Notification notification = NotificationServices.getInstance().find(idNotification);
@@ -70,6 +72,8 @@ public class Main {
         System.out.println("Tipo de fruta 2: "+notification2.getShelfData().getFruitType());
         System.out.println("Cantidad overripe: "+notification2.getShelfData().getCantOverripe());
         System.out.println("Cantidad de frutas: "+notification2.getShelfData().getFruitCant());
+
+         */
 
 
         //DefaultDataLoader.getInstance().createDefaultContainer();

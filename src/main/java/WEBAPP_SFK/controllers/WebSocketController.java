@@ -246,17 +246,24 @@ public class WebSocketController extends BaseController {
     }
 
     public void saveNotifications(ShelfDataJSON sdj, User user) {
+        /*
         boolean notificationMadurez = new ControllerCore().findNotificationByTypeAndUser(1, user);
         boolean notificationSuministro = new ControllerCore().findNotificationByTypeAndUser(2, user);
         boolean notificationTemperature = new ControllerCore().findNotificationByTypeAndUser(3, user);
         boolean notificationHumidity = new ControllerCore().findNotificationByTypeAndUser(4, user);
+
+         */
         List<ShelfData> shelfData = new ShelfDataServices().findAllShelfDataByShelfId(sdj.getDeviceId());
 
+        boolean notificationMadurez = new ControllerCore().findNotificationByActive(false,1,user);
+        boolean notificationSuministro = new ControllerCore().findNotificationByActive(false,2,user);
+        boolean notificationTemperature = new ControllerCore().findNotificationByActive(false,3,user);
+        boolean notificationHumidity = new ControllerCore().findNotificationByActive(false,4, user);
 
         if (user != null) {
             if (sdj.getCantOverripe() > 0) {
                 if (notificationMadurez == true) {
-                    System.out.println("This notification [MADUREZ] already exist in database");
+                    System.out.println("This notification [MADUREZ] esta en proceso de revision");
                 } else {
                     for (ShelfData sData : shelfData) {
                         Notification notificationType1 = new Notification("Madurez", NotificationStatus.MADUREZ.getMessage(), new Date(), user, user.getBranchOffice(), user.getCompany(), 1, sData, false);
@@ -272,7 +279,7 @@ public class WebSocketController extends BaseController {
             }
             if (sdj.getFruitCant() <= 1) {
                 if (notificationSuministro == true) {
-                    System.out.println("This notification [SUMINISTRO] already exist in database");
+                    System.out.println("This notification [SUMINISTRO] esta en proceso de revision");
                 } else {
                     Notification notificationType2 = new Notification("Suministro", NotificationStatus.SUMINISTRO.getMessage(), new Date(), user, user.getBranchOffice(), user.getCompany(), 2, false);
                     ControllerCore.getInstance().createNotification(notificationType2);
@@ -286,7 +293,7 @@ public class WebSocketController extends BaseController {
             }
             if (sdj.getTemperature() > 30) {
                 if (notificationTemperature == true) {
-                    System.out.println("This notification [TEMPERATURE] already exist in database");
+                    System.out.println("This notification [TEMPERATURE] esta en proceso de revision");
                 } else {
                     Notification notificationType3 = new Notification("Temperatura", NotificationStatus.TEMPERATURA.getMessage(), new Date(), user, user.getBranchOffice(), user.getCompany(), 3, false);
                     ControllerCore.getInstance().createNotification(notificationType3);
@@ -300,7 +307,7 @@ public class WebSocketController extends BaseController {
             }
             if (sdj.getHumidity() > 90) {
                 if (notificationHumidity == true) {
-                    System.out.println("This notification [HUMIDITY] already exist in database");
+                    System.out.println("This notification [HUMIDITY] esta en proceso de revision");
                 } else {
                     Notification notificationType4 = new Notification("Humedad", NotificationStatus.HUMEDAD.getMessage(), new Date(), user, user.getBranchOffice(), user.getCompany(), 4, false);
                     ControllerCore.getInstance().createNotification(notificationType4);

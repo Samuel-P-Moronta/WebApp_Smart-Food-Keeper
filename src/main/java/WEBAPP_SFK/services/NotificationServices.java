@@ -34,6 +34,23 @@ public class NotificationServices extends DataBaseRepository<Notification> {
         }
         return null;
     }
+    public Notification findNotificationByStatus(boolean status, int type, User user) {
+        EntityManager em = getEntityManager();
+        String sql = "";
+        sql += " SELECT N from Notification N WHERE N.status = :status and N.type =:type and user.email =:email";
+
+        Query query = em.createQuery(sql, Notification.class);
+        query.setParameter("status", status);
+        query.setParameter("type", type);
+        query.setParameter("email",user.getEmail());
+
+        List<Notification> notificationList = query.getResultList();
+        if (notificationList.size() > 0) {
+            return notificationList.get(0);
+        }
+        return null;
+    }
+
 
     public List<Notification> findNotificationByUserEmail(String email) {
         EntityManager em = getEntityManager();

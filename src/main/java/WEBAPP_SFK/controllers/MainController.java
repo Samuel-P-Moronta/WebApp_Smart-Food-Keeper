@@ -513,7 +513,6 @@ public class MainController extends BaseController {
                         }
                     }
                     model.put("fullNameToShow", fullNameToShow.toUpperCase());
-                    Company company = user.getCompany();
                     List<NotificacionesAct> notificacionesActs = new ArrayList<>();
                     boolean status = false;
                     for (Notification notification : user.getNotificationList()) {
@@ -522,6 +521,7 @@ public class MainController extends BaseController {
                             status = true;
                         }
                         notificacionesActs.add(new NotificacionesAct(notification, status));
+
                     }
                     model.put("notificationListEmployee", notificacionesActs);
                     ctx.render("/public/FrontEnd_SFK/views/employeePortal/employeePortal.html", model);
