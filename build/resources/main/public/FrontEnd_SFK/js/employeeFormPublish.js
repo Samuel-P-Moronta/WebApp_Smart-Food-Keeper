@@ -163,7 +163,6 @@ function addForm(fruitType, shelfId, branchOffice, discountPercentage, overripeC
     console.log("Id notification: ", idNotificationSelect.value)
 
 
-
     if (shelfId != "" && branchOffice != "" && fruitType != "" && fruitQuantity != "" && inspectionType != "") {
         if (fruitQuantity > overripeCant) {
             alert("La cantidad de frutas a publicar no puede exceder la cantidad de frutas detectadas muy maduras")
@@ -182,6 +181,7 @@ function addForm(fruitType, shelfId, branchOffice, discountPercentage, overripeC
             var fruitQuantity = document.querySelector("#fruitQuantity").value;
             var ipt = document.getElementById("inspectionType");
             var fruitQ = document.getElementById("fruitQuantity")
+            //var btnInspection = document.getElementById("addPost");
             var resta = overripeCant - fruitQuantity;
 
             transaccion.oncomplete = function (e) {
@@ -195,9 +195,11 @@ function addForm(fruitType, shelfId, branchOffice, discountPercentage, overripeC
                     document.getElementById("inspectionTypePrueba").value = "Ya no quedan frutas que clasificar";
                     ipt.disabled = true;
                     fruitQ.disabled = true;
+                    btnInspection.dsabled = true;
                 } else {
                     ipt.disabled = false;
                     fruitQ.disabled = false;
+                    btnInspection.disabled = false;
                 }
                 listarDatos();
                 ///window.location.reload();
@@ -244,6 +246,9 @@ function listarDatos() {
     let overripeCant = document.getElementById("overripeCant").value;
     var ipt = document.getElementById("inspectionType");
     var fruitQ = document.getElementById("fruitQuantity")
+    let btnFormIndexDB = document.getElementById("addPost");
+    let btnSendForm = document.getElementById("enviarForm");
+
 
     console.log("Valor cargado desde la BD 9091", overripeCant);
 
@@ -261,6 +266,9 @@ function listarDatos() {
             //recuperando el objeto.
             formulario_recuperados.push(cursor.value);
             //
+            if (cursor.value.length > 0) {
+                console.log("LENGHT DE LA TABLA")
+            }
 
             console.log("Value cursor: ", cursor.value)
             let fruitQuantity = cursor.value.quantity;
@@ -277,7 +285,7 @@ function listarDatos() {
                 }
                 console.log("valor restado: ", restar)
                 if (restar < 0) {
-                    console.log("Overrip para sumar: ",document.querySelector("#overripeCant").value)
+                    console.log("Overrip para sumar: ", document.querySelector("#overripeCant").value)
                     //document.querySelector("#overripeCant").value = restar + overripeCant;
                     var oCant = document.querySelector("#overripeCant").value
                     console.log("Valor resultante: ", oCant);
@@ -292,6 +300,17 @@ function listarDatos() {
 
 
         } else {
+            var overripeC = document.getElementById("overripeCant").value;
+            if (overripeC == 0) {
+                btnFormIndexDB.disabled = true;
+            } else {
+                btnFormIndexDB.disabled = false;
+            }
+            if (contador == 0) {
+                btnSendForm.disabled = true;
+            } else {
+                btnSendForm.disabled = false;
+            }
             console.log("La cantidad de registros recuperados es: " + contador);
         }
 
@@ -334,7 +353,29 @@ $(document).ready(function () {
         sendDataToServer();
         //window.location.reload(true);
     });
+    $("#inspectNotOverripe").click(function () {
+        console.log("Cancelando inspeccion")
+        sendInspectNotOverripe();
+        //window.location.reload(true);
+    });
+    $("#cancelButton").click(function () {
+        console.log("Cancelando inspeccion")
+        reloadFromCancel();
+        //window.location.reload(true);
+    });
 });
+
+function sendInspectNotOverripe() {
+    //datos obtenido de forma correcta
+    let idNotificationSelect = document.getElementById("idNotificationSelect").value;
+    let inspectionNotOverripe = [{idNotificationSelect: idNotificationSelect,inspectionNotOverripe: true}];
+    webSocket.send(JSON.stringify(inspectionNotOverripe));
+}
+
+
+function reloadFromCancel() {
+    window.location.reload(true);
+}
 
 function sendDataToServer() {
     var data = dataBase.result.transaction(["form"]);
@@ -349,7 +390,6 @@ function sendDataToServer() {
         limpiarDB();
         listarDatos();
         window.location.reload(true);
-
     };
 }
 
@@ -369,5 +409,4 @@ function limpiarDB() {
 }
 
 //findForms();
-findMyBranchOffice();
 

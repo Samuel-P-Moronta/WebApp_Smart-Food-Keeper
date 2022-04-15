@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SFK Project</title>
     <!-- plugins:css -->
+
     <link rel="stylesheet" href="../../assets/vendors/mdi/css/materialdesignicons.min.css">
     <!--
     <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
@@ -121,8 +122,8 @@
                                                 <th>Evento</th>
                                                 <th>Mensaje</th>
                                                 <th>Fecha de evento</th>
-                                                <th>Accion</th>
                                                 <th>Estado</th>
+                                                <th>Accion</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -135,10 +136,7 @@
                                                 <td class="text-center" th:text="${n.notification.sendDate}">Fecha de
                                                     evento
                                                 </td>
-                                                <td class="text-center"
-                                                    th:text="${n.notification.status} ? 'REVISADO': 'EN REVISION'">Fecha
-                                                    de evento
-                                                </td>
+                                                <td class="text-center"><label class="badge "  th:text="${n.notification.status} ? 'REVISADO': 'EN REVISION'" th:classappend="${n.notification.status} ? 'badge-success' : 'badge-danger'"></label></td>
                                                 <td class="text-pinterest">
                                                     <a th:href="'/management/notificationByType-employee/'+${n.notification.type}">
                                                         <button type="button" class="btn btn-primary"
@@ -146,7 +144,7 @@
                                                         </button>
                                                     </a>
                                                     <a>
-                                                        <button th:value="${n.notification.id}" th:disabled="${n.activar}" type="button" class="btn btn-success" data-toggle="modal" data-target="#expressModal" onclick="findForms()">INSPECCION</button>
+                                                        <button th:value="${n.notification.id}"   th:disabled="${n.activar}"type="button" class="btn btn-success" data-toggle="modal"   th:data-target="${n.activar} ? '#exampleModal' : '#expressModal'" onclick="findForms()">INSPECCION</button>
                                                     </a>
                                                     <!--
                                                     <a th:href="'/employeePortal/delete-notification-employee/'+${n.notification.id}" ><button th:hidden="${n.activar}"  type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">ZAFACON</button></a>
@@ -163,8 +161,8 @@
                                                 <th>Evento</th>
                                                 <th>Mensaje</th>
                                                 <th>Fecha de evento</th>
-                                                <th>Accion</th>
                                                 <th>Estado</th>
+                                                <th>Accion</th>
 
                                             </tr>
                                             </tfoot>
@@ -215,6 +213,27 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">ALERTA DE INSPECCION</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Marcar notficacion como revision</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
+                                <form method="get" th:attr="action=${action}">
+                                    <button id="inspectNotOverripe" type="submit" class="btn btn-primary" onClick="location.reload(true);">SI</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="modal fade" id="expressModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -247,9 +266,8 @@
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="inspectionType">Seleccionar tipo de inspeccion: </label>
-                                    <select name="inspectionType" id="inspectionType" placeholder="level"
-                                            class="form-control" aria-required="true" required>
-                                        <option id="inspectionTypePrueba" value="" selected>TIPO DE INSPECCION</option>
+                                    <select name="inspectionType" id="inspectionType" placeholder="level" class="form-control" aria-required="true" required>
+                                        <option selected="false"disabled  id="inspectionTypePrueba" value="">TIPO DE INSPECCION</option>
                                         <option name="inspectionType" value="EXPRESS">EXPRESS</option>
                                         <option name="inspectionType" value="ZAFACON">ZAFACON</option>
                                     </select>
@@ -317,8 +335,9 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-dismiss="modal">CANCELAR</button>
-                                <button id="enviarForm" type="submit" class="btn btn-primary">AGREGAR FORMULARIO
+
+                                <button id="cancelButton" type="button" class="btn btn-danger" data-dismiss="modal">CANCELAR</button>
+                                <button id="enviarForm" type="submit" class="btn btn-dark">AGREGAR FORMULARIO
                                 </button>
                             </div>
                         </div>

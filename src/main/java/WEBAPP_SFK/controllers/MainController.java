@@ -488,6 +488,10 @@ public class MainController extends BaseController {
                         ctx.redirect("/login");
                     }
                 });
+                post("/reload-page", ctx -> {
+                    ctx.redirect("/employeePortal");
+                });
+
                 get("/", ctx -> {
                     User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
                     Person person = ControllerCore.controllerCore.findPersonByEmail(user.getEmail());
@@ -517,7 +521,10 @@ public class MainController extends BaseController {
                     boolean status = false;
                     for (Notification notification : user.getNotificationList()) {
                         status = false;
-                        if (notification.getTitle().equalsIgnoreCase("SUMINISTRO") || notification.getTitle().equalsIgnoreCase("TEMPERATURA") || notification.getTitle().equalsIgnoreCase("HUMEDAD") || notification.isStatus() == true) {
+                        if (notification.getTitle().equalsIgnoreCase("SUMINISTRO") || notification.getTitle().equalsIgnoreCase("TEMPERATURA") || notification.getTitle().equalsIgnoreCase("HUMEDAD") ) {
+                            status = false;
+                        }
+                        if(notification.isStatus() == false){
                             status = true;
                         }
                         notificacionesActs.add(new NotificacionesAct(notification, status));

@@ -51,7 +51,7 @@ public class DefaultDataLoader {
         createDefaultWasteData();
         createDefaultFruitProducts();
         createClient();
-        //createDefaultNotification();
+        createDefaultNotification();
     }
 
     public void createDefaultCompany() {

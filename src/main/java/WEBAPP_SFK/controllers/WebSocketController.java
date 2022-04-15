@@ -23,6 +23,8 @@ public class WebSocketController extends BaseController {
     private static Map<String, Float> map = new HashMap<>();
     private static Map<Float, String> newMap = new HashMap<>();
     private static ArrayList<Float> weights = new ArrayList<Float>();
+    private Map<String, Object> model = new HashMap<>();
+
 
 
     //private static Map<String, Float> lastEntry = new HashMap<>();
@@ -123,36 +125,46 @@ public class WebSocketController extends BaseController {
                     //FormAuxJSON form = gson.fromJson(ctx.message(), FormAuxJSON.class);
                     for (FormAuxJSON formAuxJSON : formList) {
                         long idNotification = Long.parseLong(String.valueOf(formAuxJSON.getIdNotificationSelect()));
-                        if (formAuxJSON.getInspectionType().equalsIgnoreCase("EXPRESS") || formAuxJSON.getInspectionType().equalsIgnoreCase("ZAFACON")) {
-                            //Notification n = new Notification();
-                            Notification notification = NotificationServices.getInstance().find(idNotification);
-                            if (notification != null) {
+                        Notification notification = NotificationServices.getInstance().find(idNotification);
+                        if(formAuxJSON.isInspectionNotOverripe() == true){
+                            if(notification!=null){
                                 notification.setStatus(true);
                                 NotificationServices.getInstance().update(notification);
                             }
                         }
-                        if (user != null) {
-                            BranchOffice branchOffice = BranchOfficeServices.getInstance().findBranchOfficeByUserEmployee(email);
-                            if (branchOffice != null) {
-                                List<Client> clientList = new ClientServices().findAll();
-                                Form f1 = new Form();
-                                f1.setIdNotificationSelect(formAuxJSON.getIdNotificationSelect());
-                                f1.setShelfId(formAuxJSON.getShelfId());
-                                f1.setFruitType(formAuxJSON.getFruitType());
-                                f1.setQuantity(formAuxJSON.getQuantity());
-                                f1.setInspectionType(formAuxJSON.getInspectionType());
-                                f1.setRegisterDate(new Date());
-                                f1.setBranchOffice(branchOffice);
-                                FormServices.getInstance().create(f1);
-                                //Publish express
-                                String customSubject = "Frutas express.";
-                                if(formAuxJSON.getInspectionType().equalsIgnoreCase("EXPRESS")){
-                                    for (Client c : clientList) {
-                                        String customMessage = "Hola " + " " + c.getFirstName()+" "+ c.getLastName() + "." + " " + "Este correo es para informarte tenemos" + " " + formAuxJSON.getFruitType() + "S" + " " + "con un " + formAuxJSON.getDiscountPercentage() + "%" + " " + "de descuento." + " " + "En el supermercado:" + " " + branchOffice.getCompany().getName() + " " + "y sucursal" + " " + branchOffice.getAddress().getCity() + " " + "(" + branchOffice.getAddress().getDirection() + ")";
-                                        new EmailSender().message(c.getEmail(), customSubject, customMessage);
+                        if(formAuxJSON.getInspectionType() !=null){
+                            if (formAuxJSON.getInspectionType().equalsIgnoreCase("EXPRESS") || formAuxJSON.getInspectionType().equalsIgnoreCase("ZAFACON")) {
+                                //Notification n = new Notification();
+                                if (notification != null) {
+                                    notification.setStatus(true);
+                                    NotificationServices.getInstance().update(notification);
+
+                                }
+                            }
+                            if (user != null) {
+                                BranchOffice branchOffice = BranchOfficeServices.getInstance().findBranchOfficeByUserEmployee(email);
+                                if (branchOffice != null) {
+                                    List<Client> clientList = new ClientServices().findAll();
+                                    Form f1 = new Form();
+                                    f1.setIdNotificationSelect(formAuxJSON.getIdNotificationSelect());
+                                    f1.setShelfId(formAuxJSON.getShelfId());
+                                    f1.setFruitType(formAuxJSON.getFruitType());
+                                    f1.setQuantity(formAuxJSON.getQuantity());
+                                    f1.setInspectionType(formAuxJSON.getInspectionType());
+                                    f1.setRegisterDate(new Date());
+                                    f1.setBranchOffice(branchOffice);
+                                    FormServices.getInstance().create(f1);
+                                    //Publish express
+                                    String customSubject = "Frutas express.";
+                                    if(formAuxJSON.getInspectionType().equalsIgnoreCase("EXPRESS")){
+                                        for (Client c : clientList) {
+                                            String customMessage = "Hola " + " " + c.getFirstName()+" "+ c.getLastName() + "." + " " + "Este correo es para informarte tenemos" + " " + formAuxJSON.getFruitType() + "S" + " " + "con un " + formAuxJSON.getDiscountPercentage() + "%" + " " + "de descuento." + " " + "En el supermercado:" + " " + branchOffice.getCompany().getName() + " " + "y sucursal" + " " + branchOffice.getAddress().getCity() + " " + "(" + branchOffice.getAddress().getDirection() + ")";
+                                            new EmailSender().message(c.getEmail(), customSubject, customMessage);
+                                        }
                                     }
                                 }
                             }
+
                         }
                     }
                 } catch (Exception e) {

@@ -8,11 +8,12 @@ public class FormAuxJSON {
     private int quantity;
     private String inspectionType;
     private int id;
+    private boolean inspectionNotOverripe;
 
     public FormAuxJSON() {
     }
 
-    public FormAuxJSON(int idNotificationSelect, int shelfId, String fruitType, int discountPercentage, int quantity, String inspectionType, int id) {
+    public FormAuxJSON(int idNotificationSelect, int shelfId, String fruitType, int discountPercentage, int quantity, String inspectionType, int id, Boolean inspectionNotOverripe) {
         this.idNotificationSelect = idNotificationSelect;
         this.shelfId = shelfId;
         this.fruitType = fruitType;
@@ -20,6 +21,7 @@ public class FormAuxJSON {
         this.quantity = quantity;
         this.inspectionType = inspectionType;
         this.id = id;
+        this.inspectionNotOverripe = inspectionNotOverripe;
     }
 
     public int getIdNotificationSelect() {
@@ -76,5 +78,13 @@ public class FormAuxJSON {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isInspectionNotOverripe() {
+        return inspectionNotOverripe;
+    }
+
+    public void setInspectionNotOverripe(boolean inspectionNotOverripe) {
+        this.inspectionNotOverripe = inspectionNotOverripe;
     }
 }
