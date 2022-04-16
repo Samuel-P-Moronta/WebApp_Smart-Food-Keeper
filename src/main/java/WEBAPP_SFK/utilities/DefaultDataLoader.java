@@ -262,12 +262,17 @@ public class DefaultDataLoader {
         boolean checkOverripe = new ControllerCore().findNotificationByActive(false,1,userEmployee1);
         //En revision = false
         //Revisado = true
+
         if(checkOverripe == true){
             System.out.println("[MADUREZ ESTA EN PROCESO DE REVISION]");
         }else{
             NotificationServices.getInstance().create(notification);
         }
-        NotificationServices.getInstance().create(notification3);
+        if(checkOverripe == true){
+            System.out.println("[MADUREZ ESTA EN PROCESO DE REVISION]");
+        }else{
+            NotificationServices.getInstance().create(notification3);
+        }
     }
 
     public void createClient() {

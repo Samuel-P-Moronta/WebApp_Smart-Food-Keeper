@@ -93,8 +93,9 @@ public class ControllerCore {
     public boolean findNotificationByActive(boolean status, int type, User user){
         if(NotificationServices.getInstance().findNotificationByStatus(status,type,user) !=null){
             return true;
+        }else{
+            return false;
         }
-        return false;
     }
     public BranchOffice findBranchOfficeAddress(Address address) {
         return BranchOfficeServices.getInstance().findBranchOfficeAddress(address);
