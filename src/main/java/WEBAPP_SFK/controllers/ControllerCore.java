@@ -105,6 +105,6 @@ public class ControllerCore {
         return PersonServices.getInstance().findPersonByIdentificationCard(identificationCard);
     }
     public Person findPersonByEmail(String email) {
-        return PersonServices.getInstance().findPersonByEmail(email);
+        return PersonServices.getInstance().findPersonByEmail(email.toUpperCase());
     }
 }

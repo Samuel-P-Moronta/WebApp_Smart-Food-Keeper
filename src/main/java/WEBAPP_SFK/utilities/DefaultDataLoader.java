@@ -80,7 +80,7 @@ public class DefaultDataLoader {
         } else {
             ControllerCore.getInstance().updateUser(userRoot);
         }
-        User userEmployee1 = ControllerCore.getInstance().findUserByEmail("yehudyyr09@gmail.com");
+        User userEmployee1 = ControllerCore.getInstance().findUserByEmail("yehudyr09@gmail.com");
         if (userEmployee1 == null) {
             userEmployee1 = new User();
             userEmployee1.setEmail("employee1@gmail.com");
@@ -266,12 +266,12 @@ public class DefaultDataLoader {
         if(checkOverripe == true){
             System.out.println("[MADUREZ ESTA EN PROCESO DE REVISION]");
         }else{
-            NotificationServices.getInstance().create(notification);
+            //NotificationServices.getInstance().create(notification);
         }
         if(checkOverripe == true){
             System.out.println("[MADUREZ ESTA EN PROCESO DE REVISION]");
         }else{
-            NotificationServices.getInstance().create(notification3);
+            //NotificationServices.getInstance().create(notification3);
         }
     }
 

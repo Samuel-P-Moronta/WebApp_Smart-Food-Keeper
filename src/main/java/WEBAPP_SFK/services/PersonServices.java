@@ -48,7 +48,7 @@ public class PersonServices extends DataBaseRepository<Person> {
 
     public Person findPersonByEmail(String email) {
         EntityManager entityManager = getEntityManager();
-        Query query = entityManager.createQuery("SELECT P FROM Person P WHERE  P.user.email =:email");
+        Query query = entityManager.createQuery("SELECT P FROM Person P WHERE  UPPER(P.user.email) =:email");
         query.setParameter("email",email);
         List<Person> personList = query.getResultList();
         if (personList.size() > 0) {

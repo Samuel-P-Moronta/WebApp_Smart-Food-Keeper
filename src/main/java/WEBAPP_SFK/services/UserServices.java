@@ -2,6 +2,7 @@ package WEBAPP_SFK.services;
 
 import WEBAPP_SFK.controllers.ControllerCore;
 import WEBAPP_SFK.models.Company;
+import WEBAPP_SFK.models.FruitProduct;
 import WEBAPP_SFK.models.Person;
 import WEBAPP_SFK.models.User;
 import WEBAPP_SFK.models.enums.RoleApp;
@@ -29,10 +30,22 @@ public class UserServices extends DataBaseRepository<User> {
         return userServices;
     }
     public User loginRequest(String email,String password){
-        User user = find(email);
+
+        User user = findUserByEmail(email);
         if (user != null) {
             if(user.getPassword().equals(password))
                 return user;
+        }
+        return null;
+    }
+    public User findUserByEmail(String email){
+        String emailAux = email.toUpperCase();
+        EntityManager entityManager = getEntityManager();
+        Query query = entityManager.createQuery("SELECT U FROM User U WHERE UPPER(email) = :email");
+        query.setParameter("email",emailAux);
+        List<User> fp = query.getResultList();
+        if(fp.size() > 0){
+            return fp.get(0);
         }
         return null;
     }

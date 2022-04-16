@@ -277,10 +277,11 @@ public class WebSocketController extends BaseController {
                 if (notificationMadurez == true) {
                     System.out.println("This notification [MADUREZ] esta en proceso de revision");
                 } else {
+                    Notification notificationType1 = null;
                     for (ShelfData sData : shelfData) {
-                        Notification notificationType1 = new Notification("Madurez", NotificationStatus.MADUREZ.getMessage(), new Date(), user, user.getBranchOffice(), user.getCompany(), 1, sData, false);
-                        ControllerCore.getInstance().createNotification(notificationType1);
+                        notificationType1 = new Notification("Madurez", NotificationStatus.MADUREZ.getMessage(), new Date(), user, user.getBranchOffice(), user.getCompany(), 1, sData, false);
                     }
+                    ControllerCore.getInstance().createNotification(notificationType1);
                     try {
                         new EmailSender().message(user.getEmail(), NotificationStatus.MADUREZ.getMessage(), htmlMessage());
                     } catch (Exception e) {
