@@ -56,9 +56,10 @@ public class DefaultDataLoader {
 
     public void createDefaultCompany() {
         String companyName = "El Nacional";
-        Company company = ControllerCore.getInstance().findCompanyByName(companyName);
+        String rnc = "001";
+        Company company = ControllerCore.getInstance().findCompanyByName(rnc);
         if (company == null) {
-            company = new Company(companyName);
+            company = new Company(companyName,rnc);
             ControllerCore.getInstance().createCompany(company);
         } else {
             System.out.println("Company wasn't created");
@@ -67,9 +68,9 @@ public class DefaultDataLoader {
 
     public void createDefaultBranchOffice() {
         ControllerCore controllerCore1 = new ControllerCore();
-        BranchOfficeServices.getInstance().createBranchOffice(new Address("Navarrete", "Calle Barrio Duarte"), controllerCore1.findCompanyByName("El Nacional"));
-        BranchOfficeServices.getInstance().createBranchOffice(new Address("Santo Domingo Oeste", "Timotes"), controllerCore1.findCompanyByName("El Nacional"));
-        BranchOfficeServices.getInstance().createBranchOffice(new Address("Boca Chica", "Calle 24"), controllerCore1.findCompanyByName("El Nacional"));
+        BranchOfficeServices.getInstance().createBranchOffice(new Address("Navarrete", "Calle Barrio Duarte"), controllerCore1.findCompanyByName("001"));
+        BranchOfficeServices.getInstance().createBranchOffice(new Address("Santo Domingo Oeste", "Timotes"), controllerCore1.findCompanyByName("001"));
+        BranchOfficeServices.getInstance().createBranchOffice(new Address("Boca Chica", "Calle 24"), controllerCore1.findCompanyByName("001"));
     }
 
     public void createDefaultUsers() {
@@ -130,7 +131,7 @@ public class DefaultDataLoader {
     }
 
     public void addCompanyAndBranchOfficeToUsers() {
-        Company company = ControllerCore.getInstance().findCompanyByName("El Nacional");
+        Company company = ControllerCore.getInstance().findCompanyByName("001");
         BranchOffice branchOffice1 = ControllerCore.getInstance().findBranchOfficeById(1);
         BranchOffice branchOffice2 = ControllerCore.getInstance().findBranchOfficeById(2);
 
@@ -187,7 +188,7 @@ public class DefaultDataLoader {
 
     private void createDefaultAdmin() {
         ControllerCore controllerCore1 = new ControllerCore();
-        User userAux = new User("admin@gmail.com", "123", Set.of(RoleApp.ROLE_ADMIN), controllerCore1.findCompanyByName("El nacional"));
+        User userAux = new User("admin@gmail.com", "123", Set.of(RoleApp.ROLE_ADMIN), controllerCore1.findCompanyByName("001"));
         if (controllerCore1.findUserByEmail("admin@gmail.com") == null) {
             ControllerCore.getInstance().createUser(userAux);
         } else {

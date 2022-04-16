@@ -18,6 +18,8 @@ public class Company implements Serializable {
     private Long id;
     private String name;
     private String registerDate;
+    @Column(unique = true, nullable = false)
+    private String rnc;
     //To avoid JSON infinite recursion issue 2/26/2022
     @JsonIgnore
     @OneToMany(mappedBy = "company",fetch = FetchType.EAGER)
@@ -33,10 +35,11 @@ public class Company implements Serializable {
 
     }
 
-    public Company(String name) {
+    public Company(String name, String rnc) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.registerDate = sdf.format(new Date());
         this.name = name;
+        this.rnc = rnc;
     }
 
     public Company(String name, String registerDate, Set<BranchOffice> branchOfficeList, Set<Notification> notificationList) {
@@ -101,5 +104,13 @@ public class Company implements Serializable {
 
     public void setFruitProductList(Set<FruitProduct> fruitProductList) {
         this.fruitProductList = fruitProductList;
+    }
+
+    public String getRnc() {
+        return rnc;
+    }
+
+    public void setRnc(String rnc) {
+        this.rnc = rnc;
     }
 }

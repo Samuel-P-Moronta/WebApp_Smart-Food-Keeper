@@ -86,6 +86,7 @@ public class MainController extends BaseController {
                 /* To register a new company */
                 post("/organizationRegister", ctx -> {
                     String identificationCard = ctx.formParam("identificationCard");
+                    String rnc = ctx.formParam("rnc");
                     String firstName = ctx.formParam("firstName");
                     String lastName = ctx.formParam("lastName");
                     String companyName = ctx.formParam("companyName");
@@ -97,51 +98,72 @@ public class MainController extends BaseController {
                     String companyNameAux = companyName.toUpperCase();
 
                     User user = ControllerCore.getInstance().findUserByEmail(email);
-                    Company company = ControllerCore.getInstance().findCompanyByName(companyNameAux);
+                    Company company = ControllerCore.getInstance().findCompanyByName(rnc);
                     Person person = ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard);
 
-                    if (!(identificationCard.equals("") && firstName.equals("") && lastName.equals("") && companyName.equals("") && city.equals("") && direction.equals("") && email.equals("") && password.equals(""))) {
-                        if (company == null) {
-                            company = new Company(companyNameAux);
-                            ControllerCore.getInstance().createCompany(company);
-                        }
-                        if (user == null) {
-                            Company companyAux = ControllerCore.getInstance().findCompanyByName(companyNameAux);
-                            user = new User();
-                            user.setEmail(email);
-                            user.setPassword(password);
-                            user.setRolesList(Set.of(RoleApp.ROLE_ADMIN));
-                            if (companyAux != null) {
-                                user.setCompany(companyAux);
-                                ControllerCore.getInstance().createUser(user);
-                            }
-                            if (person == null) {
-                                person = new Person();
-                                person.setIdentificationCard(identificationCard);
-                                person.setFirstName(firstName);
-                                person.setLastName(lastName);
-                                person.setRegisterDate(new Date());
-                                person.setAddress(new Address(city, direction));
-                                person.setUser(user);
-                                ControllerCore.getInstance().createPerson(person);
-                                System.out.println("Account was created successfully");
-                                String successMessage = firstName + " " + lastName + " " + "Se ha registro con exito en nuestro sistema";
-                                model.put("successMessage", successMessage);
-                                model.put("emailExist", "");
-                                model.put("errorIdentificationCard", "");
+                    if (!(identificationCard.equals("") && firstName.equals("") && lastName.equals("") && companyName.equals("") && rnc.equals("") && city.equals("") && direction.equals("") && email.equals("") && password.equals(""))) {
 
-                            } else {
-                                if (ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard) != null) {
-                                    model.put("errorIdentificationCard", "Esta cedula ya esta registrado en nuestro sistema");
-                                    model.put("emailExist", "");
-                                    model.put("successMessage", "");
+                        if (company == null && user == null && person == null) {
+                            company = new Company(companyNameAux, rnc);
+                            ControllerCore.getInstance().createCompany(company);
+
+                            if (user == null) {
+                                Company companyAux = ControllerCore.getInstance().findCompanyByName(rnc);
+                                user = new User();
+                                user.setEmail(email);
+                                user.setPassword(password);
+                                user.setRolesList(Set.of(RoleApp.ROLE_ADMIN));
+                                if (companyAux != null) {
+                                    user.setCompany(companyAux);
+                                    ControllerCore.getInstance().createUser(user);
+
+                                    if (person == null) {
+                                        person = new Person();
+                                        person.setIdentificationCard(identificationCard);
+                                        person.setFirstName(firstName);
+                                        person.setLastName(lastName);
+                                        person.setRegisterDate(new Date());
+                                        person.setAddress(new Address(city, direction));
+                                        person.setUser(user);
+                                        ControllerCore.getInstance().createPerson(person);
+                                        System.out.println("Account was created successfully");
+                                        String successMessage = firstName + " " + lastName + " " + "Se ha registro con exito en nuestro sistema";
+                                        model.put("successMessage", successMessage);
+                                        model.put("emailExist", "");
+                                        model.put("rncExist", "");
+                                        model.put("errorIdentificationCard", "");
+
+                                    } else {
+                                        if (ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard) != null) {
+                                            System.out.println("Esta cedula ya esta registrado en nuestro sistema: "+ identificationCard);
+                                            model.put("errorIdentificationCard", "Esta cedula ya esta registrado en nuestro sistema");
+                                            model.put("emailExist", "");
+                                            model.put("rncExist", "");
+                                            model.put("successMessage", "");
+                                        }
+                                    }
                                 }
+                            } else if (user != null) {
+                                System.out.println("This user already exist");
+                                System.out.println("Este correo ya esta registrado en nuestro sistema: "+ user.getEmail());
+                                model.put("emailExist", "Este correo electronico ya esta registrado en nuestro sistema");
+                                model.put("errorIdentificationCard", "");
+                                model.put("successMessage", "");
                             }
-                        } else if (user != null) {
-                            System.out.println("This user already exist");
-                            model.put("emailExist", "Este correo electronico ya esta registrado en nuestro sistema");
-                            model.put("errorIdentificationCard", "");
-                            model.put("successMessage", "");
+                        } else {
+                            if(company!=null){
+                                model.put("rncExist", "Este RNC ya esta registrado en nuestro sistema");
+                                System.out.println("Este rnc ya esta registrado en nuestro sistema: "+ rnc);
+                            }
+                            if(user!=null){
+                                model.put("emailExist", "Este correo electronico ya esta registrado en nuestro sistema");
+                                System.out.println("Este correo ya esta registrado en nuestro sistema: "+ email);
+                            }
+                            if(person!=null){
+                                model.put("errorIdentificationCard", "Esta cedula ya esta registrado en nuestro sistema");
+                                System.out.println("Esta cedula ya esta registrado en nuestro sistema: "+ identificationCard);
+
+                            }
                         }
                     }
                     ctx.render("/public/FrontEnd_SFK/views/welcomePortal/companyRegister.html", model);
@@ -149,6 +171,7 @@ public class MainController extends BaseController {
 
                 });
                 get("/organizationRegister", ctx -> {
+                    model.put("rncExist", "");
                     model.put("errorIdentificationCard", "");
                     model.put("emailExist", "");
                     model.put("successMessage", "");
@@ -512,7 +535,7 @@ public class MainController extends BaseController {
                             model.put("productList", fp);
                             Set<Form> formList;
                             formList = branchOffice.getFormList();
-                            model.put("formList",formList);
+                            model.put("formList", formList);
 
                         }
                     }
@@ -525,18 +548,18 @@ public class MainController extends BaseController {
                     for (Notification notification : user.getNotificationList()) {
                         btnAction = false;
                         notiType = false;
-                        if(notification.isStatus() == false){
+                        if (notification.isStatus() == false) {
 
-                            if(notification.getTitle().equalsIgnoreCase("SUMINISTRO") || notification.getTitle().equalsIgnoreCase("TEMPERATURA") || notification.getTitle().equalsIgnoreCase("HUMEDAD")) {
+                            if (notification.getTitle().equalsIgnoreCase("SUMINISTRO") || notification.getTitle().equalsIgnoreCase("TEMPERATURA") || notification.getTitle().equalsIgnoreCase("HUMEDAD")) {
                                 btnAction = true;
                                 notiType = true;
                             }
-                            if(notification.getTitle().equalsIgnoreCase("MADUREZ")){
+                            if (notification.getTitle().equalsIgnoreCase("MADUREZ")) {
                                 btnAction = true;
                                 notiType = false;
                             }
 
-                        }else{
+                        } else {
                             btnAction = false;
                         }
                         /*
@@ -558,7 +581,7 @@ public class MainController extends BaseController {
                         }
 
                          */
-                        notificacionesActs.add(new NotificacionesAct(notification, btnAction,notiType));
+                        notificacionesActs.add(new NotificacionesAct(notification, btnAction, notiType));
                     }
                     model.put("notificationListEmployee", notificacionesActs);
                     ctx.render("/public/FrontEnd_SFK/views/employeePortal/employeePortal.html", model);
