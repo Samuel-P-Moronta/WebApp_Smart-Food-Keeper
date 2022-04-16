@@ -29,6 +29,7 @@ public class UserGlobalController extends BaseController{
             path("/user",() ->{
                 post("/companyRegister",ctx->{
                     String identificationCard = ctx.formParam("identificationCard");
+                    String rnc = ctx.formParam("rnc");
                     String firstName = ctx.formParam("firstName");
                     String lastName = ctx.formParam("lastName");
                     String companyName = ctx.formParam("companyName");
@@ -49,7 +50,7 @@ public class UserGlobalController extends BaseController{
                         }
                         if(!identificationCard.equals("") && !firstName.equals("") && !lastName.equals("") && !city.equals("") && !direction.equals("")){
                             Person personAux = new Person(identificationCard,firstName,lastName, new Date(),new Address(city,direction),ControllerCore.getInstance().findUserByEmail(email));
-                            Company company = new Company(companyName);
+                            Company company = new Company(companyName,rnc);
                             if(ControllerCore.getInstance().findPersonByIdentificationCard(identificationCard) == null){
                                 ControllerCore.getInstance().createPerson(personAux);
                                 ControllerCore.getInstance().createCompany(company);

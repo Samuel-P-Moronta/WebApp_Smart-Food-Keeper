@@ -54,7 +54,7 @@ public class ControllerCore {
         return CompanyServices.getInstance().create(company);
     }
     public Company findCompanyById(long id){return CompanyServices.getInstance().find(id);}
-    public Company findCompanyByName(String name){return CompanyServices.getInstance().findOrganizationByName(name);}
+    public Company findCompanyByName(String rnc){return CompanyServices.getInstance().findOrganizationByNameRnc(rnc);}
     public Company findCompanyByBranchOffice(Long idBranchOffice){return CompanyServices.getInstance().findOrganizationByBranchOffice(idBranchOffice);}
 
     //--------------------------BRANCH OFFICE------------------------------------------------------------//
