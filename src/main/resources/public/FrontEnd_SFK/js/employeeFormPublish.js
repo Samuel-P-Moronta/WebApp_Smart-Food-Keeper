@@ -78,7 +78,7 @@ function findForms() {
                     document.getElementById("overripeCant").value = overripeCant;
                     var inspectionType = document.getElementById("inspectionType").value;
                     if (fruitType == "pineapple") {
-                        document.getElementById("fruitType").value = "PINA";
+                        document.getElementById("fruitType").value = "PI\u00f1A";
                     } else {
                         if (fruitType == "papaya") {
                             document.getElementById("fruitType").value = "LECHOSA";
