@@ -147,7 +147,7 @@ public class RestApi extends BaseController {
                     long idNotification = Long.parseLong(ctx.pathParam("idNotification", String.class).get());
                     Notification notification = NotificationServices.getInstance().find(idNotification);
                     Company company = user.getCompany();
-                    if(idNotification !=0l){
+                    if (idNotification != 0l) {
                         if (user != null) {
                             String email = user.getEmail();
                             BranchOffice branchOffice = BranchOfficeServices.getInstance().findBranchOfficeByUserEmployee(email);
@@ -156,16 +156,21 @@ public class RestApi extends BaseController {
                                     formDisplay.put("branchOffice: ", branchOffice);
                                     formDisplay.put("fruitProduct", company.getFruitProductList());
                                     formDisplay.put("fruitType", notification.getShelfData().getFruitType());
-                                    formDisplay.put("shelfId",notification.getShelfData().getShelf().getDeviceId());
-                                    formDisplay.put("overripeCant",notification.getShelfData().getCantOverripe());
-                                    for(FruitProduct fp: company.getFruitProductList()){
-                                        formDisplay.put("discountPercentage",fp.getDiscountPercentage());
+                                    formDisplay.put("shelfId", notification.getShelfData().getShelf().getDeviceId());
+                                    formDisplay.put("overripeCant", notification.getShelfData().getCantOverripe());
+                                    for (FruitProduct fp : company.getFruitProductList()) {
+                                        formDisplay.put("discountPercentage", fp.getDiscountPercentage());
                                     }
                                     ctx.json(formDisplay);
                                 }
                             }
                         }
-
+                    }
+                });
+                get("/findAllNotificationInMyBranchOffice", ctx -> {
+                    User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
+                    for (Notification notification : user.getNotificationList()) {
+                        ctx.json(notification);
                     }
                 });
             });

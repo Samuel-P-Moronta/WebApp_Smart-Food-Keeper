@@ -41,7 +41,6 @@ $(document).ready(function () {
         alert(data);
     });
 });
-
 function findForms() {
 
     $("#myTableNotification").on('click', '.btn-success', function () {
@@ -364,13 +363,23 @@ $(document).ready(function () {
         //window.location.reload(true);
     });
 });
-
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+        currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+}
 function sendInspectNotOverripe() {
     //datos obtenido de forma correcta
     let idNotificationSelect = document.getElementById("idNotificationSelect").value;
     let inspectionNotOverripe = [{idNotificationSelect: idNotificationSelect,inspectionNotOverripe: true}];
     webSocket.send(JSON.stringify(inspectionNotOverripe));
+    sleep(1500)
+    window.location.reload(true);
+
 }
+
 
 
 function reloadFromCancel() {
@@ -407,6 +416,8 @@ function limpiarDB() {
         console.log("Se han borrados todos los formulario de la BD");
     };
 }
+
+
 
 //findForms();
 

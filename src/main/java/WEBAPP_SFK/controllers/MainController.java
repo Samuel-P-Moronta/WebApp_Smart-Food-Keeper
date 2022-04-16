@@ -517,18 +517,48 @@ public class MainController extends BaseController {
                         }
                     }
                     model.put("fullNameToShow", fullNameToShow.toUpperCase());
+
+
                     List<NotificacionesAct> notificacionesActs = new ArrayList<>();
-                    boolean status = false;
+                    boolean btnAction; //btn action
+                    boolean notiType; // true = suministro, humedad, temperatura
                     for (Notification notification : user.getNotificationList()) {
-                        status = false;
-                        if (notification.getTitle().equalsIgnoreCase("SUMINISTRO") || notification.getTitle().equalsIgnoreCase("TEMPERATURA") || notification.getTitle().equalsIgnoreCase("HUMEDAD") ) {
+                        btnAction = false;
+                        notiType = false;
+                        if(notification.isStatus() == false){
+
+                            if(notification.getTitle().equalsIgnoreCase("SUMINISTRO") || notification.getTitle().equalsIgnoreCase("TEMPERATURA") || notification.getTitle().equalsIgnoreCase("HUMEDAD")) {
+                                btnAction = true;
+                                notiType = true;
+                            }
+                            if(notification.getTitle().equalsIgnoreCase("MADUREZ")){
+                                btnAction = true;
+                                notiType = false;
+                            }
+
+                        }else{
+                            btnAction = false;
+                        }
+                        /*
+                        if (notification.getTitle().equalsIgnoreCase("SUMINISTRO") || notification.getTitle().equalsIgnoreCase("TEMPERATURA") || notification.getTitle().equalsIgnoreCase("HUMEDAD") || notification.isStatus() == true) {
+                            status = true;
+                            notiType = true;
+                            //notification.setStatus(true);
+                            //NotificationServices.getInstance().update(NotificationServices.getInstance().find(notification.getId()));
+                        }else{
+                            notiType = false;
                             status = false;
                         }
                         if(notification.isStatus() == false){
-                            status = true;
+                            status = false;
+                        }else{
+                            if(notification.isStatus() == true){
+                                status = true;
+                            }
                         }
-                        notificacionesActs.add(new NotificacionesAct(notification, status));
 
+                         */
+                        notificacionesActs.add(new NotificacionesAct(notification, btnAction,notiType));
                     }
                     model.put("notificationListEmployee", notificacionesActs);
                     ctx.render("/public/FrontEnd_SFK/views/employeePortal/employeePortal.html", model);
@@ -585,6 +615,8 @@ public class MainController extends BaseController {
                 });
                 post("/sales-express", ctx -> {
                     User user = UserServices.getInstance().find(ctx.sessionAttribute("user"));
+
+
                     if (user != null) {
                         if (user.hasRole(RoleApp.ROLE_EMPLOYEE)) {
                             String email = user.getEmail();

@@ -144,7 +144,7 @@
                                                         </button>
                                                     </a>
                                                     <a>
-                                                        <button th:value="${n.notification.id}"   th:disabled="${n.activar}"type="button" class="btn btn-success" data-toggle="modal"   th:data-target="${n.activar} ? '#exampleModal' : '#expressModal'" onclick="findForms()">INSPECCION</button>
+                                                        <button th:value="${n.notification.id}"   th:disabled="${n.activar} ? false: true" type="button" class="btn btn-success" data-toggle="modal"   th:data-target="${n.notiType} ? '#exampleModal' : '#expressModal'" onclick="findForms()">INSPECCION</button>
                                                     </a>
                                                     <!--
                                                     <a th:href="'/employeePortal/delete-notification-employee/'+${n.notification.id}" ><button th:hidden="${n.activar}"  type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">ZAFACON</button></a>
@@ -227,8 +227,8 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
-                                <form method="get" th:attr="action=${action}">
-                                    <button id="inspectNotOverripe" type="submit" class="btn btn-primary" onClick="location.reload(true);">SI</button>
+                                <form method="get" action="/employeePortal">
+                                    <button id="inspectNotOverripe" type="submit" class="btn btn-primary">SI</button>
                                 </form>
                             </div>
                         </div>
@@ -243,8 +243,7 @@
                             <div class="modal-body">
                                 <div hidden class="form-group col-md-12">
                                     <label for="idNotificationSelect">Notificacion seleccionada: </label>
-                                    <input type="text" class="form-control" id="idNotificationSelect"
-                                           name="idNotificationSelect" disabled>
+                                    <input type="text" class="form-control" id="idNotificationSelect" name="idNotificationSelect" disabled>
                                 </div>
                                 <div class="form-group col-md-12">
                                     <label for="shelfId">Estante donde se gener&oacute; la notificaci&oacute;n: </label>
