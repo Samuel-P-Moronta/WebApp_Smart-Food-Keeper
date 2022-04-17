@@ -141,9 +141,7 @@
                                                 <td class="text-center"><label class="badge "  th:text="${n.notification.status} ? 'REVISADO': 'EN REVISION'" th:classappend="${n.notification.status} ? 'badge-success' : 'badge-danger'"></label></td>
                                                 <td class="text-pinterest">
                                                     <a th:href="'/management/notificationByType-employee/'+${n.notification.type}">
-                                                        <button type="button" class="btn btn-primary"
-                                                                data-toggle="modal" data-target="#exampleModal">VER
-                                                        </button>
+                                                        <button type="button" class="btn btn-primary">VER</button>
                                                     </a>
                                                     <a>
                                                         <button th:value="${n.notification.id}"   th:disabled="${n.activar} ? false: true" type="button" class="btn btn-success" data-toggle="modal"   th:data-target="${n.notiType} ? '#exampleModal' : '#expressModal'" onclick="findForms()">INSPECCI&Oacute;N</button>
