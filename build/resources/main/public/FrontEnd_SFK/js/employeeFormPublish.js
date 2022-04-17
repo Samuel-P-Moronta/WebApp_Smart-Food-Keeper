@@ -404,7 +404,8 @@ function sendDataToServer() {
 
 function conectar() {
     /*Cambiar a wss cuando se haga deploay para https*/
-    webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/form-register");
+    //    webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/form-register");
+    webSocket = new WebSocket("wss://" + location.hostname + ":" + location.port + "/form-register");
 }
 
 function limpiarDB() {
