@@ -78,7 +78,7 @@ function findForms() {
                     document.getElementById("overripeCant").value = overripeCant;
                     var inspectionType = document.getElementById("inspectionType").value;
                     if (fruitType == "pineapple") {
-                        document.getElementById("fruitType").value = "PINA";
+                        document.getElementById("fruitType").value = "PI\u00D1A";
                     } else {
                         if (fruitType == "papaya") {
                             document.getElementById("fruitType").value = "LECHOSA";
@@ -343,7 +343,7 @@ function imprimirTabla(lista_formulario) {
 
 //abriendo el objeto para el websocket
 var webSocket;
-var tiempoReconectar = 5000;
+var tiempoReconectar = 4000;
 $(document).ready(function () {
     conectar()
     //Endicar id Boton enviar datos
@@ -416,6 +416,13 @@ function limpiarDB() {
         console.log("Se han borrados todos los formulario de la BD");
     };
 }
+function verificarConexion(){
+    if(!webSocket || webSocket.readyState === 3){
+        conectar();
+    }
+}
+setInterval(verificarConexion, tiempoReconectar); //para reconectar.
+
 
 
 
