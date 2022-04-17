@@ -4,6 +4,7 @@ import WEBAPP_SFK.models.*;
 import WEBAPP_SFK.models.ExpressSalesInventory;
 import WEBAPP_SFK.models.enums.RoleApp;
 import WEBAPP_SFK.services.*;
+import WEBAPP_SFK.utilities.CustomEmailSender;
 import WEBAPP_SFK.utilities.EmailSender;
 import WEBAPP_SFK.utilities.NotificacionesAct;
 import io.javalin.Javalin;
@@ -55,6 +56,9 @@ public class MainController extends BaseController {
                             client.setEmail(email);
                             client.setSubscriptionDate(new Date());
                             ClientServices.getInstance().create(client);
+                            String customSubject = "Suscripción a SFK project";
+                            String customMessage = "Hola"+" "+firstName+" "+lastName+" "+"."+" "+ "Gracias por ser parte de la familia de Smart Food Keeper Project." + " "+ "Este correo es para informarte que te has suscrito a nuestro sistema, de esta forma sabrás cuando los supermercados con SFK Project tengan frutas en estado muy maduras." +" "+"Aprovechamos la ocasión para felicitarte por tomar nuestro proyecto como iniciativa para reducir el desperdicio de alimentos.";
+                            new EmailSender().message(email,customSubject,customMessage);
                         } else {
                             System.out.println("found the same email");
                         }

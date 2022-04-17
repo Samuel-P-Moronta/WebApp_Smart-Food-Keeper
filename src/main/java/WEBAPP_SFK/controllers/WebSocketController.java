@@ -48,6 +48,7 @@ public class WebSocketController extends BaseController {
         app.ws("/server/shelf", ws -> {
 
             ws.onConnect(ctx -> {
+                System.out.println("Conexión Iniciada - "+ctx.getSessionId());
                 String username = "Shelf" + " " + nextShelfNumber;
                 userUsernameMapShelf.put(ctx, username);
             });
@@ -74,6 +75,7 @@ public class WebSocketController extends BaseController {
                 }
             });
             ws.onClose(ctx -> {
+                System.out.println("Conexión Cerrada - "+ctx.getSessionId());
                 userUsernameMapShelf.remove(ctx);
             });
             ws.onError(ctx -> {
@@ -83,6 +85,7 @@ public class WebSocketController extends BaseController {
 
         app.ws("/server/container", ws -> {
             ws.onConnect(ctx -> {
+                System.out.println("Conexión Iniciada - "+ctx.getSessionId());
                 String username = "Container" + " " + nextContainerfNumber;
                 userUsernameMapContainer.put(ctx, username);
             });
@@ -98,6 +101,7 @@ public class WebSocketController extends BaseController {
                 broadcastContainerMessage(cdj);
             });
             ws.onClose(ctx -> {
+                System.out.println("Conexión Cerrada - "+ctx.getSessionId());
                 userUsernameMapContainer.remove(ctx.session);
             });
             ws.onError(ctx -> {
@@ -107,6 +111,7 @@ public class WebSocketController extends BaseController {
         app.ws("/form-register", ws -> {
 
             ws.onConnect(ctx -> {
+                System.out.println("Conexión Iniciada - "+ctx.getSessionId());
                 String username = "Forms" + " " + nextShelfNumber;
                 userUsernameForms.put(ctx, username);
             });
@@ -172,6 +177,7 @@ public class WebSocketController extends BaseController {
                 }
             });
             ws.onClose(ctx -> {
+                System.out.println("Conexión Cerrada - "+ctx.getSessionId());
                 userUsernameForms.remove(ctx);
             });
             ws.onError(ctx -> {

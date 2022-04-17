@@ -78,7 +78,7 @@ function findForms() {
                     document.getElementById("overripeCant").value = overripeCant;
                     var inspectionType = document.getElementById("inspectionType").value;
                     if (fruitType == "pineapple") {
-                        document.getElementById("fruitType").value = "PI\u00f1A";
+                        document.getElementById("fruitType").value = "PI\u00D1A";
                     } else {
                         if (fruitType == "papaya") {
                             document.getElementById("fruitType").value = "LECHOSA";
@@ -343,7 +343,7 @@ function imprimirTabla(lista_formulario) {
 
 //abriendo el objeto para el websocket
 var webSocket;
-var tiempoReconectar = 5000;
+var tiempoReconectar = 4000;
 $(document).ready(function () {
     conectar()
     //Endicar id Boton enviar datos
@@ -404,7 +404,8 @@ function sendDataToServer() {
 
 function conectar() {
     /*Cambiar a wss cuando se haga deploay para https*/
-    webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/form-register");
+    //    webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/form-register");
+    webSocket = new WebSocket("wss://" + location.hostname + ":" + location.port + "/form-register");
 }
 
 function limpiarDB() {
@@ -416,6 +417,13 @@ function limpiarDB() {
         console.log("Se han borrados todos los formulario de la BD");
     };
 }
+function verificarConexion(){
+    if(!webSocket || webSocket.readyState === 3){
+        conectar();
+    }
+}
+setInterval(verificarConexion, tiempoReconectar); //para reconectar.
+
 
 
 

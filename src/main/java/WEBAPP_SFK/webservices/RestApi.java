@@ -7,6 +7,7 @@ import WEBAPP_SFK.models.enums.RoleApp;
 import WEBAPP_SFK.services.*;
 import io.javalin.Javalin;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -153,15 +154,19 @@ public class RestApi extends BaseController {
                             BranchOffice branchOffice = BranchOfficeServices.getInstance().findBranchOfficeByUserEmployee(email);
                             if (branchOffice != null) {
                                 if (notification != null) {
-                                    formDisplay.put("branchOffice: ", branchOffice);
-                                    formDisplay.put("fruitProduct", company.getFruitProductList());
-                                    formDisplay.put("fruitType", notification.getShelfData().getFruitType());
-                                    formDisplay.put("shelfId", notification.getShelfData().getShelf().getDeviceId());
-                                    formDisplay.put("overripeCant", notification.getShelfData().getCantOverripe());
-                                    for (FruitProduct fp : company.getFruitProductList()) {
-                                        formDisplay.put("discountPercentage", fp.getDiscountPercentage());
+                                    if(notification.getTitle().equalsIgnoreCase("MADUREZ")){
+                                        formDisplay.put("branchOffice: ", branchOffice);
+                                        formDisplay.put("fruitProduct", company.getFruitProductList());
+                                        formDisplay.put("fruitType", notification.getShelfData().getFruitType());
+                                        formDisplay.put("shelfId", notification.getShelfData().getShelf().getDeviceId());
+                                        formDisplay.put("overripeCant", notification.getShelfData().getCantOverripe());
+                                        for (FruitProduct fp : company.getFruitProductList()) {
+                                            formDisplay.put("discountPercentage", fp.getDiscountPercentage());
+                                        }
+                                        ctx.json(formDisplay);
+                                    }else{
+                                        System.out.println("This notification is about [SUMINISTRO] [TEMPERATURA] or [HUMEDAD]");
                                     }
-                                    ctx.json(formDisplay);
                                 }
                             }
                         }

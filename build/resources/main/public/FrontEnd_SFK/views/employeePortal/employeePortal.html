@@ -113,7 +113,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div id="notification" class="tab-pane fade show active pt-3">
-                                    <h4 class="card-title">Listado de notificaciones</h4>
+                                    <h4 class="card-title">Listado de Alertas</h4>
                                     <div class="table-responsive">
                                         <table id="myTableNotification"
                                                class="table table-hover table-bordered table-responsive"
@@ -125,7 +125,7 @@
                                                 <th>Mensaje</th>
                                                 <th>Fecha de evento</th>
                                                 <th>Estado</th>
-                                                <th>Accion</th>
+                                                <th>Acci&oacute;n</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -146,7 +146,7 @@
                                                         </button>
                                                     </a>
                                                     <a>
-                                                        <button th:value="${n.notification.id}"   th:disabled="${n.activar} ? false: true" type="button" class="btn btn-success" data-toggle="modal"   th:data-target="${n.notiType} ? '#exampleModal' : '#expressModal'" onclick="findForms()">INSPECCION</button>
+                                                        <button th:value="${n.notification.id}"   th:disabled="${n.activar} ? false: true" type="button" class="btn btn-success" data-toggle="modal"   th:data-target="${n.notiType} ? '#exampleModal' : '#expressModal'" onclick="findForms()">INSPECCI&Oacute;N</button>
                                                     </a>
                                                     <!--
                                                     <a th:href="'/employeePortal/delete-notification-employee/'+${n.notification.id}" ><button th:hidden="${n.activar}"  type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">ZAFACON</button></a>
@@ -164,7 +164,7 @@
                                                 <th>Mensaje</th>
                                                 <th>Fecha de evento</th>
                                                 <th>Estado</th>
-                                                <th>Accion</th>
+                                                <th>Acci&oacute;n</th>
 
                                             </tr>
                                             </tfoot>
@@ -191,7 +191,6 @@
                                                 <td class="text-left" th:text="${form.fruitType}">Tipo de fruta
                                                 </td>
                                                 <td class="text-left" th:text="${form.quantity}">Cantidad
-                                                    fruta
                                                 </td>
                                                 <td class="text-left" th:text="${form.inspectionType}">Estado</td>
                                                 <td class="text-left" th:text="${form.registerDate}">Fecha de
@@ -219,13 +218,13 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">ALERTA DE INSPECCION</h5>
+                                <h5 class="modal-title">ALERTA DE INSPECCI&Oacute;N</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <p>Marcar notficacion como revision</p>
+                                <p>Marcar notficaci&oacute;n como revisi&oacute;n</p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
@@ -240,11 +239,11 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="exampleModalLabel">INSPECCION DE NOTIFICACION</h4>
+                                <h4 class="modal-title" id="exampleModalLabel">INSPECCI&Oacute;N DE NOTIFICACI&Oacute;N</h4>
                             </div>
                             <div class="modal-body">
                                 <div hidden class="form-group col-md-12">
-                                    <label for="idNotificationSelect">Notificacion seleccionada: </label>
+                                    <label for="idNotificationSelect">Notificaci&oacute;n seleccionada: </label>
                                     <input type="text" class="form-control" id="idNotificationSelect" name="idNotificationSelect" disabled>
                                 </div>
                                 <div class="form-group col-md-12">
@@ -266,15 +265,15 @@
                                            id="overripeCant" required disabled>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label for="inspectionType">Seleccionar tipo de inspeccion: </label>
+                                    <label for="inspectionType">Seleccionar tipo de inspecci&oacute;n: </label>
                                     <select name="inspectionType" id="inspectionType" placeholder="level" class="form-control" aria-required="true" required>
                                         <option selected="false"disabled  id="inspectionTypePrueba" value="">TIPO DE INSPECCION</option>
                                         <option name="inspectionType" value="EXPRESS">EXPRESS</option>
-                                        <option name="inspectionType" value="ZAFACON">ZAFACON</option>
+                                        <option name="inspectionType" value="ZAFACON">ZAFAC&Oacute;N</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label for="fruitQuantity" id="labelTypeInspeccion">Digitar cantidad de frutas
+                                    <label for="fruitQuantity" id="labelTypeInspeccion">Seleccionar cantidad de frutas
                                         : </label>
                                     <input type="number" min="0" class="form-control" name="fruitQuantity"
                                            id="fruitQuantity" placeholder="Seleccionar cantidad de frutas" required>
@@ -287,9 +286,9 @@
                                 </div>
                                 --->
                                 <hr>
-                                <button type="submit" class="btn btn-primary" id="addPost" name="addPost" onclick="addForm()">REALIZAR INSPECCION</button>
+                                <button type="submit" class="btn btn-primary" id="addPost" name="addPost" onclick="addForm()">REALIZAR INSPECCI&Oacute;N</button>
                                 <hr>
-                                <h4 class="card-title">LISTADO DE INSPECCION DE NOTIFICACION SELECCIONADA</h4>
+                                <h4 class="card-title">LISTADO DE INSPECCI&Oacute;N DE NOTIFICACI&Oacute;N SELECCIONADA</h4>
                                 <div class="table-responsive">
                                     <table id="tableShelfList" name="tableShelfList"
                                            class="table table-hover table-bordered" style="width:100%">

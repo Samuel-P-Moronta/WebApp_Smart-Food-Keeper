@@ -267,12 +267,12 @@ public class DefaultDataLoader {
         if(checkOverripe == true){
             System.out.println("[MADUREZ ESTA EN PROCESO DE REVISION]");
         }else{
-            //NotificationServices.getInstance().create(notification);
+            NotificationServices.getInstance().create(notification);
         }
         if(checkOverripe == true){
             System.out.println("[MADUREZ ESTA EN PROCESO DE REVISION]");
         }else{
-            //NotificationServices.getInstance().create(notification3);
+            NotificationServices.getInstance().create(notification3);
         }
     }
 
