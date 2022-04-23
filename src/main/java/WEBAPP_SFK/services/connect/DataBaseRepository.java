@@ -1,6 +1,7 @@
 package WEBAPP_SFK.services.connect;
 
 
+import WEBAPP_SFK.Main;
 import WEBAPP_SFK.utilities.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -19,8 +20,12 @@ public class DataBaseRepository<T>{
     private Class<T> entityClass;
 
     public DataBaseRepository(Class<T> clase) {
-        if (entityManagerFactory == null) {
-            entityManagerFactory = Persistence.createEntityManagerFactory("persistenceUnit");
+        if(entityManagerFactory == null){
+            if(Main.getModoConexion().equalsIgnoreCase("Heroku")){
+                entityManagerFactory = getConfiguracionBaseDatosHeroku();
+            }else{
+                entityManagerFactory = Persistence.createEntityManagerFactory("persistenceUnit");
+            }
         }
         this.entityClass = clase;
     }

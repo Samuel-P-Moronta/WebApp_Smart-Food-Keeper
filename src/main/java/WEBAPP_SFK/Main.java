@@ -102,9 +102,17 @@ public class Main {
 
          */
         //System.out.println("PRUEBA waste: "+WasteDataServices.getInstance().wasteFruitsWeight(new Date(),2));
-        app.start(7000);
+        app.start(getHerokuAssignedPort());
     }
     public static String getModoConexion() {
         return connectionMode;
+    }
+
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 7000;
     }
 }
