@@ -2,6 +2,8 @@
 
 ## By Samuel Peña Moronta & Yehudy De Peña Rodríguez
 
+Link: https://sfkproject.herokuapp.com/portal 
+
 Smart Food Keeper is a project focused on supermarkets that seeks to reduce fruit waste caused by the selectivity carried out by the businesses when selecting the products to be for sale with image recognition. However, there are other technologies that make up more modules of the project that play an important role in the main objective. 
 
 The system offers temperature and humidity monitoring, as well as tracking of the kilograms of fruit that have been wasted using sensors, raspberry pi, esp32 that communicate via Wi-Fi.
